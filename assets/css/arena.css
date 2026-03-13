@@ -268,6 +268,19 @@
 .msg-bubble p { margin-bottom: 8px; color: inherit; }
 .msg-bubble p:last-child { margin-bottom: 0; }
 .msg-bubble strong { color: var(--text-primary); }
+.msg-bubble ul, .msg-bubble ol { margin: 6px 0 6px 18px; padding: 0; }
+.msg-bubble li { margin-bottom: 4px; }
+.msg-bubble h1,.msg-bubble h2,.msg-bubble h3,.msg-bubble h4 {
+  margin: 10px 0 4px; color: var(--accent-cyber, #00d4ff); font-size: 1em; }
+.md-table-wrap { overflow-x: auto; margin: 8px 0; }
+.md-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+.md-table th, .md-table td {
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 5px 10px; text-align: left; vertical-align: top; }
+.md-table th {
+  background: rgba(0,212,255,0.1);
+  color: var(--accent-cyber, #00d4ff); font-weight: 600; }
+.md-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
 
 .typing-indicator {
   display: flex;
