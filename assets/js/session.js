@@ -93,31 +93,52 @@
   }
 
   // Auth form submit
-  const authSubmitBtn = document.getElementById('admin-auth-submit');
-  if (authSubmitBtn) {
-    authSubmitBtn.addEventListener('click', async () => {
-      const pw = pwInput?.value || '';
-      if (!pw) return;
-      authSubmitBtn.textContent = '...';
+  async function doAuth() {
+    const pw = (pwInput?.value || '').trim();
+    if (!pw) {
+      if (authStatus) {
+        authStatus.className = 'admin-status error';
+        authStatus.textContent = 'Please enter the workshop password.';
+      }
+      return;
+    }
+    const btn = document.getElementById('admin-auth-submit');
+    if (btn) btn.textContent = 'Checking...';
+    try {
       const hash = await sha256(pw);
-      authSubmitBtn.textContent = 'Unlock';
-
       if (hash === ADMIN_HASH) {
         sessionStorage.setItem(ADMIN_ACTIVE, 'true');
         if (authStatus) {
           authStatus.className = 'admin-status success';
-          authStatus.textContent = 'Access granted. Session keys active.';
+          authStatus.textContent = 'Access granted!';
         }
-        setTimeout(showKeysPanel, 600);
+        setTimeout(showKeysPanel, 500);
         window.showToast?.('Admin session started', 'success');
         updateKeyBars();
       } else {
         if (authStatus) {
           authStatus.className = 'admin-status error';
-          authStatus.textContent = 'Incorrect password.';
+          authStatus.textContent = 'Incorrect password. Try again.';
         }
-        pwInput.value = '';
+        if (pwInput) pwInput.value = '';
+        if (btn) btn.textContent = 'Unlock Session';
       }
+    } catch (e) {
+      if (authStatus) {
+        authStatus.className = 'admin-status error';
+        authStatus.textContent = 'Error: ' + e.message;
+      }
+      if (btn) btn.textContent = 'Unlock Session';
+    }
+  }
+
+  const authSubmitBtn = document.getElementById('admin-auth-submit');
+  if (authSubmitBtn) {
+    authSubmitBtn.addEventListener('click', doAuth);
+  }
+  if (pwInput) {
+    pwInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') doAuth();
     });
   }
 
