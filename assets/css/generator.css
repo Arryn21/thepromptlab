@@ -1,0 +1,246 @@
+/* ── generator.css — RTFC Prompt Builder ───────────────────── */
+
+#generator { background: var(--bg-primary); }
+
+.generator-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ── Builder Panel ──────────────────────────────────────────── */
+.builder-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.builder-panel h3 {
+  font-size: 1rem;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rtfc-field {
+  margin-bottom: 20px;
+}
+
+.rtfc-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.rtfc-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--accent-cyber-dim);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--accent-cyber);
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-code);
+}
+
+.rtfc-label-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.rtfc-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.rtfc-input,
+.rtfc-textarea {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: all var(--transition);
+}
+
+.rtfc-input:focus,
+.rtfc-textarea:focus {
+  outline: none;
+  border-color: var(--accent-cyber);
+}
+
+.rtfc-input::placeholder,
+.rtfc-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.rtfc-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* Colored borders on focus */
+.rtfc-field:nth-child(1) .rtfc-input:focus { border-color: #4285f4; }
+.rtfc-field:nth-child(2) .rtfc-input:focus { border-color: #10a37f; }
+.rtfc-field:nth-child(3) .rtfc-textarea:focus { border-color: #d97706; }
+.rtfc-field:nth-child(4) .rtfc-textarea:focus { border-color: #6e5494; }
+
+.rtfc-field:nth-child(1) .rtfc-letter { background: rgba(66,133,244,0.12); border-color: rgba(66,133,244,0.3); color: #4285f4; }
+.rtfc-field:nth-child(2) .rtfc-letter { background: rgba(16,163,127,0.12); border-color: rgba(16,163,127,0.3); color: #10a37f; }
+.rtfc-field:nth-child(3) .rtfc-letter { background: rgba(217,119,6,0.12); border-color: rgba(217,119,6,0.3); color: #d97706; }
+.rtfc-field:nth-child(4) .rtfc-letter { background: rgba(110,84,148,0.12); border-color: rgba(110,84,148,0.3); color: #6e5494; }
+
+.builder-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Preview Panel ──────────────────────────────────────────── */
+.preview-panel {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.preview-header h3 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.preview-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  color: var(--accent-cyber);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  animation: previewPulse 2s infinite;
+}
+
+@keyframes previewPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.preview-box {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-height: 200px;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+  transition: all var(--transition);
+}
+
+.preview-box:not(:empty) {
+  border-color: rgba(0,212,255,0.2);
+}
+
+.preview-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Highlight RTFC parts in preview */
+.preview-role     { color: #4285f4; }
+.preview-task     { color: #10a37f; }
+.preview-format   { color: #d97706; }
+.preview-criteria { color: #6e5494; }
+
+.preview-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.preview-stat strong { color: var(--text-secondary); }
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Template Picker ────────────────────────────────────────── */
+.template-row {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.template-row-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.template-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.template-chip {
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.template-chip:hover {
+  border-color: var(--accent-cyber);
+  color: var(--accent-cyber);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .generator-layout {
+    grid-template-columns: 1fr;
+  }
+  .preview-panel {
+    position: static;
+  }
+}

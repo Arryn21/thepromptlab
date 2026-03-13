@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptLab — AI for Math Teachers | CSUDH LIFT LAB</title>
+  <meta name="description" content="57 ready-to-use AI prompts for high school math teachers. ChatGPT, Claude, Gemini & GitHub Copilot. CSUDH LIFT LAB Workshop, March 17, 2026.">
+  <meta name="theme-color" content="#0a0e1a">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/hero.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/arena.css">
+  <link rel="stylesheet" href="assets/css/generator.css">
+  <link rel="stylesheet" href="assets/css/library.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     HEADER / NAV
+══════════════════════════════════════════════════════════ -->
+<header id="header" role="banner">
+  <div class="header-inner">
+    <a href="#hero" class="logo" aria-label="PromptLab home">
+      <div class="logo-dot" aria-hidden="true"></div>
+      PromptLab
+    </a>
+
+    <nav class="nav-links" role="navigation" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#tools">Tools</a>
+      <a href="#arena">Arena</a>
+      <a href="#generator">Generator</a>
+      <a href="#library">Library</a>
+      <a href="#activities">Activities</a>
+      <a href="#resources">Resources</a>
+      <a href="#arena" class="nav-cta">Try Live ⚡</a>
+    </nav>
+
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <div class="container hero-content">
+    <!-- Logos -->
+    <div class="hero-logos fade-in">
+      <img src="assets/pictures/LIFT LAB.svg" alt="LIFT LAB" height="52">
+      <div class="logo-divider"></div>
+      <img src="assets/pictures/csudhlogo.webp" alt="CSUDH" height="48">
+    </div>
+
+    <!-- Tag -->
+    <div class="hero-tag fade-in">
+      <span class="dot" aria-hidden="true"></span>
+      LIFT LAB Workshop · March 17, 2026 · CSUDH
+    </div>
+
+    <!-- Title -->
+    <h1 class="fade-in">
+      AI for Math Teachers:
+      <span class="hero-title-line2">What to Use, When &amp; Why</span>
+    </h1>
+
+    <!-- Typed subtitle -->
+    <div class="hero-typed-wrapper fade-in">
+      A hands-on toolkit <span id="typed-target"></span>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-wrapper fade-in" id="countdown-wrapper" aria-label="Countdown to workshop">
+      <div class="countdown-label">Workshop starts in</div>
+      <div class="countdown-boxes">
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-days">--</span>
+          <span class="countdown-unit">Days</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-hours">--</span>
+          <span class="countdown-unit">Hours</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-mins">--</span>
+          <span class="countdown-unit">Mins</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-secs">--</span>
+          <span class="countdown-unit">Secs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live badge (shown during workshop) -->
+    <div class="countdown-live-badge" id="countdown-live" style="display:none;" role="status">
+      <span class="live-dot" aria-hidden="true"></span>
+      Workshop is LIVE — Welcome!
+    </div>
+
+    <!-- CTAs -->
+    <div class="hero-ctas fade-in">
+      <a href="#arena" class="btn btn-primary btn-lg">
+        ⚡ Try Live AI Arena
+      </a>
+      <a href="#library" class="btn btn-outline btn-lg">
+        📚 Browse 57 Prompts
+      </a>
+    </div>
+
+    <!-- Info row -->
+    <div class="hero-info-row fade-in">
+      <div class="hero-info-item">
+        <span class="icon" aria-hidden="true">📅</span>
+        March 17, 2026 · 6–8 PM PT
+      </div>
+      <div class="hero-info-item">
+        <span class="icon" aria-hidden="true">💻</span>
+        Via Zoom
+      </div>
+      <div class="hero-info-item">
+        <span class="icon" aria-hidden="true">🎓</span>
+        California Math Project @ CSUDH
+      </div>
+      <div class="hero-info-item">
+        <span class="icon" aria-hidden="true">✅</span>
+        Free · No signup required
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <span>scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ABOUT / AGENDA
+══════════════════════════════════════════════════════════ -->
+<section id="about" aria-label="About the workshop">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">About</span>
+      <h2>Tonight's Agenda</h2>
+      <p>Two hours of hands-on AI exploration designed specifically for high school math teachers in the LAUSD, Compton USD, and Torrance USD area.</p>
+    </div>
+
+    <div class="about-grid">
+      <!-- Agenda -->
+      <div>
+        <div class="agenda-list">
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">6:00 PM</span>
+            <div class="agenda-text">
+              <strong>Welcome &amp; Why AI Now</strong>
+              <span>AB 2876, LAUSD "Ed" incident, the opportunity for math teachers</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">6:15 PM</span>
+            <div class="agenda-text">
+              <strong>The RTFC Formula</strong>
+              <span>Role · Task · Format · Criteria — your universal prompt framework</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">6:30 PM</span>
+            <div class="agenda-text">
+              <strong>ChatGPT for Content Generation</strong>
+              <span>Worksheets, lesson plans, exit tickets — hands-on demo</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">6:50 PM</span>
+            <div class="agenda-text">
+              <strong>Claude for Explanations &amp; HTML Tools</strong>
+              <span>Student-friendly explainers, interactive quizzes, proof scaffolding</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">7:10 PM</span>
+            <div class="agenda-text">
+              <strong>Gemini + Google Classroom</strong>
+              <span>Rubrics, slide decks, image generation for classroom materials</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">7:30 PM</span>
+            <div class="agenda-text">
+              <strong>Math Visualizer Demo</strong>
+              <span>Plain English → Python → graph, live in browser. No coding needed.</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">7:45 PM</span>
+            <div class="agenda-text">
+              <strong>Q&amp;A + Prompt Library Tour</strong>
+              <span>All 57 prompts, favorites, download cheat sheets</span>
+            </div>
+          </div>
+          <div class="agenda-item fade-in">
+            <span class="agenda-time">8:00 PM</span>
+            <div class="agenda-text">
+              <strong>Wrap-up &amp; Resources</strong>
+              <span>Download everything, bookmark promptlab.xyz, keep building</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presenter card -->
+      <div class="fade-in">
+        <div class="presenter-card">
+          <div class="presenter-avatar" aria-hidden="true">👨‍🏫</div>
+          <h3>Mr. Vishal Tharu</h3>
+          <div class="role">Workshop Presenter</div>
+          <div class="org">M.S. Cybersecurity Candidate · CSUDH</div>
+          <div class="presenter-badges">
+            <span class="badge">California Math Project</span>
+            <span class="badge">CSUDH LIFT LAB</span>
+            <span class="badge">Cybersecurity</span>
+            <span class="badge">AI Education</span>
+          </div>
+        </div>
+
+        <div style="margin-top:24px; padding:20px; background:var(--glass); border:1px solid var(--border); border-radius:var(--radius-md);">
+          <div class="section-tag" style="margin-bottom:12px">Why This Workshop</div>
+          <p style="font-size:0.875rem; margin-bottom:8px;"><strong style="color:var(--accent-cyber)">AB 2876 (Oct 2025)</strong> — California now requires AI literacy in all K-12 subjects.</p>
+          <p style="font-size:0.875rem; margin-bottom:8px;"><strong style="color:#ef4444">LAUSD "Ed"</strong> — AI chatbot deployed to 55K students, shut down after company collapse.</p>
+          <p style="font-size:0.875rem;">The question isn't <em>whether</em> to use AI — it's <em>how to use it well.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TOOLS
+══════════════════════════════════════════════════════════ -->
+<section id="tools" aria-label="AI tools covered">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">4 Tools</span>
+      <h2>Your AI Toolkit for Math Class</h2>
+      <p>Each tool has a superpower. Tonight you'll see all four — and know exactly when to reach for each one.</p>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool-card fade-in" style="--tool-color:#10a37f; --tool-color-dim:rgba(16,163,127,0.1);" onclick="document.getElementById('tab-chatgpt').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
+        <div class="tool-icon" aria-hidden="true">🤖</div>
+        <h3>ChatGPT</h3>
+        <p>The workhorse. Best for generating worksheets, lesson plans, exit tickets, word problems, and rubrics at scale.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="tool-badge">12 Prompts</span>
+          <span class="tool-badge">Free Educator Plan</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Content generation at volume</div>
+      </div>
+
+      <div class="tool-card fade-in" style="--tool-color:#d97706; --tool-color-dim:rgba(217,119,6,0.1);" onclick="document.getElementById('tab-claude').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
+        <div class="tool-icon" aria-hidden="true">🧠</div>
+        <h3>Claude</h3>
+        <p>The explainer. Best for student-friendly explanations, proof scaffolding, common misconceptions, and interactive HTML tools.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="tool-badge">11 Prompts</span>
+          <span class="tool-badge">Free at claude.ai</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Explanations &amp; interactive tools</div>
+      </div>
+
+      <div class="tool-card fade-in" style="--tool-color:#4285f4; --tool-color-dim:rgba(66,133,244,0.1);" onclick="document.getElementById('tab-gemini').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
+        <div class="tool-icon" aria-hidden="true">✨</div>
+        <h3>Gemini</h3>
+        <p>The Google native. Lives inside Classroom, Docs, Slides &amp; Forms. Also generates images for posters, flyers, and classroom materials.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="tool-badge">27 Prompts</span>
+          <span class="tool-badge">Free with Google</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Google Workspace + image generation</div>
+      </div>
+
+      <div class="tool-card fade-in" style="--tool-color:#6e5494; --tool-color-dim:rgba(110,84,148,0.1);" onclick="document.getElementById('tab-math').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
+        <div class="tool-icon" aria-hidden="true">📊</div>
+        <h3>Math Visualizer</h3>
+        <p>Type plain English. Get a live graph. Claude generates Python, Pyodide runs it in your browser — no server, no install, verified math.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="tool-badge">7 Copilot Prompts</span>
+          <span class="tool-badge">Live in Browser</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Graphs, statistics, visual demos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     AI ARENA
+══════════════════════════════════════════════════════════ -->
+<section id="arena" aria-label="AI Arena — live chat">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Live Demo</span>
+      <h2>AI Arena</h2>
+      <p>Chat with ChatGPT, Claude, and Gemini live — or generate math visualizations. Add your API key in the panel below, or press <kbd style="font-family:var(--font-code);background:var(--glass);padding:2px 6px;border-radius:4px;border:1px solid var(--border)">Ctrl+Shift+K</kbd> if you have workshop access.</p>
+    </div>
+
+    <div class="arena-wrapper">
+      <!-- Tab bar -->
+      <div class="arena-tabs" role="tablist" aria-label="AI tool tabs">
+        <button class="arena-tab active" id="tab-chatgpt"
+                data-panel="panel-chatgpt" role="tab"
+                aria-selected="true" aria-controls="panel-chatgpt"
+                style="--tab-color:#10a37f">
+          <span class="tab-dot" aria-hidden="true"></span>
+          ChatGPT
+        </button>
+        <button class="arena-tab" id="tab-claude"
+                data-panel="panel-claude" role="tab"
+                aria-selected="false" aria-controls="panel-claude"
+                style="--tab-color:#d97706">
+          <span class="tab-dot" aria-hidden="true"></span>
+          Claude
+        </button>
+        <button class="arena-tab" id="tab-gemini"
+                data-panel="panel-gemini" role="tab"
+                aria-selected="false" aria-controls="panel-gemini"
+                style="--tab-color:#4285f4">
+          <span class="tab-dot" aria-hidden="true"></span>
+          Gemini
+        </button>
+        <button class="arena-tab" id="tab-math"
+                data-panel="panel-math" role="tab"
+                aria-selected="false" aria-controls="panel-math"
+                style="--tab-color:#6e5494">
+          <span class="tab-dot" aria-hidden="true"></span>
+          📊 Math Visualizer
+        </button>
+      </div>
+
+      <!-- ── ChatGPT Panel ── -->
+      <div class="arena-panel active" id="panel-chatgpt" role="tabpanel" aria-labelledby="tab-chatgpt">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <span style="font-size:0.8rem;font-weight:700;color:#10a37f">ChatGPT</span>
+            <select class="model-selector" aria-label="Select ChatGPT model">
+              <option value="gpt-4o-mini">gpt-4o-mini (fast, free tier)</option>
+              <option value="gpt-4o">gpt-4o (most capable)</option>
+              <option value="gpt-4-turbo">gpt-4-turbo</option>
+            </select>
+          </div>
+          <div class="panel-header-right">
+            <button class="panel-btn" data-action="clear" aria-label="Clear conversation">Clear</button>
+          </div>
+        </div>
+
+        <!-- Self-service key bar -->
+        <div class="key-bar" data-provider="openai" role="form" aria-label="OpenAI API key">
+          <span class="key-bar-label">🔑 OpenAI Key:</span>
+          <input type="password" placeholder="sk-..." autocomplete="off" aria-label="OpenAI API key input">
+          <button class="key-save-btn">Save</button>
+          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener"
+             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
+        </div>
+
+        <div class="chat-messages" id="chat-chatgpt" aria-live="polite">
+          <div class="chat-empty">
+            <div class="empty-icon" aria-hidden="true">🤖</div>
+            <p>Ask ChatGPT anything about math teaching, or try a starter:</p>
+            <div class="chat-chips">
+              <button class="chip">Create a worksheet on solving two-step equations for 9th grade</button>
+              <button class="chip">Write 5 real-world word problems about linear equations</button>
+              <button class="chip">Design a 60-min lesson plan on the Pythagorean theorem</button>
+              <button class="chip">Generate 15 exit ticket questions on quadratic functions</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea class="chat-input" placeholder="Ask ChatGPT… (Shift+Enter for new line, Enter to send)"
+                      rows="1" aria-label="Message input"></textarea>
+            <button class="send-btn" aria-label="Send message">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Claude Panel ── -->
+      <div class="arena-panel" id="panel-claude" role="tabpanel" aria-labelledby="tab-claude">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <span style="font-size:0.8rem;font-weight:700;color:#d97706">Claude</span>
+            <select class="model-selector" aria-label="Select Claude model">
+              <option value="claude-sonnet-4-6">claude-sonnet-4-6 (recommended)</option>
+              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5 (fast)</option>
+              <option value="claude-opus-4-6">claude-opus-4-6 (most capable)</option>
+            </select>
+          </div>
+          <div class="panel-header-right">
+            <button class="panel-btn" data-action="clear">Clear</button>
+          </div>
+        </div>
+
+        <div class="key-bar" data-provider="anthropic">
+          <span class="key-bar-label">🔑 Anthropic Key:</span>
+          <input type="password" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API key">
+          <button class="key-save-btn">Save</button>
+          <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener"
+             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
+        </div>
+
+        <div class="chat-messages" id="chat-claude" aria-live="polite">
+          <div class="chat-empty">
+            <div class="empty-icon" aria-hidden="true">🧠</div>
+            <p>Ask Claude to explain a concept, scaffold a proof, or build an interactive quiz:</p>
+            <div class="chat-chips">
+              <button class="chip">Explain slope to a 9th grader who struggles with fractions</button>
+              <button class="chip">Create an interactive HTML quiz on quadrilateral properties</button>
+              <button class="chip">List 5 common misconceptions about solving equations</button>
+              <button class="chip">Write a reteach script for students who missed two-step equations</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea class="chat-input" placeholder="Ask Claude… (Enter to send, Shift+Enter for new line)"
+                      rows="1" aria-label="Message input"></textarea>
+            <button class="send-btn" aria-label="Send message">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Gemini Panel ── -->
+      <div class="arena-panel" id="panel-gemini" role="tabpanel" aria-labelledby="tab-gemini">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <span style="font-size:0.8rem;font-weight:700;color:#4285f4">Gemini</span>
+            <select class="model-selector" aria-label="Select Gemini model">
+              <option value="gemini-2.0-flash">gemini-2.0-flash (fast)</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro (long context)</option>
+              <option value="gemini-2.0-flash-thinking-exp">gemini-2.0-flash-thinking</option>
+            </select>
+          </div>
+          <div class="panel-header-right">
+            <button class="panel-btn" data-action="clear">Clear</button>
+          </div>
+        </div>
+
+        <div class="key-bar" data-provider="google">
+          <span class="key-bar-label">🔑 Google Key:</span>
+          <input type="password" placeholder="AIza..." autocomplete="off" aria-label="Google API key">
+          <button class="key-save-btn">Save</button>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener"
+             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
+        </div>
+
+        <div class="chat-messages" id="chat-gemini" aria-live="polite">
+          <div class="chat-empty">
+            <div class="empty-icon" aria-hidden="true">✨</div>
+            <p>Ask Gemini — especially great for Google Classroom integration:</p>
+            <div class="chat-chips">
+              <button class="chip">Create a rubric for a 10th grade geometry project on Google Classroom</button>
+              <button class="chip">Write a parent newsletter for Algebra 1 this month</button>
+              <button class="chip">Design a slide deck for a lesson on exponential functions</button>
+              <button class="chip">What CA Common Core standards cover the Pythagorean theorem?</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <textarea class="chat-input" placeholder="Ask Gemini… (Enter to send)"
+                      rows="1" aria-label="Message input"></textarea>
+            <button class="send-btn" aria-label="Send message">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Copilot / Math Visualizer Panel ── -->
+      <div class="arena-panel" id="panel-math" role="tabpanel" aria-labelledby="tab-math">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <span style="font-size:0.8rem;font-weight:700;color:#6e5494">📊 Math Visualizer</span>
+            <span style="font-size:0.75rem;color:var(--text-muted)">Claude → Python → Graph</span>
+          </div>
+          <div class="panel-header-right">
+            <span style="font-size:0.72rem;color:var(--text-muted)">Uses Anthropic key</span>
+          </div>
+        </div>
+
+        <div class="key-bar" data-provider="anthropic">
+          <span class="key-bar-label">🔑 Anthropic Key:</span>
+          <input type="password" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API key">
+          <button class="key-save-btn">Save</button>
+        </div>
+
+        <div class="visualizer-panel">
+          <div class="viz-input-area">
+            <div class="viz-label">Describe your graph in plain English:</div>
+            <div class="viz-chips" id="viz-chips" aria-label="Quick-start prompts"></div>
+            <div class="viz-input-row">
+              <input type="text" class="viz-input" id="viz-input"
+                     placeholder="e.g. Graph y = x² - 4x + 3, mark the vertex and x-intercepts"
+                     aria-label="Visualization description">
+              <button class="viz-run-btn" id="viz-run-btn" aria-label="Generate graph">
+                ▶ Generate Graph
+              </button>
+            </div>
+          </div>
+
+          <div class="viz-output" id="viz-output" aria-live="polite">
+            <div class="viz-placeholder">
+              <div class="big-icon" aria-hidden="true">📊</div>
+              <p style="font-size:0.875rem;">Describe any math graph or visualization above.<br>Claude writes the Python code, Pyodide runs it — live in your browser.</p>
+              <p style="font-size:0.75rem;margin-top:8px;">First run loads ~7MB (one time only)</p>
+            </div>
+
+            <!-- Pyodide progress bar -->
+            <div class="pyodide-progress" id="pyodide-progress" aria-live="polite">
+              <div style="font-size:0.8rem;font-weight:600;margin-bottom:6px;" id="progress-msg">Loading...</div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+
+            <!-- Chart result -->
+            <div class="chart-result" id="chart-result">
+              <img id="chart-img" alt="Generated math visualization" src="">
+              <div class="chart-actions">
+                <button class="btn btn-primary btn-sm" id="chart-download">⬇ Download PNG</button>
+                <a href="#" target="_blank" rel="noopener" class="btn btn-outline btn-sm" id="chart-colab">
+                  ▶ Open in Colab
+                </a>
+              </div>
+              <details class="code-collapse" id="generated-code">
+                <summary>Generated Python Code</summary>
+                <pre><code id="code-block"></code></pre>
+              </details>
+              <button class="btn btn-outline btn-sm" id="code-copy" style="align-self:flex-start">📋 Copy Code</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.arena-wrapper -->
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     RTFC GENERATOR
+══════════════════════════════════════════════════════════ -->
+<section id="generator" aria-label="RTFC Prompt Builder">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Prompt Formula</span>
+      <h2>Build Any Prompt with RTFC</h2>
+      <p><strong style="color:var(--accent-cyber)">R</strong>ole + <strong style="color:#10a37f">T</strong>ask + <strong style="color:#d97706">F</strong>ormat + <strong style="color:#6e5494">C</strong>riteria. Fill in the four fields and watch your prompt build in real time.</p>
+    </div>
+
+    <div class="generator-layout">
+      <!-- Builder -->
+      <div class="builder-panel">
+        <h3>🏗 Prompt Builder</h3>
+
+        <!-- Templates -->
+        <div class="template-row">
+          <div class="template-row-label">Start with a template:</div>
+          <div class="template-chips">
+            <button class="template-chip" data-template="Worksheet">Worksheet</button>
+            <button class="template-chip" data-template="Lesson Plan">Lesson Plan</button>
+            <button class="template-chip" data-template="Parent Email">Parent Email</button>
+            <button class="template-chip" data-template="Exit Ticket">Exit Ticket</button>
+          </div>
+        </div>
+
+        <div style="height:20px"></div>
+
+        <!-- R -->
+        <div class="rtfc-field">
+          <div class="rtfc-label">
+            <div class="rtfc-letter">R</div>
+            <span class="rtfc-label-text">Role</span>
+            <span class="rtfc-hint">— who is the AI acting as?</span>
+          </div>
+          <input type="text" class="rtfc-input" id="rtfc-role"
+                 placeholder="e.g. experienced 9th grade Algebra 1 teacher"
+                 aria-label="Role field">
+        </div>
+
+        <!-- T -->
+        <div class="rtfc-field">
+          <div class="rtfc-label">
+            <div class="rtfc-letter">T</div>
+            <span class="rtfc-label-text">Task</span>
+            <span class="rtfc-hint">— what should it create?</span>
+          </div>
+          <input type="text" class="rtfc-input" id="rtfc-task"
+                 placeholder="e.g. create a 10-question worksheet on solving two-step equations"
+                 aria-label="Task field">
+        </div>
+
+        <!-- F -->
+        <div class="rtfc-field">
+          <div class="rtfc-label">
+            <div class="rtfc-letter">F</div>
+            <span class="rtfc-label-text">Format</span>
+            <span class="rtfc-hint">— how should it be structured?</span>
+          </div>
+          <textarea class="rtfc-textarea" id="rtfc-format"
+                    placeholder="e.g. a clean printable with space for student work and a separate answer key page"
+                    aria-label="Format field"></textarea>
+        </div>
+
+        <!-- C -->
+        <div class="rtfc-field">
+          <div class="rtfc-label">
+            <div class="rtfc-letter">C</div>
+            <span class="rtfc-label-text">Criteria</span>
+            <span class="rtfc-hint">— what makes it good?</span>
+          </div>
+          <textarea class="rtfc-textarea" id="rtfc-criteria"
+                    placeholder="e.g. aligned to Common Core 8.EE.C.7, all answers integers only"
+                    aria-label="Criteria field"></textarea>
+        </div>
+
+        <div class="builder-actions">
+          <button class="btn btn-outline btn-sm" id="rtfc-clear">🗑 Clear</button>
+          <button class="btn btn-primary btn-sm" id="rtfc-copy">📋 Copy Prompt</button>
+          <button class="btn btn-maroon btn-sm" id="rtfc-to-arena">⚡ Send to Arena</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-panel">
+        <div class="preview-header">
+          <h3>Live Preview</h3>
+          <span class="preview-badge">● LIVE</span>
+        </div>
+
+        <div class="preview-box" id="rtfc-preview" aria-live="polite">
+          <span class="preview-empty">Your prompt will appear here as you type...</span>
+        </div>
+
+        <div class="preview-stats">
+          <div>Characters: <strong id="rtfc-char-count">0</strong></div>
+          <div>Words: <strong id="rtfc-word-count">0</strong></div>
+        </div>
+
+        <div class="preview-actions">
+          <button class="btn btn-primary btn-sm" id="rtfc-copy-2" onclick="document.getElementById('rtfc-copy').click()">📋 Copy</button>
+          <button class="btn btn-maroon btn-sm" onclick="document.getElementById('rtfc-to-arena').click()">⚡ Try in Arena</button>
+        </div>
+
+        <div style="padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-md);font-size:0.8rem;color:var(--text-muted);">
+          <strong style="color:var(--text-secondary)">💡 Pro tip:</strong> Fill in the [BRACKETS] with your specific topic, grade, and subject before sending to the AI.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PROMPT LIBRARY
+══════════════════════════════════════════════════════════ -->
+<section id="library" aria-label="Prompt library">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">57 Prompts</span>
+      <h2>Prompt Library</h2>
+      <p>Every prompt from tonight's cheat sheets, searchable and filterable. Click ☆ to save favorites — they persist in your browser forever.</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="library-controls">
+      <div class="search-wrap">
+        <i class="search-icon" aria-hidden="true">🔍</i>
+        <input type="search" class="search-input" id="library-search"
+               placeholder="Search prompts, tags, categories..."
+               aria-label="Search prompts">
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Tool</div>
+        <div class="filter-chips" role="group" aria-label="Filter by tool">
+          <button class="filter-chip active" data-tool="all">All</button>
+          <button class="filter-chip" data-tool="chatgpt">ChatGPT</button>
+          <button class="filter-chip" data-tool="claude">Claude</button>
+          <button class="filter-chip" data-tool="gemini">Gemini</button>
+          <button class="filter-chip" data-tool="copilot">Copilot</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Category</div>
+        <div class="filter-chips" role="group" aria-label="Filter by category">
+          <button class="filter-chip active" data-category="all">All</button>
+          <button class="filter-chip" data-category="worksheet">Worksheet</button>
+          <button class="filter-chip" data-category="lesson-plan">Lesson Plan</button>
+          <button class="filter-chip" data-category="assessment">Assessment</button>
+          <button class="filter-chip" data-category="explanation">Explanation</button>
+          <button class="filter-chip" data-category="visual">Visual</button>
+          <button class="filter-chip" data-category="parent-communication">Parent Comm</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Saved</div>
+        <div class="filter-chips">
+          <button class="filter-chip" id="filter-favorites">⭐ Favorites</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="library-stats">
+      <div class="prompt-count" id="prompt-result-count" aria-live="polite">Loading prompts...</div>
+      <div class="view-toggle" role="group" aria-label="View mode">
+        <button class="view-btn active" data-view="grid" aria-label="Grid view">⊞</button>
+        <button class="view-btn" data-view="list" aria-label="List view">☰</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="prompts-grid" id="prompts-grid" aria-label="Prompts grid" aria-live="polite">
+      <div style="text-align:center;padding:40px;color:var(--text-muted);">Loading prompts...</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ACTIVITIES
+══════════════════════════════════════════════════════════ -->
+<section id="activities" aria-label="Hands-on activities">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Hands-On</span>
+      <h2>Try It Yourself</h2>
+      <p>Four timed activities tonight. Use the timers to keep pace during the workshop.</p>
+    </div>
+
+    <div class="activities-grid">
+      <div class="activity-card fade-in" id="activity-1">
+        <div class="activity-num">Activity 01 · ChatGPT</div>
+        <h3>Build Your First Worksheet</h3>
+        <p>Use the RTFC formula to create a practice worksheet for one of your actual units. Ask for an answer key.</p>
+        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
+          <li>Pick a topic you're teaching next week</li>
+          <li>Fill in the Worksheet template in the RTFC builder</li>
+          <li>Compare your result with a neighbor</li>
+        </ul>
+        <div class="activity-timer">
+          <div class="timer-display" aria-live="polite">05:00</div>
+          <button class="timer-btn" aria-label="Start timer">Start</button>
+        </div>
+      </div>
+
+      <div class="activity-card fade-in" id="activity-2">
+        <div class="activity-num">Activity 02 · Claude</div>
+        <h3>Student-Friendly Explainer</h3>
+        <p>Ask Claude to explain a concept your students always struggle with — at student level, with an analogy.</p>
+        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
+          <li>Use the Claude tab in AI Arena</li>
+          <li>Try the Student-Friendly Explainer prompt</li>
+          <li>Then try the "dual-audience version" from the library</li>
+        </ul>
+        <div class="activity-timer">
+          <div class="timer-display" aria-live="polite">08:00</div>
+          <button class="timer-btn" aria-label="Start timer">Start</button>
+        </div>
+      </div>
+
+      <div class="activity-card fade-in" id="activity-3">
+        <div class="activity-num">Activity 03 · Gemini</div>
+        <h3>Classroom Visual Generator</h3>
+        <p>Generate a classroom poster or flyer using Gemini's image generation. No design skills needed.</p>
+        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
+          <li>Open gemini.google.com in a new tab</li>
+          <li>Use the Math Concept Poster prompt from the library</li>
+          <li>Iterate: "Make it more colorful" or "Change to navy and gold"</li>
+        </ul>
+        <div class="activity-timer">
+          <div class="timer-display" aria-live="polite">08:00</div>
+          <button class="timer-btn" aria-label="Start timer">Start</button>
+        </div>
+      </div>
+
+      <div class="activity-card fade-in" id="activity-4">
+        <div class="activity-num">Activity 04 · Math Visualizer</div>
+        <h3>Generate a Live Math Graph</h3>
+        <p>Use the Math Visualizer tab to generate a graph for something you teach. Download it for class tomorrow.</p>
+        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
+          <li>Click the 📊 Math Visualizer tab above</li>
+          <li>Try one of the quick-start chips or type your own</li>
+          <li>Download the PNG → use it in a slide or handout</li>
+        </ul>
+        <div class="activity-timer">
+          <div class="timer-display" aria-live="polite">10:00</div>
+          <button class="timer-btn" aria-label="Start timer">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     RESOURCES
+══════════════════════════════════════════════════════════ -->
+<section id="resources" aria-label="Resources and downloads">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Downloads</span>
+      <h2>Take Everything Home</h2>
+      <p>All cheat sheets are yours to keep. Bookmark this page — the AI Arena stays live after the workshop.</p>
+    </div>
+
+    <div class="resources-grid">
+      <!-- Downloads -->
+      <div>
+        <h3 style="margin-bottom:20px;font-size:1rem;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase">Prompt Cheat Sheets</h3>
+        <div class="downloads-list">
+          <div class="download-item fade-in">
+            <div class="download-info">
+              <span class="download-icon" aria-hidden="true">📄</span>
+              <div>
+                <div class="download-name">ChatGPT Prompts</div>
+                <div class="download-meta">12 prompts · Markdown</div>
+              </div>
+            </div>
+            <a href="downloads/chatgpt-prompts.md" download class="download-btn" aria-label="Download ChatGPT prompts">⬇ Download</a>
+          </div>
+
+          <div class="download-item fade-in">
+            <div class="download-info">
+              <span class="download-icon" aria-hidden="true">📄</span>
+              <div>
+                <div class="download-name">Claude Prompts</div>
+                <div class="download-meta">11 prompts · Markdown</div>
+              </div>
+            </div>
+            <a href="downloads/claude-prompts.md" download class="download-btn" aria-label="Download Claude prompts">⬇ Download</a>
+          </div>
+
+          <div class="download-item fade-in">
+            <div class="download-info">
+              <span class="download-icon" aria-hidden="true">📄</span>
+              <div>
+                <div class="download-name">Gemini Prompts</div>
+                <div class="download-meta">12 prompts · Markdown</div>
+              </div>
+            </div>
+            <a href="downloads/gemini-prompts.md" download class="download-btn" aria-label="Download Gemini prompts">⬇ Download</a>
+          </div>
+
+          <div class="download-item fade-in">
+            <div class="download-info">
+              <span class="download-icon" aria-hidden="true">📄</span>
+              <div>
+                <div class="download-name">Gemini Image Prompts</div>
+                <div class="download-meta">15 prompts · Markdown</div>
+              </div>
+            </div>
+            <a href="downloads/gemini-images-prompts.md" download class="download-btn" aria-label="Download Gemini image prompts">⬇ Download</a>
+          </div>
+
+          <div class="download-item fade-in">
+            <div class="download-info">
+              <span class="download-icon" aria-hidden="true">📄</span>
+              <div>
+                <div class="download-name">GitHub Copilot Prompts</div>
+                <div class="download-meta">7 prompts · Markdown</div>
+              </div>
+            </div>
+            <a href="downloads/copilot-prompts.md" download class="download-btn" aria-label="Download Copilot prompts">⬇ Download</a>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-md)">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Useful Links</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a href="https://chatgpt.com/plans/k12-teachers" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--accent-cyber)">🤖 ChatGPT K-12 Educator Plan (free) ↗</a>
+            <a href="https://claude.ai" target="_blank" rel="noopener" style="font-size:0.85rem;color:#d97706">🧠 Claude (free at claude.ai) ↗</a>
+            <a href="https://gemini.google.com" target="_blank" rel="noopener" style="font-size:0.85rem;color:#4285f4">✨ Gemini (free with Google account) ↗</a>
+            <a href="https://education.github.com/teachers" target="_blank" rel="noopener" style="font-size:0.85rem;color:#6e5494">💻 GitHub Copilot for Teachers (free) ↗</a>
+            <a href="https://colab.google.com" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--accent-cyber)">▶ Google Colab (run Python free) ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison table -->
+      <div>
+        <h3 style="margin-bottom:20px;font-size:1rem;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase">Tool Comparison</h3>
+        <div class="comparison-table-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Best For</th>
+                <th>Free?</th>
+                <th>Math Accuracy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tool-name" style="color:#10a37f">ChatGPT</span></td>
+                <td>Worksheets, lesson plans, content at scale</td>
+                <td><span class="check">✓</span> Educator plan</td>
+                <td>Good — verify answers</td>
+              </tr>
+              <tr>
+                <td><span class="tool-name" style="color:#d97706">Claude</span></td>
+                <td>Explanations, proofs, interactive HTML tools</td>
+                <td><span class="check">✓</span> claude.ai</td>
+                <td>Good — verify answers</td>
+              </tr>
+              <tr>
+                <td><span class="tool-name" style="color:#4285f4">Gemini</span></td>
+                <td>Google Workspace, image generation</td>
+                <td><span class="check">✓</span> Google account</td>
+                <td>Good — verify answers</td>
+              </tr>
+              <tr>
+                <td><span class="tool-name" style="color:#6e5494">Copilot</span></td>
+                <td>Graphs, visualizations, verified computation</td>
+                <td><span class="check">✓</span> GitHub Education</td>
+                <td><strong style="color:#22c55e">Runs code = verified</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:16px;padding:16px;background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.2);border-radius:var(--radius-md);font-size:0.82rem;color:var(--text-secondary)">
+          <strong style="color:var(--accent-gold)">⚠ Always verify the math</strong> — ChatGPT, Claude, and Gemini can make arithmetic errors. Always check answer keys before distributing to students.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PRESENTER
+══════════════════════════════════════════════════════════ -->
+<section id="presenter" style="background:var(--bg-secondary)" aria-label="About the presenter">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Presenter</span>
+      <h2>About Mr. Vishal Tharu</h2>
+    </div>
+
+    <div style="max-width:720px;margin:0 auto;text-align:center">
+      <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--accent-maroon),var(--accent-cyber));display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 24px;">👨‍🏫</div>
+
+      <h3 style="font-size:1.6rem;margin-bottom:8px">Vishal Tharu</h3>
+      <p style="color:var(--accent-cyber);font-weight:600;margin-bottom:4px">M.S. Cybersecurity Candidate · California State University, Dominguez Hills</p>
+      <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:32px">LIFT LAB Presenter · California Math Project @ CSUDH</p>
+
+      <p style="margin-bottom:16px">Vishal is a cybersecurity graduate student at CSUDH with a passion for making emerging technology accessible to educators. He designed this workshop to help math teachers move from AI curiosity to AI competence — with practical tools they can use the next day.</p>
+
+      <p style="margin-bottom:32px">His approach: skip the hype, focus on what works, and always keep the student in the center.</p>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap">
+        <img src="assets/pictures/LIFT LAB.svg" alt="LIFT LAB" style="height:44px;opacity:0.85">
+        <div style="width:1px;height:36px;background:var(--border)"></div>
+        <img src="assets/pictures/csudhlogo.webp" alt="CSUDH" style="height:44px;opacity:0.85;filter:brightness(1.2)">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-logos">
+      <img src="assets/pictures/LIFT LAB.svg" alt="LIFT LAB">
+      <div class="footer-divider"></div>
+      <img src="assets/pictures/csudhlogo.webp" alt="CSUDH" style="filter:brightness(1.3)">
+    </div>
+    <p>PromptLab · AI for Math Teachers Workshop · March 17, 2026</p>
+    <p>California Math Project @ CSUDH · LIFT — Learn · Integrate · Facilitate · Teach</p>
+    <p style="margin-top:12px;">
+      <a href="https://github.com/Arryn21/promptlab" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:0.8rem;">
+        View on GitHub ↗
+      </a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/Arryn21/promptlab/issues/new" target="_blank" rel="noopener" style="color:var(--text-muted);font-size:0.8rem;">
+        Suggest a prompt ↗
+      </a>
+    </p>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ADMIN PANEL MODAL (Ctrl+Shift+K)
+══════════════════════════════════════════════════════════ -->
+<div id="admin-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+  <div class="admin-panel">
+    <button class="admin-close" id="admin-close" aria-label="Close admin panel">✕</button>
+
+    <h3 id="admin-title">
+      <span style="color:var(--accent-cyber)">⚡</span>
+      Workshop Admin Panel
+    </h3>
+    <p class="subtitle">Session keys are stored in memory only — cleared when you close the tab.</p>
+
+    <!-- Auth form -->
+    <div id="admin-auth-form">
+      <div class="admin-field">
+        <label for="admin-password">Workshop Password</label>
+        <div class="admin-input-wrap">
+          <input type="password" id="admin-password" placeholder="Enter workshop password" autocomplete="off">
+        </div>
+      </div>
+      <div class="admin-status" id="admin-auth-status"></div>
+      <button class="btn btn-primary" id="admin-auth-submit" style="width:100%">Unlock Session</button>
+    </div>
+
+    <!-- Keys form (shown after auth) -->
+    <div id="admin-keys-form" style="display:none">
+      <div class="admin-field">
+        <label for="admin-openai-key">OpenAI API Key</label>
+        <div class="admin-input-wrap">
+          <input type="password" id="admin-openai-key" placeholder="sk-..." autocomplete="off">
+        </div>
+      </div>
+      <div class="admin-field">
+        <label for="admin-anthropic-key">Anthropic API Key</label>
+        <div class="admin-input-wrap">
+          <input type="password" id="admin-anthropic-key" placeholder="sk-ant-..." autocomplete="off">
+        </div>
+      </div>
+      <div class="admin-field">
+        <label for="admin-google-key">Google API Key</label>
+        <div class="admin-input-wrap">
+          <input type="password" id="admin-google-key" placeholder="AIza..." autocomplete="off">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn btn-primary" id="admin-keys-save" style="flex:1">Save &amp; Close</button>
+        <button class="btn btn-outline btn-sm" id="admin-keys-clear">Clear Session</button>
+      </div>
+    </div>
+
+    <p class="admin-footer">🔒 Keys never leave your browser · Ctrl+Shift+K to reopen</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PROMPT DETAIL MODAL
+══════════════════════════════════════════════════════════ -->
+<div id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close" aria-label="Close prompt detail">✕</button>
+    <div id="modal-body" aria-live="polite"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════════════════════ -->
+<div id="toast-container" role="status" aria-live="polite"></div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SCRIPTS (deferred)
+══════════════════════════════════════════════════════════ -->
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/countdown.js" defer></script>
+<script src="assets/js/session.js" defer></script>
+<script src="assets/js/activities.js" defer></script>
+<script src="assets/js/prompt-library.js" defer></script>
+<script src="assets/js/prompt-generator.js" defer></script>
+<script src="assets/js/ai-arena.js" defer></script>
+<script src="assets/js/python-runner.js" defer></script>
+
+</body>
+</html>
