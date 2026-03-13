@@ -1,4 +1,5 @@
 accesstokens.txt
+assets/js/keys.js
 *.env
 .DS_Store
 Thumbs.db

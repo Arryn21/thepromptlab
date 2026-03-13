@@ -18,9 +18,8 @@
   const KEY_GOOGLE    = 'pl_key_google';
   const ADMIN_ACTIVE  = 'pl_admin_active';
 
-  // Keys use localStorage (persist across sessions) so you only enter them once.
-  // Admin auth uses sessionStorage (clears on tab close — intentional).
-  const keyStore = localStorage;
+  // Keys use sessionStorage — auto-injected from encrypted keys.js, cleared on tab close.
+  const keyStore = sessionStorage;
 
   // ── SHA-256 (pure JS — works on http, file://, and https) ──
   function sha256(str) {
@@ -149,12 +148,36 @@
       const hash = sha256(pw);
       if (hash === ADMIN_HASH) {
         sessionStorage.setItem(ADMIN_ACTIVE, 'true');
+
+        // Auto-decrypt keys from build-injected window.__EK__
+        if (window.__EK__) {
+          const hb = hash.match(/.{2}/g).map(h => parseInt(h, 16));
+          const dec = hex => hex
+            ? hex.match(/.{2}/g).map((h, i) => String.fromCharCode(parseInt(h, 16) ^ hb[i % hb.length])).join('')
+            : '';
+          const ok = dec(window.__EK__.o);
+          const ak = dec(window.__EK__.a);
+          const gk = dec(window.__EK__.g);
+          if (ok) keyStore.setItem(KEY_OPENAI,    ok);
+          if (ak) keyStore.setItem(KEY_ANTHROPIC,  ak);
+          if (gk) keyStore.setItem(KEY_GOOGLE,     gk);
+        }
+
         if (authStatus) {
           authStatus.className = 'admin-status success';
-          authStatus.textContent = 'Access granted!';
+          authStatus.textContent = window.__EK__
+            ? 'Access granted — API keys loaded automatically!'
+            : 'Access granted! Enter keys below.';
         }
-        setTimeout(showKeysPanel, 500);
-        window.showToast?.('Admin session started', 'success');
+
+        // Skip keys form if auto-injected, otherwise show it
+        if (window.__EK__) {
+          setTimeout(closeAdmin, 800);
+        } else {
+          setTimeout(showKeysPanel, 500);
+        }
+
+        window.showToast?.('Session unlocked', 'success');
         updateKeyBars();
       } else {
         if (authStatus) {

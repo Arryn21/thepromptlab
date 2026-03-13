@@ -24,6 +24,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate encrypted keys
+        env:
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
+          GOOGLE_KEY: ${{ secrets.GOOGLE_KEY }}
+        run: |
+          python3 << 'EOF'
+          import os, hashlib
+
+          pw = os.environ.get('ADMIN_PASSWORD', '')
+          if not pw:
+              with open('assets/js/keys.js', 'w') as f:
+                  f.write('/* keys not configured */\n')
+              print('WARNING: ADMIN_PASSWORD secret not set')
+          else:
+              pw_hash = hashlib.sha256(pw.encode()).hexdigest()
+              key_bytes = bytes.fromhex(pw_hash)
+
+              def xor_enc(text):
+                  if not text:
+                      return ''
+                  b = text.encode('utf-8')
+                  return ''.join(format(x ^ key_bytes[i % len(key_bytes)], '02x')
+                                 for i, x in enumerate(b))
+
+              o = xor_enc(os.environ.get('OPENAI_KEY', ''))
+              a = xor_enc(os.environ.get('ANTHROPIC_KEY', ''))
+              g = xor_enc(os.environ.get('GOOGLE_KEY', ''))
+
+              with open('assets/js/keys.js', 'w') as f:
+                  f.write(f'window.__EK__={{o:"{o}",a:"{a}",g:"{g}"}};\n')
+
+              print('keys.js generated successfully')
+          EOF
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
