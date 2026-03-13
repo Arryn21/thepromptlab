@@ -8,7 +8,7 @@
   // To generate new hash: run in browser console:
   //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourpassword'))
   //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
-  const ADMIN_HASH = 'a8c1d3e5f2b4e9a17c3f5d8b2e0a4c6f9e1d3b5a7c9f2e4d6b8a0c2e4f6d8b0'; // placeholder — set real hash
+  const ADMIN_HASH = '29e4e33720fe99236b0b854994397a05af8a517968088ff9b9bdad7ceda8e26b';
 
   const SESSION_WINDOW_START = new Date('2026-03-18T01:00:00Z').getTime(); // Mar 17 6PM PDT
   const SESSION_WINDOW_END   = new Date('2026-03-18T13:00:00Z').getTime(); // Mar 18 6AM PDT
