@@ -18,6 +18,10 @@
   const KEY_GOOGLE    = 'pl_key_google';
   const ADMIN_ACTIVE  = 'pl_admin_active';
 
+  // Keys use localStorage (persist across sessions) so you only enter them once.
+  // Admin auth uses sessionStorage (clears on tab close — intentional).
+  const keyStore = localStorage;
+
   // ── SHA-256 (pure JS — works on http, file://, and https) ──
   function sha256(str) {
     function rightRotate(v, a) { return (v >>> a) | (v << (32 - a)); }
@@ -75,16 +79,16 @@
   // ── Key getters (used by ai-arena.js & python-runner.js) ──
   window.getKey = function (provider) {
     switch (provider) {
-      case 'openai':     return sessionStorage.getItem(KEY_OPENAI) || '';
-      case 'anthropic':  return sessionStorage.getItem(KEY_ANTHROPIC) || '';
-      case 'google':     return sessionStorage.getItem(KEY_GOOGLE) || '';
+      case 'openai':     return keyStore.getItem(KEY_OPENAI) || '';
+      case 'anthropic':  return keyStore.getItem(KEY_ANTHROPIC) || '';
+      case 'google':     return keyStore.getItem(KEY_GOOGLE) || '';
       default: return '';
     }
   };
 
   window.setKey = function (provider, value) {
     const keyMap = { openai: KEY_OPENAI, anthropic: KEY_ANTHROPIC, google: KEY_GOOGLE };
-    if (keyMap[provider]) sessionStorage.setItem(keyMap[provider], value.trim());
+    if (keyMap[provider]) keyStore.setItem(keyMap[provider], value.trim());
   };
 
   // ── Admin Panel UI ─────────────────────────────────────────
@@ -124,9 +128,9 @@
     const oai = document.getElementById('admin-openai-key');
     const ant = document.getElementById('admin-anthropic-key');
     const goo = document.getElementById('admin-google-key');
-    if (oai) oai.value = sessionStorage.getItem(KEY_OPENAI) || '';
-    if (ant) ant.value = sessionStorage.getItem(KEY_ANTHROPIC) || '';
-    if (goo) goo.value = sessionStorage.getItem(KEY_GOOGLE) || '';
+    if (oai) oai.value = keyStore.getItem(KEY_OPENAI) || '';
+    if (ant) ant.value = keyStore.getItem(KEY_ANTHROPIC) || '';
+    if (goo) goo.value = keyStore.getItem(KEY_GOOGLE) || '';
   }
 
   // Auth form submit
@@ -186,9 +190,9 @@
       const oai = document.getElementById('admin-openai-key')?.value?.trim() || '';
       const ant = document.getElementById('admin-anthropic-key')?.value?.trim() || '';
       const goo = document.getElementById('admin-google-key')?.value?.trim() || '';
-      if (oai) sessionStorage.setItem(KEY_OPENAI, oai);
-      if (ant) sessionStorage.setItem(KEY_ANTHROPIC, ant);
-      if (goo) sessionStorage.setItem(KEY_GOOGLE, goo);
+      if (oai) keyStore.setItem(KEY_OPENAI, oai);
+      if (ant) keyStore.setItem(KEY_ANTHROPIC, ant);
+      if (goo) keyStore.setItem(KEY_GOOGLE, goo);
       window.showToast?.('API keys saved to session', 'success');
       closeAdmin();
       updateKeyBars();
@@ -199,9 +203,9 @@
   const keysClearBtn = document.getElementById('admin-keys-clear');
   if (keysClearBtn) {
     keysClearBtn.addEventListener('click', () => {
-      sessionStorage.removeItem(KEY_OPENAI);
-      sessionStorage.removeItem(KEY_ANTHROPIC);
-      sessionStorage.removeItem(KEY_GOOGLE);
+      keyStore.removeItem(KEY_OPENAI);
+      keyStore.removeItem(KEY_ANTHROPIC);
+      keyStore.removeItem(KEY_GOOGLE);
       sessionStorage.removeItem(ADMIN_ACTIVE);
       window.showToast?.('Session keys cleared', 'warning');
       closeAdmin();
