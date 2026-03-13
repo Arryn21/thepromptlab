@@ -239,7 +239,7 @@
           document.getElementById('prompt-modal').classList.remove('open');
           setTimeout(() => window.tryInArena && window.tryInArena('${p.id}'), 300);
         ">⚡ Try in Arena</button>
-        <a href="https://github.com/Arryn21/promptlab/issues/new?title=Prompt+suggestion:+${encodeURIComponent(p.title)}&body=Suggest+an+improvement+for+prompt+id:+${p.id}"
+        <a href="https://github.com/Arryn21/thepromptlab/issues/new?title=Prompt+suggestion:+${encodeURIComponent(p.title)}&body=Suggest+an+improvement+for+prompt+id:+${p.id}"
            target="_blank" class="btn btn-outline btn-sm">💡 Suggest Edit</a>
       </div>`;
 
