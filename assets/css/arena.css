@@ -69,232 +69,209 @@
 .arena-panel.active { display: flex; }
 
 
-/* ── AI Desmos Studio ───────────────────────────────────────── */
-.desmos-studio {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  height: calc(100vh - 200px);
-  min-height: 520px;
-  overflow: hidden;
-}
-
-.desmos-controls {
-  overflow-y: auto;
-  padding: 20px;
-  border-right: 1px solid var(--border);
+/* ── Math Tools Guide ───────────────────────────────────────── */
+.math-tools-guide {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  background: var(--bg-secondary);
+  gap: 20px;
+  padding: 24px;
+  overflow-y: auto;
 }
 
-.studio-title {
-  font-size: 1rem;
+.math-tools-header { text-align: center; }
+
+.math-tools-title {
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text-primary);
+  margin-bottom: 6px;
 }
 
-.studio-subtitle {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-top: 4px;
-}
-
-/* Description textarea */
-.desmos-desc-input {
-  width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
-  color: var(--text-primary);
+.math-tools-subtitle {
   font-size: 0.82rem;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 72px;
-  transition: border-color var(--transition);
-  line-height: 1.5;
-}
-.desmos-desc-input:focus { outline: none; border-color: var(--accent-cyber); }
-.desmos-desc-input::placeholder { color: var(--text-muted); }
-
-/* Copy prompt button */
-.desmos-copy-prompt-btn {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--accent-cyber-dim);
-  border: 1px solid rgba(0,212,255,0.3);
-  border-radius: var(--radius-md);
-  color: var(--accent-cyber);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all var(--transition);
-  text-align: left;
-  line-height: 1.3;
-}
-.desmos-copy-prompt-btn:hover {
-  background: rgba(0,212,255,0.12);
-  border-color: var(--accent-cyber);
-}
-
-/* Paste section */
-.desmos-paste-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.desmos-paste-label {
-  font-size: 0.7rem;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
 }
 
-.desmos-paste-area {
-  width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-  font-family: var(--font-code);
-  resize: vertical;
-  min-height: 80px;
-  transition: border-color var(--transition);
-}
-.desmos-paste-area:focus { outline: none; border-color: var(--accent-cyber); }
-.desmos-paste-area::placeholder { color: var(--text-muted); }
-
-/* Template chips */
-.desmos-templates-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.desmos-template-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.desmos-template-chip {
-  padding: 5px 11px;
-  border-radius: 100px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all var(--transition);
-  font-family: inherit;
-}
-.desmos-template-chip:hover {
-  border-color: #6e5494;
-  color: #a78bfa;
-  background: rgba(110,84,148,0.1);
-}
-
-/* AI Results */
-.desmos-ai-results {
-  background: rgba(110,84,148,0.06);
-  border: 1px solid rgba(110,84,148,0.25);
-  border-radius: var(--radius-md);
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
+.math-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
 }
-.desmos-ai-results.hidden { display: none; }
 
-.desmos-result-section { display: flex; flex-direction: column; gap: 6px; }
-
-.desmos-result-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.desmos-teacher-notes {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.desmos-questions {
-  margin: 0;
-  padding-left: 18px;
+.math-tool-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-.desmos-questions li {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+  gap: 10px;
+  transition: all var(--transition);
 }
 
-/* Right panel */
-.desmos-right {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.math-tool-card:hover {
+  border-color: rgba(110,84,148,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
-.desmos-toolbar {
+.math-tool-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary);
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.math-tool-icon {
+  font-size: 1.5rem;
   flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
 }
 
-.desmos-label {
-  font-size: 0.72rem;
+.math-tool-name {
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 5px;
 }
 
-.desmos-toolbar-btns {
+.math-tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.math-tool-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: rgba(110,84,148,0.1);
+  border: 1px solid rgba(110,84,148,0.25);
+  color: #a78bfa;
+  letter-spacing: 0.04em;
+}
+
+.math-tool-desc {
+  font-size: 0.79rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.math-tool-actions {
   display: flex;
   gap: 6px;
+  margin-top: auto;
 }
 
-.desmos-embed {
+.math-tool-open-btn {
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all var(--transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.math-tool-open-btn:hover {
+  border-color: var(--accent-cyber);
+  color: var(--accent-cyber);
+}
+
+.math-tool-ask-btn {
   flex: 1;
-  min-height: 0;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border: 1px solid rgba(110,84,148,0.35);
+  background: rgba(110,84,148,0.1);
+  color: #a78bfa;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
 }
 
-/* Desmos iframe dark background patch */
-.desmos-embed iframe {
-  background: var(--bg-primary) !important;
+.math-tool-ask-btn:hover {
+  background: #6e5494;
+  border-color: #6e5494;
+  color: #fff;
 }
 
-@media (max-width: 900px) {
-  .desmos-studio {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 420px;
-    height: auto;
-  }
-  .desmos-controls {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    max-height: 360px;
-  }
-  .desmos-right { height: 420px; }
+.math-tool-ask-btn.copied {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #fff;
+}
+
+/* Footer ask box */
+.math-tools-footer { margin-top: 4px; }
+
+.math-tools-ask-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(0,212,255,0.04);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+}
+
+.math-tools-ask-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+
+.math-tools-ask-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.math-tools-ask-box p {
+  font-size: 0.79rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.math-tools-prompt-preview {
+  font-family: var(--font-code);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.math-tools-copy-prompt {
+  padding: 8px 16px;
+  background: var(--accent-cyber);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.math-tools-copy-prompt:hover { background: #fff; }
+
+@media (max-width: 640px) {
+  .math-tools-grid { grid-template-columns: 1fr; }
+  .math-tools-guide { padding: 16px; }
 }
 
 /* ── Tool Launcher ──────────────────────────────────────────── */

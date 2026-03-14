@@ -207,8 +207,8 @@
           <div class="agenda-item fade-in">
             <span class="agenda-time">7:30 PM</span>
             <div class="agenda-text">
-              <strong>AI Desmos Studio Demo</strong>
-              <span>Plain English → Claude → live Desmos graph. Teachers learn to use AI to build classroom visuals.</span>
+              <strong>Math Tools Explorer</strong>
+              <span>Hands-on guide to Desmos, GeoGebra, ClassCalc, and Wolfram Alpha — with AI-generated usage guides for each.</span>
             </div>
           </div>
           <div class="agenda-item fade-in">
@@ -394,14 +394,14 @@ End with a candid summary:
       </div>
 
       <div class="tool-card fade-in" style="--tool-color:#6e5494; --tool-color-dim:rgba(110,84,148,0.1);" onclick="document.getElementById('tab-math').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
-        <div class="tool-icon" aria-hidden="true">📊</div>
-        <h3>AI Desmos Studio</h3>
-        <p>Describe any graph in plain English. Claude writes the Desmos expressions — they load into a live embedded calculator instantly. Just sign in to Claude for free.</p>
+        <div class="tool-icon" aria-hidden="true">📐</div>
+        <h3>Math Tools Guide</h3>
+        <p>Interactive guide to the best free math tools — Desmos, GeoGebra, ClassCalc, and Wolfram Alpha. Ask AI how to use each one and get step-by-step classroom instructions.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-          <span class="tool-badge">7 Copilot Prompts</span>
-          <span class="tool-badge">Live in Browser</span>
+          <span class="tool-badge">6 Tools</span>
+          <span class="tool-badge">All Free</span>
         </div>
-        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Graphs, statistics, visual demos</div>
+        <div style="font-size:0.78rem;color:var(--text-muted)">💡 Best for: Graphing, geometry, safe testing, step-by-step solutions</div>
       </div>
     </div>
   </div>
@@ -435,7 +435,7 @@ End with a candid summary:
           <span class="tab-dot" aria-hidden="true"></span> ⚔ Compare Side-by-Side
         </button>
         <button class="arena-tab" id="tab-math" data-panel="panel-math" role="tab" style="--tab-color:#6e5494">
-          <span class="tab-dot" aria-hidden="true"></span> 📊 AI Desmos Studio
+          <span class="tab-dot" aria-hidden="true"></span> 📐 Math Tools
         </button>
       </div>
 
@@ -554,67 +554,146 @@ End with a candid summary:
         </div>
       </div>
 
-      <!-- ── AI Desmos Studio Panel ── -->
+      <!-- ── Math Tools Guide Panel ── -->
       <div class="arena-panel" id="panel-math" role="tabpanel">
-        <div class="desmos-studio">
+        <div class="math-tools-guide">
 
-          <!-- Left: AI Controls -->
-          <div class="desmos-controls">
-            <div class="desmos-studio-header">
-              <div class="studio-title">📊 AI Desmos Studio</div>
-              <div class="studio-subtitle">Describe any graph in plain English → AI writes the Desmos expressions → live graph appears instantly</div>
-            </div>
-
-            <!-- Description input -->
-            <textarea id="desmos-desc" class="desmos-desc-input"
-              placeholder="e.g. Show a parabola with vertex form y = a(x-h)² + k, add sliders so students can explore transformations..."
-              rows="3" aria-label="Graph description"></textarea>
-
-            <!-- Copy prompt to Claude/ChatGPT -->
-            <button id="desmos-copy-prompt-btn" class="desmos-copy-prompt-btn">
-              📋 Copy AI Prompt → opens Claude
-              <span style="display:block;font-size:0.68rem;opacity:0.75;margin-top:2px">Get expressions from Claude, paste below</span>
-            </button>
-
-            <!-- Paste area -->
-            <div class="desmos-paste-section">
-              <div class="desmos-paste-label">Paste Claude's response (JSON or one expression per line):</div>
-              <textarea id="desmos-paste-area" class="desmos-paste-area" rows="4"
-                placeholder='y = x^2 - 4x + 3&#10;y = 2x - 1&#10;a = 1'
-                aria-label="Paste Desmos expressions"></textarea>
-              <button id="desmos-load-btn" class="btn btn-outline btn-sm">▶ Load into Desmos</button>
-            </div>
-
-            <!-- Template chips -->
-            <div class="desmos-templates-label">Quick templates:</div>
-            <div id="desmos-templates" class="desmos-template-chips"></div>
-
-            <!-- AI Results -->
-            <div id="desmos-ai-results" class="desmos-ai-results hidden">
-              <div class="desmos-result-section">
-                <div class="desmos-result-label">💡 Teacher Tip</div>
-                <div class="desmos-teacher-notes"></div>
-              </div>
-              <div class="desmos-result-section">
-                <div class="desmos-result-label">💬 Discussion Questions</div>
-                <ul class="desmos-questions"></ul>
-              </div>
-            </div>
-          </div><!-- /.desmos-controls -->
-
-          <!-- Right: Live Desmos embed -->
-          <div class="desmos-right">
-            <div class="desmos-toolbar">
-              <span class="desmos-label">Live Desmos Graph</span>
-              <div class="desmos-toolbar-btns">
-                <button id="desmos-clear-btn" class="btn btn-outline btn-sm">🗑 Clear</button>
-                <a href="https://www.desmos.com/calculator" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Open Full ↗</a>
-              </div>
-            </div>
-            <div id="desmos-container" class="desmos-embed"></div>
+          <div class="math-tools-header">
+            <div class="math-tools-title">📐 Math Tools Guide</div>
+            <div class="math-tools-subtitle">The best free tools for math teaching. Click <strong>Ask AI How to Use It</strong> to copy a prompt — paste it into ChatGPT or Claude for a complete, personalized walkthrough.</div>
           </div>
 
-        </div><!-- /.desmos-studio -->
+          <div class="math-tools-grid">
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">📈</span>
+                <div>
+                  <div class="math-tool-name">Desmos Graphing Calculator</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Graphing</span>
+                    <span class="math-tool-tag">Sliders</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">The most powerful free graphing calculator. Graph any function, create sliders for students to explore transformations, and share graphs with a single link.</p>
+              <div class="math-tool-actions">
+                <a href="https://www.desmos.com/calculator" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="Desmos Graphing Calculator">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">🎯</span>
+                <div>
+                  <div class="math-tool-name">Desmos Activity Builder</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Student Activities</span>
+                    <span class="math-tool-tag">Interactive</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">Build multi-screen interactive math activities your whole class works through simultaneously. Monitor student progress live and pause the class at any point.</p>
+              <div class="math-tool-actions">
+                <a href="https://teacher.desmos.com/" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="Desmos Activity Builder">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">🧮</span>
+                <div>
+                  <div class="math-tool-name">ClassCalc</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Testing</span>
+                    <span class="math-tool-tag">Lockdown Mode</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">A classroom-safe calculator that locks students to math only during tests — no internet browsing, no cheating. Full scientific and graphing modes. Works on any device.</p>
+              <div class="math-tool-actions">
+                <a href="https://classcalc.com/" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="ClassCalc">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">📐</span>
+                <div>
+                  <div class="math-tool-name">GeoGebra</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Geometry</span>
+                    <span class="math-tool-tag">Calculus</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">Combines geometry, algebra, graphing, statistics, and calculus in one tool. Ideal for proofs, constructions, and visual calculus demos. Huge library of ready-made activities.</p>
+              <div class="math-tool-actions">
+                <a href="https://www.geogebra.org/" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="GeoGebra">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">🔬</span>
+                <div>
+                  <div class="math-tool-name">Wolfram Alpha</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Step-by-Step</span>
+                    <span class="math-tool-tag">Computation</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">Answers any math question with full step-by-step solutions — from arithmetic to advanced calculus. Teachers use it to verify answers, generate worked examples, and explore topics instantly.</p>
+              <div class="math-tool-actions">
+                <a href="https://www.wolframalpha.com/" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="Wolfram Alpha">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+            <div class="math-tool-card">
+              <div class="math-tool-header">
+                <span class="math-tool-icon">🎓</span>
+                <div>
+                  <div class="math-tool-name">Khan Academy</div>
+                  <div class="math-tool-tags">
+                    <span class="math-tool-tag">Lessons</span>
+                    <span class="math-tool-tag">Practice</span>
+                    <span class="math-tool-tag">Free</span>
+                  </div>
+                </div>
+              </div>
+              <p class="math-tool-desc">Free video lessons, practice exercises, and mastery tracking for every math topic K–12. Assign specific skill sets to students and monitor their progress in your teacher dashboard.</p>
+              <div class="math-tool-actions">
+                <a href="https://www.khanacademy.org/teacher" target="_blank" rel="noopener" class="math-tool-open-btn">Open Tool ↗</a>
+                <button class="math-tool-ask-btn" data-tool="Khan Academy">Ask AI How to Use It</button>
+              </div>
+            </div>
+
+          </div><!-- /.math-tools-grid -->
+
+          <div class="math-tools-footer">
+            <div class="math-tools-ask-box">
+              <span class="math-tools-ask-icon">💬</span>
+              <div>
+                <div class="math-tools-ask-title">Not sure which tool fits your lesson?</div>
+                <p>Copy this prompt and paste it into ChatGPT or Claude:</p>
+                <div class="math-tools-prompt-preview">"I teach [SUBJECT] to [GRADE] students. I want to use a free digital tool for [GOAL — e.g. exploring transformations, practicing algebra, geometry proofs]. Which tool should I use — Desmos, GeoGebra, ClassCalc, or Wolfram Alpha — and how do I set it up in under 10 minutes?"</div>
+                <button class="math-tools-copy-prompt" id="math-picker-btn">📋 Copy This Prompt</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.math-tools-guide -->
       </div>
 
     </div><!-- /.arena-wrapper -->
@@ -856,19 +935,20 @@ Warm regards,
       <div class="gallery-card fade-in">
         <div class="gallery-card-header">
           <span class="gallery-category-badge">Visualization</span>
-          <span class="gallery-tool-badge">AI Desmos Studio</span>
+          <span class="gallery-tool-badge">Desmos + ChatGPT</span>
         </div>
         <div class="gallery-card-body">
           <div class="gallery-prompt-label">Prompt Used</div>
-          <div class="gallery-prompt-text">Show a parabola in vertex form y = a(x-h)² + k with sliders for a, h, k so students can explore transformations live</div>
+          <div class="gallery-prompt-text">Give me step-by-step instructions to build a Desmos activity where students explore vertex form y = a(x-h)² + k using sliders for a, h, and k. Include what to type, how to add sliders, and how to share it with my class.</div>
           <div class="gallery-output-label">What it generates</div>
-          <div class="gallery-output-text">Claude outputs Desmos expressions → live embedded graph with:
-• Draggable sliders for a, h, and k
-• y = x² shown in gray for before/after comparison
-• Instant shareable Desmos link
-• Students interact with it directly
+          <div class="gallery-output-text">ChatGPT returns a complete walkthrough:
+• Exact expressions to type into Desmos
+• How to create draggable sliders for a, h, k
+• A reference graph of y = x² for comparison
+• How to generate a shareable classroom link
+• 3 discussion questions to ask students
 
-<em>Try it live in the AI Desmos Studio tab above →</em></div>
+<em>Try it — click "Math Tools" tab above → Desmos Graphing Calculator → Ask AI How to Use It</em></div>
         </div>
       </div>
 
@@ -1169,9 +1249,8 @@ Warm regards,
 <script src="assets/js/activities.js" defer></script>
 <script src="assets/js/prompt-library.js" defer></script>
 <script src="assets/js/prompt-generator.js" defer></script>
-<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0faa6"></script>
 <script src="assets/js/ai-arena.js" defer></script>
-<script src="assets/js/desmos-studio.js" defer></script>
+<script src="assets/js/math-tools.js" defer></script>
 
 </body>
 </html>
