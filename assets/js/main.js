@@ -207,18 +207,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    // Survey steps
-    gsap.utils.toArray('.survey-step').forEach((el, i) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 90%' },
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        delay: i * 0.12,
-        ease: 'power2.out'
-      });
-    });
-
     // Agenda items
     gsap.utils.toArray('.agenda-item').forEach((item, i) => {
       gsap.from(item, {
@@ -232,42 +220,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ── Survey mode toggle ────────────────────────────────────
-  const START_PROMPT = `Act as an AI literacy coach. Help me build my "AI Habits Profile" by asking these 5 questions ONE AT A TIME (wait for my response before the next):
-
-1. Which AI tools have you used? (ChatGPT, Claude, Gemini, Copilot, none, other)
-2. How often do you use AI for teaching? (Daily / Few times/week / Occasionally / Never)
-3. What do you mainly use AI for in your classroom? (lesson plans, worksheets, student feedback, explanations, parent emails, grading, other — pick all that apply)
-4. Rate your prompt-writing confidence 1–5
-   (1=never written a prompt, 5=I get exactly what I want every time)
-5. What's your biggest hesitation about AI in your classroom?
-
-After I answer all 5, output a formatted table:
-"My AI Habits Profile" | Category | My Answer | Level
-Add one final row: "My #1 goal for today's workshop" — based on my answers.`;
-
-  const END_PROMPT = `Based on what you learned today in the LIFT LAB AI workshop, update your AI Habits Profile. Reflect on:
-
-1. Which AI tools did you actually try today?
-2. Did your confidence level change? New rating 1–5?
-3. What's one specific thing you'll use AI for in your classroom next week?
-4. What's still your biggest hesitation — did it change?
-5. What was your most surprising moment today?
-
-After I answer, output an updated "My AI Habits Profile" table comparing Before/After, and add a final row: "My first AI task for next week" — based on my answers.`;
-
-  window.setSurveyMode = function(mode, btn) {
-    document.querySelectorAll('.survey-toggle-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const textEl = document.getElementById('survey-prompt-text');
-    if (textEl) textEl.textContent = mode === 'end' ? END_PROMPT : START_PROMPT;
-  };
-
+  // ── Survey copy ───────────────────────────────────────────
   window.copySurveyPrompt = function() {
     const textEl = document.getElementById('survey-prompt-text');
-    const text = textEl ? textEl.textContent : START_PROMPT;
+    const text = textEl ? textEl.textContent : '';
+    const btn = document.getElementById('survey-copy-btn');
     navigator.clipboard.writeText(text).then(() => {
-      window.showToast?.('Diagnostic prompt copied! Paste it into ChatGPT, Claude, or Gemini.', 'success', 3500);
+      if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('copied'); }
+      setTimeout(() => { if (btn) { btn.textContent = 'Copy Prompt'; btn.classList.remove('copied'); } }, 2000);
+      window.showToast?.('Prompt copied — paste it into ChatGPT, Claude, or Gemini!', 'success', 3000);
     }).catch(() => {
       const ta = document.createElement('textarea');
       ta.value = text;

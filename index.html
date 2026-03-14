@@ -258,56 +258,91 @@
 <!-- ══════════════════════════════════════════════════════════
      DIAGNOSTIC SURVEY
 ══════════════════════════════════════════════════════════ -->
-<section id="survey" aria-label="Pre-workshop diagnostic survey">
+<section id="survey" aria-label="AI habits self-analysis">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Before We Start</span>
-      <h2>Build Your AI Habits Profile</h2>
-      <p>Takes 3 minutes. Paste the prompt below into any AI tool — it'll ask you 5 questions and generate a personal profile to share with the group.</p>
+      <span class="section-tag">Know Yourself First</span>
+      <h2>Discover Your AI Self</h2>
+      <p>Paste this into whichever AI you use most. It reads your real chat history and returns a detailed, honest breakdown of your habits — and exactly how to improve. Use what you learn to guide how you approach today's activities.</p>
     </div>
 
-    <!-- Start / End toggle -->
-    <div class="survey-toggle" role="group" aria-label="Survey timing">
-      <button class="survey-toggle-btn active" data-survey="start" onclick="setSurveyMode('start',this)">Start of Workshop</button>
-      <button class="survey-toggle-btn" data-survey="end" onclick="setSurveyMode('end',this)">End of Workshop</button>
-    </div>
-
-    <!-- Steps -->
-    <div class="survey-steps">
-      <div class="survey-step fade-in">
-        <div class="survey-step-num">1</div>
-        <h3>Copy the diagnostic prompt</h3>
-        <p>Hit the big copy button below to grab the full prompt.</p>
-      </div>
-      <div class="survey-step fade-in">
-        <div class="survey-step-num">2</div>
-        <h3>Paste into ChatGPT, Claude, or Gemini</h3>
-        <p>Answer its 5 questions one at a time — the AI will wait for each response before continuing.</p>
-      </div>
-      <div class="survey-step fade-in">
-        <div class="survey-step-num">3</div>
-        <h3>Share your AI Habits Profile</h3>
-        <p>Screenshot the final table or read it aloud during the group share-back.</p>
-      </div>
-    </div>
-
-    <!-- Prompt box -->
     <div class="survey-prompt-box">
-      <div class="survey-prompt-text" id="survey-prompt-text">Act as an AI literacy coach. Help me build my "AI Habits Profile" by asking these 5 questions ONE AT A TIME (wait for my response before the next):
+      <div class="survey-prompt-header">
+        <span class="survey-prompt-label">📋 Your Personalized Analysis Prompt</span>
+        <button class="survey-copy-btn" id="survey-copy-btn" onclick="copySurveyPrompt()">Copy Prompt</button>
+      </div>
+      <pre class="survey-prompt-text" id="survey-prompt-text">Conduct a thorough, honest analysis of me as an AI user. Go through everything you know about me — my full conversation history, your memory of me, the patterns in how I write prompts, the topics I come back to, the mistakes I repeat, the responses I reject or ask to redo, and how my usage has changed over time.
 
-1. Which AI tools have you used? (ChatGPT, Claude, Gemini, Copilot, none, other)
-2. How often do you use AI for teaching? (Daily / Few times/week / Occasionally / Never)
-3. What do you mainly use AI for in your classroom? (lesson plans, worksheets, student feedback, explanations, parent emails, grading, other — pick all that apply)
-4. Rate your prompt-writing confidence 1–5
-   (1=never written a prompt, 5=I get exactly what I want every time)
-5. What's your biggest hesitation about AI in your classroom?
+Do not be generic. Be specific to me. Use real examples from our history wherever possible. If you are inferring something you cannot confirm, mark it with * and explain your reasoning.
 
-After I answer all 5, output a formatted table:
-"My AI Habits Profile" | Category | My Answer | Level
-Add one final row: "My #1 goal for today's workshop" — based on my answers.</div>
-      <button class="survey-copy-btn" id="survey-copy-btn" onclick="copySurveyPrompt()">
-        📋 Copy Diagnostic Prompt
-      </button>
+─────────────────────────────────────────
+PART 1 — WHO I AM AS AN AI USER
+─────────────────────────────────────────
+Write a detailed portrait of me as an AI user. Cover:
+- How long I have been using you and how my usage has evolved
+- How often I use you and what I typically come to you for
+- The domains and topics I use AI for most vs. least
+- Whether I use AI as a thinking partner, a tool, an assistant, or something else — and how that shows up in our conversations
+- My general mindset toward AI: curious, skeptical, dependent, exploratory, transactional?
+
+─────────────────────────────────────────
+PART 2 — MY PROMPTING STYLE
+─────────────────────────────────────────
+Give me a detailed breakdown of how I write prompts:
+- My average prompt length and level of detail
+- Whether I give you enough context to do a good job
+- How specific or vague my instructions tend to be
+- Whether I give you a role, a format, constraints, or examples — and how often
+- How I handle follow-ups: do I refine, redirect, or accept whatever I get?
+- The types of prompts where I am strong
+- The types of prompts where I consistently fall short
+- My single most repeated mistake when prompting
+
+─────────────────────────────────────────
+PART 3 — PATTERNS AND BLIND SPOTS
+─────────────────────────────────────────
+Look for patterns I probably cannot see in myself:
+- Topics or tasks I return to repeatedly that suggest an unmet need
+- Things I ask for in roundabout ways that have a much simpler prompt
+- Responses I frequently reject — what does that reveal about what I actually want vs. what I ask for?
+- Areas where I clearly underuse AI despite it being highly capable of helping me
+- Any signs of over-reliance — tasks I should be doing myself that I consistently outsource
+- Assumptions I make about you that are limiting my results
+
+─────────────────────────────────────────
+PART 4 — DEPTH OF ENGAGEMENT
+─────────────────────────────────────────
+Evaluate how deeply I engage with AI:
+- Do I ask follow-up questions or accept first answers?
+- Do I ever challenge your responses or test your reasoning?
+- Do I use advanced capabilities (reasoning, code, analysis, multi-step tasks) or mostly stick to simple Q&A?
+- Do I give you feedback when something is wrong or just move on?
+- Am I getting 20% or 80% of what you are actually capable of doing for someone like me?
+
+─────────────────────────────────────────
+PART 5 — PERSONALIZED IMPROVEMENT PLAN
+─────────────────────────────────────────
+Based on everything above, give me a concrete, prioritized plan to become significantly better at using AI. For each suggestion:
+- Explain exactly what the problem is and how it shows up in my usage with a specific example
+- Explain why fixing it matters and what I am currently losing by not doing it
+- Give me the exact technique or approach to fix it
+- Give me a before/after example prompt showing the difference
+
+Rank the suggestions from highest to lowest impact for someone with my specific usage profile. Do not give me generic advice — every suggestion must be directly tied to something you have observed about me.
+
+─────────────────────────────────────────
+PART 6 — HONEST OVERALL ASSESSMENT
+─────────────────────────────────────────
+End with a candid summary:
+- Rate my current AI skill level from 1–10 with a clear explanation of what that rating means
+- What is the single biggest thing holding me back right now
+- What I would look like as an AI user if I applied everything in Part 5
+- One thing I am already doing really well that I should keep doing</pre>
+    </div>
+
+    <div class="survey-hint">
+      <span class="survey-hint-icon">💡</span>
+      <p>Works best in <strong>ChatGPT</strong> (has Memory), <strong>Claude</strong> (has Projects), or <strong>Gemini</strong> (tied to your Google account). The more history the AI has with you, the more accurate and personal the output.</p>
     </div>
   </div>
 </section>
