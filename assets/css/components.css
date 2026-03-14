@@ -327,98 +327,6 @@
   .resources-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 
-/* ── AI Output Gallery ───────────────────────────────────────── */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 14px;
-}
-
-.gallery-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: all var(--transition);
-}
-
-.gallery-card:hover {
-  border-color: var(--accent-cyber);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow);
-}
-
-.gallery-card-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg-secondary);
-}
-
-.gallery-category-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 100px;
-  background: var(--accent-cyber-dim);
-  color: var(--accent-cyber);
-  border: 1px solid rgba(0,212,255,0.25);
-}
-
-.gallery-tool-badge {
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-}
-
-.gallery-card-body {
-  padding: 18px;
-}
-
-.gallery-prompt-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.gallery-prompt-text {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-family: var(--font-code);
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  margin-bottom: 14px;
-  line-height: 1.5;
-}
-
-.gallery-output-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.gallery-output-text {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
 
 /* ── AI Self-Analysis Survey ─────────────────────────────────── */
 #survey {
@@ -723,7 +631,6 @@
 @media (max-width: 768px) {
   .breakout-grid { grid-template-columns: 1fr; }
   .schedule-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: 1fr; }
   .countdown-boxes { flex-wrap: wrap; }
 }
 
