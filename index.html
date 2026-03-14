@@ -214,8 +214,8 @@
           <div class="agenda-item fade-in">
             <span class="agenda-time">7:30 PM</span>
             <div class="agenda-text">
-              <strong>Math Visualizer Demo</strong>
-              <span>Plain English → Python → graph, live in browser. No coding needed.</span>
+              <strong>AI Desmos Studio Demo</strong>
+              <span>Plain English → Claude → live Desmos graph. Teachers learn to use AI to build classroom visuals.</span>
             </div>
           </div>
           <div class="agenda-item fade-in">
@@ -367,8 +367,8 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
 
       <div class="tool-card fade-in" style="--tool-color:#6e5494; --tool-color-dim:rgba(110,84,148,0.1);" onclick="document.getElementById('tab-math').click();document.getElementById('arena').scrollIntoView({behavior:'smooth'})">
         <div class="tool-icon" aria-hidden="true">📊</div>
-        <h3>Math Visualizer</h3>
-        <p>Type plain English. Get a live graph. Claude generates Python, Pyodide runs it in your browser — no server, no install, verified math.</p>
+        <h3>AI Desmos Studio</h3>
+        <p>Describe any graph in plain English. Claude writes the Desmos expressions, they load into a live embedded calculator instantly — no API key needed to explore.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
           <span class="tool-badge">7 Copilot Prompts</span>
           <span class="tool-badge">Live in Browser</span>
@@ -407,7 +407,7 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
           <span class="tab-dot" aria-hidden="true"></span> ⚔ Compare Side-by-Side
         </button>
         <button class="arena-tab" id="tab-math" data-panel="panel-math" role="tab" style="--tab-color:#6e5494">
-          <span class="tab-dot" aria-hidden="true"></span> 📊 Math Visualizer
+          <span class="tab-dot" aria-hidden="true"></span> 📊 AI Desmos Studio
         </button>
       </div>
 
@@ -526,64 +526,86 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
         </div>
       </div>
 
-      <!-- ── Math Visualizer Panel ── -->
+      <!-- ── AI Desmos Studio Panel ── -->
       <div class="arena-panel" id="panel-math" role="tabpanel">
-        <div class="panel-header">
-          <div class="panel-header-left">
-            <span style="font-size:0.8rem;font-weight:700;color:#6e5494">📊 Math Visualizer</span>
-            <span style="font-size:0.75rem;color:var(--text-muted)">Claude → Python → Graph · runs in your browser</span>
-          </div>
-          <div class="panel-header-right">
-            <span style="font-size:0.72rem;color:var(--text-muted)">Needs Anthropic key · <kbd style="background:var(--glass);padding:1px 5px;border-radius:3px;border:1px solid var(--border)">Ctrl+Shift+K</kbd></span>
-          </div>
-        </div>
+        <div class="desmos-studio">
 
-        <div class="key-bar" data-provider="anthropic">
-          <span class="key-bar-label">🔑 Anthropic Key:</span>
-          <input type="password" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API key">
-          <button class="key-save-btn">Save</button>
-        </div>
+          <!-- Left: AI Controls -->
+          <div class="desmos-controls">
+            <div class="desmos-studio-header">
+              <div class="studio-title">📊 AI Desmos Studio</div>
+              <div class="studio-subtitle">Describe any graph in plain English → AI writes the Desmos expressions → live graph appears instantly</div>
+            </div>
 
-        <div class="visualizer-panel">
-          <div class="viz-input-area">
-            <div class="viz-label">Describe your graph in plain English:</div>
-            <div class="viz-chips" id="viz-chips" aria-label="Quick-start prompts"></div>
-            <div class="viz-input-row">
-              <input type="text" class="viz-input" id="viz-input"
-                     placeholder="e.g. Graph y = x² - 4x + 3, mark the vertex and x-intercepts"
-                     aria-label="Visualization description">
-              <button class="viz-run-btn" id="viz-run-btn" aria-label="Generate graph">
-                ▶ Generate Graph
+            <!-- API Key bar (collapsible) -->
+            <div class="desmos-key-row">
+              <button id="desmos-key-toggle" class="desmos-key-toggle-btn" title="Add Anthropic API key to enable auto-generation">🔑 Add API Key <span style="font-size:0.65rem;opacity:0.7">(optional — enables auto-generate)</span></button>
+            </div>
+            <div id="desmos-key-bar" class="desmos-key-bar hidden">
+              <input type="password" id="desmos-key-input" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API key" class="desmos-key-input">
+              <button id="desmos-key-save" class="btn btn-primary btn-sm">Save Key</button>
+            </div>
+
+            <!-- Description input -->
+            <textarea id="desmos-desc" class="desmos-desc-input"
+              placeholder="e.g. Show a parabola with vertex form y = a(x-h)² + k, add sliders so students can explore transformations..."
+              rows="3" aria-label="Graph description"></textarea>
+
+            <!-- Action buttons -->
+            <div class="desmos-action-row">
+              <button id="desmos-gen-btn" class="btn btn-primary" style="flex:1">
+                ✨ Generate Graph
               </button>
             </div>
+
+            <!-- Divider -->
+            <div class="desmos-divider"><span>or use without API key</span></div>
+
+            <!-- No-key flow: copy prompt -->
+            <button id="desmos-copy-prompt-btn" class="desmos-copy-prompt-btn">
+              📋 Copy AI Prompt → opens Claude
+              <span style="display:block;font-size:0.68rem;opacity:0.75;margin-top:2px">Get expressions from Claude, paste below</span>
+            </button>
+
+            <!-- Paste area -->
+            <div class="desmos-paste-section">
+              <div class="desmos-paste-label">Paste Claude's response (JSON or one expression per line):</div>
+              <textarea id="desmos-paste-area" class="desmos-paste-area" rows="4"
+                placeholder='y = x^2 - 4x + 3&#10;y = 2x - 1&#10;a = 1'
+                aria-label="Paste Desmos expressions"></textarea>
+              <button id="desmos-load-btn" class="btn btn-outline btn-sm">▶ Load into Desmos</button>
+            </div>
+
+            <!-- Template chips -->
+            <div class="desmos-templates-label">Quick templates:</div>
+            <div id="desmos-templates" class="desmos-template-chips"></div>
+
+            <!-- AI Results -->
+            <div id="desmos-ai-results" class="desmos-ai-results hidden">
+              <div class="desmos-result-section">
+                <div class="desmos-result-label">💡 Teacher Tip</div>
+                <div class="desmos-teacher-notes"></div>
+              </div>
+              <div class="desmos-result-section">
+                <div class="desmos-result-label">💬 Discussion Questions</div>
+                <ul class="desmos-questions"></ul>
+              </div>
+            </div>
+          </div><!-- /.desmos-controls -->
+
+          <!-- Right: Live Desmos embed -->
+          <div class="desmos-right">
+            <div class="desmos-toolbar">
+              <span class="desmos-label">Live Desmos Graph</span>
+              <div class="desmos-toolbar-btns">
+                <button id="desmos-clear-btn" class="btn btn-outline btn-sm">🗑 Clear</button>
+                <a href="https://www.desmos.com/calculator" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Open Full ↗</a>
+              </div>
+            </div>
+            <div id="desmos-container" class="desmos-embed"></div>
           </div>
 
-          <div class="viz-output" id="viz-output" aria-live="polite">
-            <div class="viz-placeholder">
-              <div class="big-icon" aria-hidden="true">📊</div>
-              <p style="font-size:0.875rem;">Describe any math graph or visualization above.<br>Claude writes the Python code, Pyodide runs it — live in your browser.</p>
-              <p style="font-size:0.75rem;margin-top:8px;">First run loads ~7MB (one time only)</p>
-            </div>
-            <div class="pyodide-progress" id="pyodide-progress" aria-live="polite">
-              <div style="font-size:0.8rem;font-weight:600;margin-bottom:6px;" id="progress-msg">Loading...</div>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
-              </div>
-            </div>
-            <div class="chart-result" id="chart-result">
-              <img id="chart-img" alt="Generated math visualization" src="">
-              <div class="chart-actions">
-                <button class="btn btn-primary btn-sm" id="chart-download">⬇ Download PNG</button>
-                <a href="#" target="_blank" rel="noopener" class="btn btn-outline btn-sm" id="chart-colab">▶ Open in Colab</a>
-              </div>
-              <details class="code-collapse" id="generated-code">
-                <summary>Generated Python Code</summary>
-                <pre><code id="code-block"></code></pre>
-              </details>
-              <button class="btn btn-outline btn-sm" id="code-copy" style="align-self:flex-start">📋 Copy Code</button>
-            </div>
-          </div>
-        </div>
+        </div><!-- /.desmos-studio -->
       </div>
 
     </div><!-- /.arena-wrapper -->
@@ -825,19 +847,19 @@ Warm regards,
       <div class="gallery-card fade-in">
         <div class="gallery-card-header">
           <span class="gallery-category-badge">Visualization</span>
-          <span class="gallery-tool-badge">Math Visualizer</span>
+          <span class="gallery-tool-badge">AI Desmos Studio</span>
         </div>
         <div class="gallery-card-body">
           <div class="gallery-prompt-label">Prompt Used</div>
-          <div class="gallery-prompt-text">Graph y = x² - 4x + 3, mark the vertex and x-intercepts with labeled points, use a dark background</div>
+          <div class="gallery-prompt-text">Show a parabola in vertex form y = a(x-h)² + k with sliders for a, h, k so students can explore transformations live</div>
           <div class="gallery-output-label">What it generates</div>
-          <div class="gallery-output-text">Claude writes matplotlib Python code → Pyodide runs it in your browser → you get a dark-themed parabola with:
-• Vertex labeled at (2, –1)
-• X-intercepts labeled at (1, 0) and (3, 0)
-• Color-coded annotations
-• Download as PNG button
+          <div class="gallery-output-text">Claude outputs Desmos expressions → live embedded graph with:
+• Draggable sliders for a, h, and k
+• y = x² shown in gray for before/after comparison
+• Instant shareable Desmos link
+• Students interact with it directly
 
-<em>Try it live in the Math Visualizer tab above →</em></div>
+<em>Try it live in the AI Desmos Studio tab above →</em></div>
         </div>
       </div>
 
@@ -966,7 +988,7 @@ Warm regards,
       </div>
       <div class="schedule-block">
         <div class="schedule-time">3:50 – 4:30</div>
-        <div class="schedule-name">Math Visualizer</div>
+        <div class="schedule-name">AI Desmos Studio</div>
         <div class="schedule-desc">Teach + live demo</div>
       </div>
       <div class="schedule-block" style="border-color:rgba(134,38,51,0.3);background:rgba(134,38,51,0.06)">
@@ -1071,15 +1093,15 @@ Warm regards,
       <div class="breakout-card fade-in" id="activity-4" style="--tool-color:#6e5494">
         <div class="breakout-header">
           <div class="breakout-num">4</div>
-          <span class="breakout-tool-badge">Math Visualizer</span>
+          <span class="breakout-tool-badge">AI Desmos Studio</span>
           <span class="breakout-time-badge">⏱ 30 min</span>
         </div>
         <h3>Math Viz Challenge</h3>
-        <p>Describe a math concept in plain English → generate a chart → explain it to the class. No coding required.</p>
+        <p>Describe a math concept in plain English → AI Desmos Studio builds an interactive graph → share it with students.</p>
         <ul class="breakout-steps">
-          <li data-n="1">Open the 📊 Math Visualizer tab in AI Arena above</li>
-          <li data-n="2">Type a plain English description of a graph (e.g., "Show a sine wave from -2π to 2π, label key points")</li>
-          <li data-n="3">Download the PNG — it's ready for a slide or handout</li>
+          <li data-n="1">Open the 📊 AI Desmos Studio tab in AI Arena above</li>
+          <li data-n="2">Pick a template or type your own concept (e.g., "Show transformations of sine with amplitude and phase shift sliders")</li>
+          <li data-n="3">Click "Copy AI Prompt" → paste into Claude → copy the JSON back → click "Load into Desmos"</li>
           <li data-n="4">Try a second, more complex graph: unit circle, trig comparison, or statistical plot</li>
         </ul>
         <div class="share-back-list">
@@ -1398,8 +1420,9 @@ Warm regards,
 <script src="assets/js/activities.js" defer></script>
 <script src="assets/js/prompt-library.js" defer></script>
 <script src="assets/js/prompt-generator.js" defer></script>
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0faa6"></script>
 <script src="assets/js/ai-arena.js" defer></script>
-<script src="assets/js/python-runner.js" defer></script>
+<script src="assets/js/desmos-studio.js" defer></script>
 
 </body>
 </html>

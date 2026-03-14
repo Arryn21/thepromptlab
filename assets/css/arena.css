@@ -670,6 +670,290 @@
   color: var(--accent-cyber);
 }
 
+/* ── AI Desmos Studio ───────────────────────────────────────── */
+.desmos-studio {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  height: calc(100vh - 200px);
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.desmos-controls {
+  overflow-y: auto;
+  padding: 20px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--bg-secondary);
+}
+
+.studio-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.studio-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* Key bar */
+.desmos-key-toggle-btn {
+  width: 100%;
+  text-align: left;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+.desmos-key-toggle-btn:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+
+.desmos-key-bar {
+  display: flex;
+  gap: 8px;
+}
+.desmos-key-bar.hidden { display: none; }
+
+.desmos-key-input {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  transition: border-color var(--transition);
+}
+.desmos-key-input:focus { outline: none; border-color: var(--accent-cyber); }
+
+/* Description textarea */
+.desmos-desc-input {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 72px;
+  transition: border-color var(--transition);
+  line-height: 1.5;
+}
+.desmos-desc-input:focus { outline: none; border-color: var(--accent-cyber); }
+.desmos-desc-input::placeholder { color: var(--text-muted); }
+
+/* Action row */
+.desmos-action-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Divider */
+.desmos-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+.desmos-divider::before,
+.desmos-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Copy prompt button */
+.desmos-copy-prompt-btn {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--accent-cyber-dim);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: var(--radius-md);
+  color: var(--accent-cyber);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+  text-align: left;
+  line-height: 1.3;
+}
+.desmos-copy-prompt-btn:hover {
+  background: rgba(0,212,255,0.12);
+  border-color: var(--accent-cyber);
+}
+
+/* Paste section */
+.desmos-paste-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.desmos-paste-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.desmos-paste-area {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-family: var(--font-code);
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color var(--transition);
+}
+.desmos-paste-area:focus { outline: none; border-color: var(--accent-cyber); }
+.desmos-paste-area::placeholder { color: var(--text-muted); }
+
+/* Template chips */
+.desmos-templates-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.desmos-template-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.desmos-template-chip {
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+.desmos-template-chip:hover {
+  border-color: #6e5494;
+  color: #a78bfa;
+  background: rgba(110,84,148,0.1);
+}
+
+/* AI Results */
+.desmos-ai-results {
+  background: rgba(110,84,148,0.06);
+  border: 1px solid rgba(110,84,148,0.25);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.desmos-ai-results.hidden { display: none; }
+
+.desmos-result-section { display: flex; flex-direction: column; gap: 6px; }
+
+.desmos-result-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.desmos-teacher-notes {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.desmos-questions {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.desmos-questions li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Right panel */
+.desmos-right {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.desmos-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.desmos-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.desmos-toolbar-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.desmos-embed {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Desmos iframe dark background patch */
+.desmos-embed iframe {
+  background: var(--bg-primary) !important;
+}
+
+@media (max-width: 900px) {
+  .desmos-studio {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 420px;
+    height: auto;
+  }
+  .desmos-controls {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 360px;
+  }
+  .desmos-right { height: 420px; }
+}
+
 /* ── Tool Launcher ──────────────────────────────────────────── */
 .launcher-panel {
   display: flex;

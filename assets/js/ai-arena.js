@@ -555,9 +555,7 @@
     });
   });
 
-  // ── Init Math Visualizer key bar ──────────────────────────
-  // (ChatGPT / Claude / Gemini are now Tool Launchers — no API needed)
-  // initChatPanel handles the .key-bar save button; viz logic is in python-runner.js
-  initChatPanel('panel-math', 'anthropic');
+  // ChatGPT / Claude / Gemini / Arena are now Tool Launchers — no API needed.
+  // Math panel key bar is handled by desmos-studio.js — nothing to init here.
 
 })();
