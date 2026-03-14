@@ -479,98 +479,12 @@
       }
     }
 
-    // ── Format markdown-ish content ──────────────────────────
+    // ── Render markdown via marked.js (same library ChatGPT/Claude use) ──
     function formatContent(text) {
       if (!text) return '';
-      const lines = text.split('\n');
-      const out = [];
-      let i = 0;
-      while (i < lines.length) {
-        const line = lines[i];
-        // Fenced code block
-        if (line.startsWith('```')) {
-          const codeLines = [];
-          i++;
-          while (i < lines.length && !lines[i].startsWith('```')) {
-            codeLines.push(escHtml(lines[i]));
-            i++;
-          }
-          out.push(`<pre><code>${codeLines.join('\n')}</code></pre>`);
-          i++;
-          continue;
-        }
-        // Table block (lines starting with |)
-        if (line.trim().startsWith('|')) {
-          const tLines = [];
-          while (i < lines.length && lines[i].trim().startsWith('|')) {
-            tLines.push(lines[i]);
-            i++;
-          }
-          out.push(renderTable(tLines));
-          continue;
-        }
-        // Headings
-        const hm = line.match(/^(#{1,4})\s+(.+)/);
-        if (hm) {
-          const lvl = hm[1].length;
-          out.push(`<h${lvl} class="md-h">${inlineFmt(hm[2])}</h${lvl}>`);
-          i++; continue;
-        }
-        // Bullet list
-        if (/^[ \t]*[-*+] /.test(line)) {
-          const items = [];
-          while (i < lines.length && /^[ \t]*[-*+] /.test(lines[i])) {
-            items.push(`<li>${inlineFmt(lines[i].replace(/^[ \t]*[-*+] /, ''))}</li>`);
-            i++;
-          }
-          out.push(`<ul>${items.join('')}</ul>`);
-          continue;
-        }
-        // Numbered list
-        if (/^[ \t]*\d+\. /.test(line)) {
-          const items = [];
-          while (i < lines.length && /^[ \t]*\d+\. /.test(lines[i])) {
-            items.push(`<li>${inlineFmt(lines[i].replace(/^[ \t]*\d+\. /, ''))}</li>`);
-            i++;
-          }
-          out.push(`<ol>${items.join('')}</ol>`);
-          continue;
-        }
-        // Blank line → paragraph break
-        if (line.trim() === '') {
-          out.push('');
-          i++; continue;
-        }
-        // Regular line
-        out.push(`<p>${inlineFmt(line)}</p>`);
-        i++;
-      }
-      return out.join('\n');
-    }
-
-    function renderTable(lines) {
-      const parseRow = l => l.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
-      const sepIdx = lines.findIndex(l => /^\|[\s|:\-]+\|$/.test(l.trim()));
-      if (sepIdx < 0) return lines.map(l => `<p>${inlineFmt(l)}</p>`).join('');
-      const headers = parseRow(lines[0]);
-      const rows = lines.filter((_, idx) => idx !== 0 && idx !== sepIdx);
-      let html = '<div class="md-table-wrap"><table class="md-table"><thead><tr>';
-      headers.forEach(h => { html += `<th>${inlineFmt(h)}</th>`; });
-      html += '</tr></thead><tbody>';
-      rows.forEach(row => {
-        if (!row.trim()) return;
-        html += '<tr>' + parseRow(row).map(c => `<td>${inlineFmt(c)}</td>`).join('') + '</tr>';
-      });
-      return html + '</tbody></table></div>';
-    }
-
-    function inlineFmt(text) {
-      return escHtml(text)
-        .replace(/`([^`]+)`/g, '<code>$1</code>')
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/__(.+?)__/g, '<strong>$1</strong>')
-        .replace(/_(.+?)_/g, '<em>$1</em>');
+      return window.marked
+        ? marked.parse(text, { breaks: true, gfm: true })
+        : `<p>${text.replace(/\n/g, '<br>')}</p>`;
     }
   }
 
