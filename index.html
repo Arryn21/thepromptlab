@@ -709,7 +709,7 @@ End with a candid summary:
     <div class="section-header">
       <span class="section-tag">Prompt Workshop</span>
       <h2>Write Better Prompts</h2>
-      <p>Two tools, one goal — prompts that get you exactly what you need. Copy a meta-prompt, paste it into ChatGPT or Claude, and let the AI do the engineering for you.</p>
+      <p>Three tools, one goal — prompts that get you exactly what you need. Copy a meta-prompt, paste it into ChatGPT or Claude, and let the AI do the work.</p>
     </div>
 
     <!-- Mode toggle -->
@@ -721,6 +721,10 @@ End with a candid summary:
       <button class="pw-toggle-btn" data-mode="improve" id="pw-btn-improve">
         <span class="pw-toggle-icon">🔧</span>
         <span>Improve Existing</span>
+      </button>
+      <button class="pw-toggle-btn" data-mode="humanize" id="pw-btn-humanize">
+        <span class="pw-toggle-icon">✍️</span>
+        <span>Humanize Output</span>
       </button>
     </div>
 
@@ -882,6 +886,81 @@ Based on my specific use case, identify the 3 most important prompting principle
               <button class="pw-copy-btn" id="pw-copy-improve">Copy Prompt</button>
             </div>
             <pre class="pw-prompt-text pw-combined-output" id="pw-combined-output">← Paste your prompt above and the full meta-prompt will appear here, ready to copy.</pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Mode 3: Humanize Output ── -->
+    <div class="pw-panel hidden" id="pw-panel-humanize">
+      <div class="pw-layout">
+
+        <div class="pw-explainer">
+          <div class="pw-explainer-title">How it works</div>
+          <div class="pw-steps">
+            <div class="pw-step">
+              <div class="pw-step-num">1</div>
+              <div>
+                <strong>Paste your AI output</strong>
+                <p>Paste anything AI gave you — worksheet, email, lesson plan, explanation.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">2</div>
+              <div>
+                <strong>Choose your content type</strong>
+                <p>So the AI knows the right voice and tone to aim for.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">3</div>
+              <div>
+                <strong>Copy the combined prompt</strong>
+                <p>Your text gets wrapped in a humanizer meta-prompt automatically.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">4</div>
+              <div>
+                <strong>Paste into ChatGPT or Claude</strong>
+                <p>Get back a version that sounds like a real teacher wrote it.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pw-explainer-note">
+            <strong>What gets fixed:</strong> Em dash overuse, "delve / leverage / tapestry", filler openers ("Certainly!", "Great question!"), false ranges ("a 5–7 step process"), corporate vocabulary, and perfectly symmetrical bullet lists that no human ever writes naturally.
+          </div>
+        </div>
+
+        <div class="pw-improve-right">
+          <div class="pw-prompt-box">
+            <div class="pw-prompt-header">
+              <span class="pw-prompt-label">📄 Your AI Output</span>
+              <div class="pw-humanize-controls">
+                <select id="pw-humanize-type" class="pw-humanize-select" aria-label="Content type">
+                  <option value="worksheet">Worksheet</option>
+                  <option value="lesson">Lesson Plan</option>
+                  <option value="email">Parent Email</option>
+                  <option value="explanation">Math Explanation</option>
+                  <option value="rubric">Rubric</option>
+                  <option value="feedback">Student Feedback</option>
+                  <option value="general">General Text</option>
+                </select>
+                <span class="pw-char-count" id="pw-humanize-chars">0 chars</span>
+              </div>
+            </div>
+            <textarea class="pw-improve-input" id="pw-humanize-input"
+              placeholder="Paste the AI-generated text you want to humanize — worksheet, email, lesson plan, anything…"
+              rows="6" aria-label="AI output to humanize"></textarea>
+          </div>
+
+          <div class="pw-prompt-box">
+            <div class="pw-prompt-header">
+              <span class="pw-prompt-label">📋 Humanizer Prompt — Copy This</span>
+              <button class="pw-copy-btn" id="pw-copy-humanize">Copy Prompt</button>
+            </div>
+            <pre class="pw-prompt-text pw-combined-output" id="pw-humanize-output">← Paste your AI output above and the humanizer prompt will appear here, ready to copy.</pre>
           </div>
         </div>
 

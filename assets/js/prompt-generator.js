@@ -1,4 +1,4 @@
-/* prompt-generator.js — Prompt Workshop: Build + Improve modes */
+/* prompt-generator.js — Prompt Workshop: Build + Improve + Humanize modes */
 
 (function () {
 
@@ -10,6 +10,7 @@
       btn.classList.add('active');
       document.getElementById('pw-panel-build').classList.toggle('hidden', mode !== 'build');
       document.getElementById('pw-panel-improve').classList.toggle('hidden', mode !== 'improve');
+      document.getElementById('pw-panel-humanize').classList.toggle('hidden', mode !== 'humanize');
     });
   });
 
@@ -98,40 +99,136 @@ End with a prompt template — a reusable skeleton I can apply to any future pro
 
 This template should reflect what you learned about my specific use case, not a generic one.`;
 
-  const input    = document.getElementById('pw-improve-input');
-  const output   = document.getElementById('pw-combined-output');
-  const charEl   = document.getElementById('pw-improve-chars');
-  const copyBtn  = document.getElementById('pw-copy-improve');
+  const improveInput  = document.getElementById('pw-improve-input');
+  const improveOutput = document.getElementById('pw-combined-output');
+  const improveChars  = document.getElementById('pw-improve-chars');
+  const improveCopy   = document.getElementById('pw-copy-improve');
 
-  function updateCombined() {
-    const userPrompt = input?.value?.trim() || '';
-    if (charEl) charEl.textContent = (input?.value?.length || 0) + ' chars';
-
+  function updateImprove() {
+    const userPrompt = improveInput?.value?.trim() || '';
+    if (improveChars) improveChars.textContent = (improveInput?.value?.length || 0) + ' chars';
     if (!userPrompt) {
-      if (output) {
-        output.textContent = '← Paste your prompt above and the full meta-prompt will appear here, ready to copy.';
-        output.classList.remove('has-content');
+      if (improveOutput) {
+        improveOutput.textContent = '← Paste your prompt above and the full meta-prompt will appear here, ready to copy.';
+        improveOutput.classList.remove('has-content');
       }
       return;
     }
-
     const combined = IMPROVE_PREFIX + userPrompt + IMPROVE_SUFFIX;
-    if (output) {
-      output.textContent = combined;
-      output.classList.add('has-content');
+    if (improveOutput) {
+      improveOutput.textContent = combined;
+      improveOutput.classList.add('has-content');
     }
   }
 
-  input?.addEventListener('input', updateCombined);
+  improveInput?.addEventListener('input', updateImprove);
 
-  copyBtn?.addEventListener('click', () => {
-    const userPrompt = input?.value?.trim() || '';
+  improveCopy?.addEventListener('click', () => {
+    const userPrompt = improveInput?.value?.trim() || '';
     if (!userPrompt) {
       window.showToast?.('Paste your existing prompt first!', 'warning', 2000);
       return;
     }
-    const combined = IMPROVE_PREFIX + userPrompt + IMPROVE_SUFFIX;
-    copyText(combined, copyBtn, 'Combined prompt copied — paste it into ChatGPT or Claude!');
+    copyText(IMPROVE_PREFIX + userPrompt + IMPROVE_SUFFIX, improveCopy,
+      'Combined prompt copied — paste it into ChatGPT or Claude!');
+  });
+
+  // ── Mode 3: Humanize Output ───────────────────────────────────
+  const CONTENT_TYPE_LABELS = {
+    worksheet:   'a student worksheet',
+    lesson:      'a lesson plan',
+    email:       'a parent email',
+    explanation: 'a math concept explanation for students',
+    rubric:      'a grading rubric',
+    feedback:    'written student feedback',
+    general:     'general educational text',
+  };
+
+  function buildHumanizePrompt(text, type) {
+    const label = CONTENT_TYPE_LABELS[type] || 'educational text';
+    return `You are an expert editor specializing in making AI-generated content sound genuinely human. I am a high school math teacher. I used an AI tool to generate ${label}, and I need you to rewrite it so it sounds like I — a real classroom teacher — actually wrote it.
+
+Here is the AI-generated text:
+
+─────────────────────────────────────────
+${text}
+─────────────────────────────────────────
+
+STEP 1 — DIAGNOSE THE AI PATTERNS
+Scan the text above and list every AI writing pattern you detect. For each one:
+- Quote the exact phrase or sentence
+- Name the pattern (e.g. "em dash overuse," "corporate vocabulary," "filler opener," "perfectly symmetrical list," "false range," "AI buzzword")
+- Rate how jarring it sounds to a real teacher: Low / Medium / High
+
+Use this checklist of known AI patterns:
+• Overused em dashes (—) where a comma or period would work better
+• AI vocabulary: "delve," "leverage," "tapestry," "foster," "nuanced," "comprehensive," "robust," "crucial," "pivotal," "paramount," "meticulous," "commendable," "invaluable"
+• Filler openers: "Certainly!", "Great question!", "Of course!", "Absolutely!", "I'd be happy to"
+• False ranges: "a 5–7 step process," "3–4 examples" (humans pick one number)
+• Corporate structure: every section has exactly 3 bullets, every bullet is the same length
+• Over-hedging: "It is worth noting that," "It is important to mention," "One must consider"
+• Passive voice stacking: more than 2 passive constructions per paragraph
+• Unnatural transitions: "Furthermore," "Moreover," "In conclusion," "It is evident that"
+• Missing contractions: AI avoids "don't / won't / it's / I've" — real teachers use them
+• Generic praise language: "This is an excellent opportunity to," "Students will benefit greatly from"
+
+STEP 2 — REWRITE: HUMANIZED VERSION
+Rewrite the entire text applying these rules:
+- Keep ALL factual content, structure, and intent exactly intact — change only the voice
+- Write the way a real experienced math teacher talks: direct, practical, occasionally informal
+- Use contractions naturally (don't, won't, let's, you'll, it's)
+- Vary sentence length — mix short punchy sentences with longer ones
+- Replace symmetric bullet lists with natural, uneven ones (some bullets longer, some shorter)
+- Cut every filler opener, corporate buzzword, and over-formal transition
+- Where the AI wrote something vague or generic, make it specific and concrete
+- The tone should feel like a colleague explaining something in the teacher's lounge, not a textbook
+
+STEP 3 — SHOW ME THE DIFF
+After the rewrite, show a side-by-side comparison of the 3–5 most impactful changes you made:
+| Original (AI) | Rewritten (Human) | Why this change matters |
+
+STEP 4 — TEACH ME THE PATTERN
+Based on what you changed, give me one rule I can apply every time I review AI output before using it in class — stated as a single memorable sentence.`;
+  }
+
+  const humanizeInput  = document.getElementById('pw-humanize-input');
+  const humanizeOutput = document.getElementById('pw-humanize-output');
+  const humanizeChars  = document.getElementById('pw-humanize-chars');
+  const humanizeCopy   = document.getElementById('pw-copy-humanize');
+  const humanizeType   = document.getElementById('pw-humanize-type');
+
+  function updateHumanize() {
+    const text = humanizeInput?.value?.trim() || '';
+    const type = humanizeType?.value || 'general';
+    if (humanizeChars) humanizeChars.textContent = (humanizeInput?.value?.length || 0) + ' chars';
+
+    if (!text) {
+      if (humanizeOutput) {
+        humanizeOutput.textContent = '← Paste your AI output above and the humanizer prompt will appear here, ready to copy.';
+        humanizeOutput.classList.remove('has-content');
+      }
+      return;
+    }
+
+    const prompt = buildHumanizePrompt(text, type);
+    if (humanizeOutput) {
+      humanizeOutput.textContent = prompt;
+      humanizeOutput.classList.add('has-content');
+    }
+  }
+
+  humanizeInput?.addEventListener('input', updateHumanize);
+  humanizeType?.addEventListener('change', updateHumanize);
+
+  humanizeCopy?.addEventListener('click', () => {
+    const text = humanizeInput?.value?.trim() || '';
+    if (!text) {
+      window.showToast?.('Paste your AI output first!', 'warning', 2000);
+      return;
+    }
+    const type = humanizeType?.value || 'general';
+    copyText(buildHumanizePrompt(text, type), humanizeCopy,
+      'Humanizer prompt copied — paste it into ChatGPT or Claude!');
   });
 
 })();

@@ -192,6 +192,30 @@
 .pw-prompt-text::-webkit-scrollbar-track { background: transparent; }
 .pw-prompt-text::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
+/* ── Mode 3 — Humanize controls ─────────────────────────────── */
+.pw-humanize-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pw-humanize-select {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-family: var(--font-body);
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.pw-humanize-select:focus {
+  outline: none;
+  border-color: var(--accent-cyber);
+}
+
 /* ── Mode 2 — Improve layout ─────────────────────────────────── */
 .pw-improve-right {
   display: flex;
@@ -238,8 +262,8 @@
   .pw-explainer { position: static; }
 }
 
-@media (max-width: 640px) {
-  .pw-toggle { width: 100%; }
-  .pw-toggle-btn { flex: 1; justify-content: center; padding: 10px 12px; }
+@media (max-width: 700px) {
+  .pw-toggle { width: 100%; flex-wrap: wrap; }
+  .pw-toggle-btn { flex: 1; min-width: 120px; justify-content: center; padding: 9px 10px; font-size: 0.82rem; }
   .pw-prompt-text { font-size: 0.72rem; }
 }
