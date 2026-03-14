@@ -185,6 +185,7 @@
         <div class="msg-avatar">${role === 'user' ? '👤' : '🤖'}</div>
         <div class="msg-bubble">${formatContent(content)}</div>`;
       messagesEl.appendChild(div);
+      renderMath(div.querySelector('.msg-bubble'));
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
@@ -207,7 +208,9 @@
     function finishStreaming(id, fullText) {
       const el = document.getElementById(id);
       if (el) {
-        el.querySelector('.msg-bubble').innerHTML = formatContent(fullText);
+        const bubble = el.querySelector('.msg-bubble');
+        bubble.innerHTML = formatContent(fullText);
+        renderMath(bubble);  // render math once streaming is done
       }
       history.push({ role: 'assistant', content: fullText });
       streaming = false;
@@ -479,12 +482,28 @@
       }
     }
 
-    // ── Render markdown via marked.js (same library ChatGPT/Claude use) ──
+    // ── Render markdown via marked.js ────────────────────────
     function formatContent(text) {
       if (!text) return '';
       return window.marked
         ? marked.parse(text, { breaks: true, gfm: true })
         : `<p>${text.replace(/\n/g, '<br>')}</p>`;
+    }
+
+    // ── Render LaTeX math via KaTeX auto-render ───────────────
+    // Called after streaming finishes — handles \(...\), \[...\], $...$ and $$...$$
+    function renderMath(el) {
+      if (!el || !window.renderMathInElement) return;
+      renderMathInElement(el, {
+        delimiters: [
+          { left: '$$',     right: '$$',     display: true  },
+          { left: '\\[',    right: '\\]',    display: true  },
+          { left: '$',      right: '$',      display: false },
+          { left: '\\(',    right: '\\)',    display: false },
+        ],
+        throwOnError: false,
+        output: 'html'
+      });
     }
   }
 

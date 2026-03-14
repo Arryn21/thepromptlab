@@ -412,6 +412,25 @@
 }
 .msg-bubble a:hover { color: #fff; }
 
+/* ── KaTeX math — dark theme overrides ──────────────────────── */
+.msg-bubble .katex {
+  font-size: 1em;
+  color: var(--text-primary);
+}
+/* Display math block: center + breathing room */
+.msg-bubble .katex-display {
+  margin: 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 14px;
+  background: rgba(0,212,255,0.05);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 8px;
+}
+.msg-bubble .katex-display > .katex { display: block; text-align: center; }
+/* Inline math: keep readable against the bubble bg */
+.msg-bubble .katex-html { color: var(--text-primary); }
+
 .typing-indicator {
   display: flex;
   gap: 4px;
