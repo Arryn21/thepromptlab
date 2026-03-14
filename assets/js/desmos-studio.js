@@ -1,6 +1,6 @@
-/* desmos-studio.js — AI Desmos Studio
-   Plain English → Claude generates expressions → live Desmos embed
-   Also supports no-API-key flow: copy prompt → paste into Claude/ChatGPT → paste JSON back
+/* desmos-studio.js — AI Desmos Studio (no API key required)
+   Flow: describe graph → copy structured prompt → paste into Claude/ChatGPT →
+         paste JSON back → load into live embedded Desmos calculator.
 */
 
 (function () {
@@ -33,7 +33,7 @@
     }
   ];
 
-  // ── Claude prompt builder ─────────────────────────────────
+  // ── Build the structured Claude/ChatGPT prompt ────────────
   function buildPrompt(userDesc) {
     return `You are helping a high school math teacher create a Desmos graphing calculator visualization.
 
@@ -56,7 +56,7 @@ Respond with ONLY a valid JSON object in exactly this format — no explanation,
 
 Rules:
 - Use valid Desmos LaTeX syntax (e.g. y=x^{2}, \\frac{1}{x}, \\sqrt{x})
-- For sliders: define as simple assignment like a=1 and Desmos auto-creates the slider
+- For sliders: define as simple assignment like a=1 — Desmos auto-creates the slider
 - For sliderBounds: use string values like "min": "-5"
 - Colors: #2d70b3 (blue), #c74440 (red), #388c46 (green), #fa7e19 (orange), #6042a6 (purple)
 - For dashed lines add "lineStyle": "DASHED"
@@ -64,10 +64,9 @@ Rules:
 - Output ONLY the raw JSON object`;
   }
 
-  // ── Parse pasted text (flexible: JSON array, one-per-line, etc.) ──
+  // ── Parse pasted text (JSON array, JSON object, or one-per-line) ──
   function parsePasted(text) {
     text = text.trim();
-    // Try JSON
     if (text.startsWith('[') || text.startsWith('{')) {
       try {
         const p = JSON.parse(text);
@@ -75,7 +74,6 @@ Rules:
         if (p.expressions) return p.expressions;
       } catch {}
     }
-    // One expression per line
     const lines = text.split('\n')
       .map(l => l.trim())
       .filter(l => l && !l.startsWith('//') && !l.startsWith('#'));
@@ -88,10 +86,9 @@ Rules:
     return [];
   }
 
-  // ── State ─────────────────────────────────────────────────
+  // ── Desmos state ──────────────────────────────────────────
   let calculator = null;
 
-  // ── Init Desmos embed ─────────────────────────────────────
   function initDesmos() {
     const el = document.getElementById('desmos-container');
     if (!el || !window.Desmos) return;
@@ -106,12 +103,11 @@ Rules:
 
     // Default welcome graph
     calculator.setExpressions([
-      { id: 'welcome1', latex: 'y=x^{2}-4x+3',   color: '#00d4ff' },
-      { id: 'welcome2', latex: 'y=2x-3',          color: '#a78bfa', lineStyle: 'DASHED' },
+      { id: 'w1', latex: 'y=x^{2}-4x+3',   color: '#00d4ff' },
+      { id: 'w2', latex: 'y=2x-3',          color: '#a78bfa', lineStyle: 'DASHED' },
     ]);
   }
 
-  // ── Load expressions into Desmos ─────────────────────────
   function loadExpressions(expressions) {
     if (!calculator) return false;
     try {
@@ -124,41 +120,6 @@ Rules:
     }
   }
 
-  // ── Claude API call ───────────────────────────────────────
-  async function callClaude(desc) {
-    const key = window.getKey?.('anthropic') || '';
-    if (!key) return null;
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1024,
-        messages: [{ role: 'user', content: buildPrompt(desc) }]
-      })
-    });
-
-    if (!res.ok) {
-      const e = await res.json().catch(() => ({}));
-      throw new Error(e.error?.message || `API error ${res.status}`);
-    }
-
-    const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-
-    // Extract JSON robustly
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in Claude response');
-    return JSON.parse(jsonMatch[0]);
-  }
-
-  // ── Show AI results panel ────────────────────────────────
   function showResults(result) {
     const container = document.getElementById('desmos-ai-results');
     if (!container) return;
@@ -170,46 +131,13 @@ Rules:
       notesEl.textContent = result.teacherNotes;
     }
     if (questionsEl && Array.isArray(result.discussionQuestions)) {
-      questionsEl.innerHTML = result.discussionQuestions
-        .map(q => `<li>${q}</li>`)
-        .join('');
+      questionsEl.innerHTML = result.discussionQuestions.map(q => `<li>${q}</li>`).join('');
     }
     container.classList.remove('hidden');
     container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // ── Key bar setup ─────────────────────────────────────────
-  function setupKeyBar() {
-    const bar      = document.getElementById('desmos-key-bar');
-    const input    = document.getElementById('desmos-key-input');
-    const saveBtn  = document.getElementById('desmos-key-save');
-    const toggleBtn = document.getElementById('desmos-key-toggle');
-
-    toggleBtn?.addEventListener('click', () => {
-      bar?.classList.toggle('hidden');
-      if (!bar?.classList.contains('hidden')) input?.focus();
-    });
-
-    saveBtn?.addEventListener('click', () => {
-      const val = input?.value.trim();
-      if (val) {
-        window.setKey?.('anthropic', val);
-        window.showToast?.('Anthropic key saved — Generate Graph is now active!', 'success');
-        bar?.classList.add('hidden');
-        updateGenBtn();
-      }
-    });
-  }
-
-  // ── Update Generate button state ──────────────────────────
-  function updateGenBtn() {
-    const btn = document.getElementById('desmos-gen-btn');
-    if (!btn) return;
-    const hasKey = !!(window.getKey?.('anthropic'));
-    btn.title = hasKey ? '' : 'Add your Anthropic API key first';
-  }
-
-  // ── Main setup ────────────────────────────────────────────
+  // ── Setup ─────────────────────────────────────────────────
   function setup() {
     // Template chips
     const chipsContainer = document.getElementById('desmos-templates');
@@ -231,49 +159,14 @@ Rules:
       });
     }
 
-    // Auto-resize textarea
+    // Auto-resize description textarea
     const descTA = document.getElementById('desmos-desc');
     descTA?.addEventListener('input', () => {
       descTA.style.height = 'auto';
       descTA.style.height = Math.min(descTA.scrollHeight, 160) + 'px';
     });
 
-    // ── Generate Graph (with API key) ──────────────────────
-    document.getElementById('desmos-gen-btn')?.addEventListener('click', async () => {
-      const desc = document.getElementById('desmos-desc')?.value.trim();
-      if (!desc) { window.showToast?.('Describe your graph first', 'warning'); return; }
-
-      const key = window.getKey?.('anthropic') || '';
-      if (!key) {
-        window.showToast?.('Add your Anthropic key → click the 🔑 button', 'warning', 4000);
-        document.getElementById('desmos-key-bar')?.classList.remove('hidden');
-        document.getElementById('desmos-key-input')?.focus();
-        return;
-      }
-
-      const btn = document.getElementById('desmos-gen-btn');
-      btn.disabled = true;
-      btn.textContent = '⏳ Asking Claude...';
-
-      try {
-        const result = await callClaude(desc);
-        if (result?.expressions?.length) {
-          if (loadExpressions(result.expressions)) {
-            showResults(result);
-            window.showToast?.('Graph loaded! Check teacher notes below.', 'success');
-          }
-        } else {
-          throw new Error('No expressions returned');
-        }
-      } catch (e) {
-        window.showToast?.(`Error: ${e.message}`, 'error', 5000);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = '✨ Generate Graph';
-      }
-    });
-
-    // ── Copy AI Prompt (no API key) ────────────────────────
+    // Copy AI Prompt → open Claude
     document.getElementById('desmos-copy-prompt-btn')?.addEventListener('click', async () => {
       const desc = document.getElementById('desmos-desc')?.value.trim();
       if (!desc) { window.showToast?.('Describe your graph first', 'warning'); return; }
@@ -292,13 +185,13 @@ Rules:
       }
 
       window.open('https://claude.ai/', '_blank', 'noopener,noreferrer');
-      window.showToast?.('Prompt copied! Paste into Claude → copy the JSON → paste it below', 'success', 5000);
+      window.showToast?.('Prompt copied! Paste into Claude → copy the JSON → paste below', 'success', 5000);
     });
 
-    // ── Load pasted expressions ────────────────────────────
+    // Load pasted expressions into Desmos
     document.getElementById('desmos-load-btn')?.addEventListener('click', () => {
       const text = document.getElementById('desmos-paste-area')?.value.trim();
-      if (!text) { window.showToast?.('Paste Claude\'s JSON response first', 'warning'); return; }
+      if (!text) { window.showToast?.("Paste Claude's JSON response first", 'warning'); return; }
 
       const exprs = parsePasted(text);
       if (!exprs.length) {
@@ -307,29 +200,28 @@ Rules:
       }
       if (loadExpressions(exprs)) {
         window.showToast?.(`Loaded ${exprs.length} expression${exprs.length !== 1 ? 's' : ''} into Desmos!`, 'success');
+
+        // Try to show AI results if the paste contains teacherNotes
+        try {
+          const parsed = JSON.parse(document.getElementById('desmos-paste-area').value.trim());
+          if (parsed.teacherNotes || parsed.discussionQuestions) showResults(parsed);
+        } catch {}
       }
     });
 
-    // ── Clear ──────────────────────────────────────────────
+    // Clear
     document.getElementById('desmos-clear-btn')?.addEventListener('click', () => {
       calculator?.setBlank();
       document.getElementById('desmos-ai-results')?.classList.add('hidden');
     });
-
-    // ── Open full Desmos ───────────────────────────────────
-    // (handled by <a> tag in HTML)
-
-    setupKeyBar();
-    updateGenBtn();
   }
 
-  // ── Boot: wait for Desmos API ─────────────────────────────
+  // ── Boot ─────────────────────────────────────────────────
   function boot() {
     if (window.Desmos) {
       initDesmos();
       setup();
     } else {
-      // Desmos script not loaded yet — retry
       setTimeout(boot, 300);
     }
   }
