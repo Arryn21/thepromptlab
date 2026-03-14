@@ -702,115 +702,192 @@ End with a candid summary:
 
 
 <!-- ══════════════════════════════════════════════════════════
-     RTFC GENERATOR
+     PROMPT WORKSHOP
 ══════════════════════════════════════════════════════════ -->
-<section id="generator" aria-label="RTFC Prompt Builder">
+<section id="generator" aria-label="Prompt Workshop">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Prompt Formula</span>
-      <h2>Build Any Prompt with RTFC</h2>
-      <p><strong style="color:var(--accent-cyber)">R</strong>ole + <strong style="color:#10a37f">T</strong>ask + <strong style="color:#d97706">F</strong>ormat + <strong style="color:#6e5494">C</strong>riteria. Fill in the four fields and watch your prompt build in real time.</p>
+      <span class="section-tag">Prompt Workshop</span>
+      <h2>Write Better Prompts</h2>
+      <p>Two tools, one goal — prompts that get you exactly what you need. Copy a meta-prompt, paste it into ChatGPT or Claude, and let the AI do the engineering for you.</p>
     </div>
 
-    <div class="generator-layout">
-      <!-- Builder -->
-      <div class="builder-panel">
-        <h3>🏗 Prompt Builder</h3>
+    <!-- Mode toggle -->
+    <div class="pw-toggle" role="group" aria-label="Workshop mode">
+      <button class="pw-toggle-btn active" data-mode="build" id="pw-btn-build">
+        <span class="pw-toggle-icon">🔨</span>
+        <span>Build from Scratch</span>
+      </button>
+      <button class="pw-toggle-btn" data-mode="improve" id="pw-btn-improve">
+        <span class="pw-toggle-icon">🔧</span>
+        <span>Improve Existing</span>
+      </button>
+    </div>
 
-        <!-- Templates -->
-        <div class="template-row">
-          <div class="template-row-label">Start with a template:</div>
-          <div class="template-chips">
-            <button class="template-chip" data-template="Worksheet">Worksheet</button>
-            <button class="template-chip" data-template="Lesson Plan">Lesson Plan</button>
-            <button class="template-chip" data-template="Parent Email">Parent Email</button>
-            <button class="template-chip" data-template="Exit Ticket">Exit Ticket</button>
+    <!-- ── Mode 1: Build from Scratch ── -->
+    <div class="pw-panel" id="pw-panel-build">
+      <div class="pw-layout">
+
+        <div class="pw-explainer">
+          <div class="pw-explainer-title">How it works</div>
+          <div class="pw-steps">
+            <div class="pw-step">
+              <div class="pw-step-num">1</div>
+              <div>
+                <strong>Copy the meta-prompt</strong>
+                <p>Hit the copy button — it grabs the full prompt below.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">2</div>
+              <div>
+                <strong>Paste into ChatGPT or Claude</strong>
+                <p>The AI becomes your personal prompt architect.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">3</div>
+              <div>
+                <strong>Answer 5 questions</strong>
+                <p>It interviews you about your goal, audience, and ideal output.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">4</div>
+              <div>
+                <strong>Receive 3 polished versions</strong>
+                <p>Quick, Standard, and Advanced — with full explanations of every technique used.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pw-explainer-note">
+            <strong>Why this beats a form:</strong> The AI adapts to exactly what you need. A form gives you the same output no matter what. This gives you prompts written specifically for your subject, your students, and your tool of choice.
           </div>
         </div>
 
-        <div style="height:20px"></div>
-
-        <!-- R -->
-        <div class="rtfc-field">
-          <div class="rtfc-label">
-            <div class="rtfc-letter">R</div>
-            <span class="rtfc-label-text">Role</span>
-            <span class="rtfc-hint">— who is the AI acting as?</span>
+        <div class="pw-prompt-box">
+          <div class="pw-prompt-header">
+            <span class="pw-prompt-label">📋 Meta-Prompt — Build from Scratch</span>
+            <button class="pw-copy-btn" id="pw-copy-build">Copy Prompt</button>
           </div>
-          <input type="text" class="rtfc-input" id="rtfc-role"
-                 placeholder="e.g. experienced 9th grade Algebra 1 teacher"
-                 aria-label="Role field">
+          <pre class="pw-prompt-text" id="pw-text-build">You are a professional prompt engineer specializing in AI prompts for educators. Your job is to help me build a high-quality, production-ready prompt I can use with any AI tool.
+
+Work in two phases — do not skip ahead.
+
+─────────────────────────────────────────
+PHASE 1 — UNDERSTAND MY NEED
+─────────────────────────────────────────
+Ask me the following questions ONE AT A TIME. Wait for my full answer before asking the next one. Do not summarize my answers back to me — just ask the next question.
+
+1. What do you want the AI to produce? Be specific — not just "lesson plan" but what kind, for what topic, with what structure.
+
+2. Who is this for? Give me your grade level, subject, and anything about your students I should know (struggling learners, advanced, ELL, mixed ability, specific IEP needs, etc.)
+
+3. What does a perfect output look like? What must it include, and what must it never do or include?
+
+4. Have you tried any version of this prompt before? If yes, paste it here and tell me what was wrong with the result. If no, tell me what worries you about AI getting this wrong.
+
+5. Which AI tool will you use this prompt in — ChatGPT, Claude, or Gemini? This changes how I write it.
+
+─────────────────────────────────────────
+PHASE 2 — BUILD THREE VERSIONS
+─────────────────────────────────────────
+After I answer all 5 questions, produce the following. Do not start Phase 2 until I have answered every question.
+
+VERSION A — QUICK (2–4 sentences)
+A minimal but effective prompt that anyone can memorize, adapt on the fly, and use in under 30 seconds.
+After the prompt, explain: what makes even this short version work — what specific words are doing heavy lifting and why.
+
+VERSION B — STANDARD (100–200 words)
+A complete, professional prompt with role, task, context, format, and constraints clearly defined. This is the version most teachers should use daily.
+After the prompt, explain: every structural decision you made — why you chose this role, why you framed the task this way, what the format instruction accomplishes, and what the constraints prevent.
+
+VERSION C — ADVANCED (200–400 words)
+A power-user prompt built for maximum output quality. It must include:
+- A specific expert role with named credentials, experience level, and professional mindset
+- Rich context: who the students are, what they already know, what the teacher's goal is
+- An explicit output structure with labeled sections, approximate lengths, and formatting rules
+- Hard constraints: what to include, what to exclude, what tone to use, what to avoid
+- At least one concrete example embedded in the prompt showing the style or quality expected
+- A self-check instruction at the end: before outputting, the AI must verify it has met every requirement
+After the prompt, explain: every advanced technique used, what problem each one solves, and when a teacher should reach for this level of prompt vs. Version B.
+
+─────────────────────────────────────────
+FINAL — TEACH ME THE PRINCIPLES
+─────────────────────────────────────────
+Based on my specific use case, identify the 3 most important prompting principles I should internalize. For each one:
+- State the principle as a one-sentence rule
+- Show a before/after example (not from my prompt — write a new one) that isolates exactly how applying this principle changes the AI's output
+- Tell me when to apply it and when it's overkill</pre>
         </div>
 
-        <!-- T -->
-        <div class="rtfc-field">
-          <div class="rtfc-label">
-            <div class="rtfc-letter">T</div>
-            <span class="rtfc-label-text">Task</span>
-            <span class="rtfc-hint">— what should it create?</span>
-          </div>
-          <input type="text" class="rtfc-input" id="rtfc-task"
-                 placeholder="e.g. create a 10-question worksheet on solving two-step equations"
-                 aria-label="Task field">
-        </div>
-
-        <!-- F -->
-        <div class="rtfc-field">
-          <div class="rtfc-label">
-            <div class="rtfc-letter">F</div>
-            <span class="rtfc-label-text">Format</span>
-            <span class="rtfc-hint">— how should it be structured?</span>
-          </div>
-          <textarea class="rtfc-textarea" id="rtfc-format"
-                    placeholder="e.g. a clean printable with space for student work and a separate answer key page"
-                    aria-label="Format field"></textarea>
-        </div>
-
-        <!-- C -->
-        <div class="rtfc-field">
-          <div class="rtfc-label">
-            <div class="rtfc-letter">C</div>
-            <span class="rtfc-label-text">Criteria</span>
-            <span class="rtfc-hint">— what makes it good?</span>
-          </div>
-          <textarea class="rtfc-textarea" id="rtfc-criteria"
-                    placeholder="e.g. aligned to Common Core 8.EE.C.7, all answers integers only"
-                    aria-label="Criteria field"></textarea>
-        </div>
-
-        <div class="builder-actions">
-          <button class="btn btn-outline btn-sm" id="rtfc-clear">🗑 Clear</button>
-          <button class="btn btn-primary btn-sm" id="rtfc-copy">📋 Copy Prompt</button>
-          <button class="btn btn-maroon btn-sm" id="rtfc-to-arena">⚡ Send to Arena</button>
-        </div>
-      </div>
-
-      <!-- Preview -->
-      <div class="preview-panel">
-        <div class="preview-header">
-          <h3>Live Preview</h3>
-          <span class="preview-badge">● LIVE</span>
-        </div>
-
-        <div class="preview-box" id="rtfc-preview" aria-live="polite">
-          <span class="preview-empty">Your prompt will appear here as you type...</span>
-        </div>
-
-        <div class="preview-stats">
-          <div>Characters: <strong id="rtfc-char-count">0</strong></div>
-          <div>Words: <strong id="rtfc-word-count">0</strong></div>
-        </div>
-
-        <div class="preview-actions">
-          <button class="btn btn-primary btn-sm" id="rtfc-copy-2" onclick="document.getElementById('rtfc-copy').click()">📋 Copy</button>
-          <button class="btn btn-maroon btn-sm" onclick="document.getElementById('rtfc-to-arena').click()">⚡ Try in Arena</button>
-        </div>
-
-        <div style="padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-md);font-size:0.8rem;color:var(--text-muted);">
-          <strong style="color:var(--text-secondary)">💡 Pro tip:</strong> Fill in the [BRACKETS] with your specific topic, grade, and subject before sending to the AI.
-        </div>
       </div>
     </div>
+
+    <!-- ── Mode 2: Improve Existing ── -->
+    <div class="pw-panel hidden" id="pw-panel-improve">
+      <div class="pw-layout">
+
+        <div class="pw-explainer">
+          <div class="pw-explainer-title">How it works</div>
+          <div class="pw-steps">
+            <div class="pw-step">
+              <div class="pw-step-num">1</div>
+              <div>
+                <strong>Paste your existing prompt</strong>
+                <p>Type or paste any prompt you've written — even a rough one-liner.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">2</div>
+              <div>
+                <strong>Copy the combined output</strong>
+                <p>The box below auto-builds the full meta-prompt with your prompt embedded.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">3</div>
+              <div>
+                <strong>Paste into ChatGPT or Claude</strong>
+                <p>The AI diagnoses every weakness in your original.</p>
+              </div>
+            </div>
+            <div class="pw-step">
+              <div class="pw-step-num">4</div>
+              <div>
+                <strong>Get 3 rebuilt versions + lessons</strong>
+                <p>Fixed, Rebuilt, and Maximum Power — plus the skills you're missing and a reusable template.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pw-explainer-note">
+            <strong>Why this is powerful:</strong> Most prompt guides are generic. This is specific to YOUR prompt — the AI critiques exactly what you wrote, fixes exactly what's broken, and teaches you the skills you personally are missing.
+          </div>
+        </div>
+
+        <div class="pw-improve-right">
+          <div class="pw-prompt-box">
+            <div class="pw-prompt-header">
+              <span class="pw-prompt-label">✏️ Your Existing Prompt</span>
+              <span class="pw-char-count" id="pw-improve-chars">0 chars</span>
+            </div>
+            <textarea class="pw-improve-input" id="pw-improve-input"
+              placeholder="Paste any prompt here — even a rough one like: 'Write a worksheet on fractions for 6th graders'"
+              rows="5" aria-label="Your existing prompt"></textarea>
+          </div>
+
+          <div class="pw-prompt-box" id="pw-combined-box">
+            <div class="pw-prompt-header">
+              <span class="pw-prompt-label">📋 Combined Meta-Prompt — Copy This</span>
+              <button class="pw-copy-btn" id="pw-copy-improve">Copy Prompt</button>
+            </div>
+            <pre class="pw-prompt-text pw-combined-output" id="pw-combined-output">← Paste your prompt above and the full meta-prompt will appear here, ready to copy.</pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
