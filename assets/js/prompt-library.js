@@ -55,7 +55,7 @@
   }
 
   // ── Render ───────────────────────────────────────────────
-  function renderLibrary() {
+  function renderLibrary(animate = false) {
     const grid    = document.getElementById('prompts-grid');
     const countEl = document.getElementById('prompt-result-count');
     const pagEl   = document.getElementById('library-pagination');
@@ -65,31 +65,39 @@
     const totalPages = Math.ceil(filtered.length / PER_PAGE);
     currentPage      = Math.min(currentPage, totalPages || 1);
 
-    const start  = (currentPage - 1) * PER_PAGE;
-    const end    = Math.min(start + PER_PAGE, filtered.length);
-    const page   = filtered.slice(start, end);
+    const start = (currentPage - 1) * PER_PAGE;
+    const end   = Math.min(start + PER_PAGE, filtered.length);
+    const page  = filtered.slice(start, end);
 
-    if (countEl) {
-      if (filtered.length === 0) {
-        countEl.innerHTML = `<strong>0</strong> prompts found`;
-      } else {
-        countEl.innerHTML = `Showing <strong>${start + 1}–${end}</strong> of ${filtered.length} prompts`;
+    function applyContent() {
+      if (countEl) {
+        countEl.innerHTML = filtered.length === 0
+          ? `<strong>0</strong> prompts found`
+          : `Showing <strong>${start + 1}–${end}</strong> of ${filtered.length} prompts`;
       }
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results">
+            <div class="nr-icon">🔍</div>
+            <p>No prompts match your search. Try different keywords or clear filters.</p>
+          </div>`;
+        if (pagEl) pagEl.innerHTML = '';
+        return;
+      }
+      grid.innerHTML = page.map(p => renderCard(p)).join('');
+      attachCardListeners(grid);
+      renderPagination(filtered.length, totalPages, pagEl);
     }
 
-    if (filtered.length === 0) {
-      grid.innerHTML = `
-        <div class="no-results">
-          <div class="nr-icon">🔍</div>
-          <p>No prompts match your search. Try different keywords or clear filters.</p>
-        </div>`;
-      if (pagEl) pagEl.innerHTML = '';
-      return;
+    if (animate) {
+      grid.classList.add('pl-fade-out');
+      setTimeout(() => {
+        applyContent();
+        grid.classList.remove('pl-fade-out');
+      }, 160);
+    } else {
+      applyContent();
     }
-
-    grid.innerHTML = page.map(p => renderCard(p)).join('');
-    attachCardListeners(grid);
-    renderPagination(filtered.length, totalPages, pagEl);
   }
 
   // ── Pagination controls ───────────────────────────────────
@@ -124,22 +132,17 @@
       <button class="page-arrow-btn" id="page-next" ${nextDis} aria-label="Next page">Next →</button>`;
 
     container.querySelector('#page-prev')?.addEventListener('click', () => {
-      if (currentPage > 1) { currentPage--; renderLibrary(); scrollToLibrary(); }
+      if (currentPage > 1) { currentPage--; renderLibrary(true); }
     });
     container.querySelector('#page-next')?.addEventListener('click', () => {
-      if (currentPage < totalPages) { currentPage++; renderLibrary(); scrollToLibrary(); }
+      if (currentPage < totalPages) { currentPage++; renderLibrary(true); }
     });
     container.querySelectorAll('.page-num-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         currentPage = parseInt(btn.dataset.page);
-        renderLibrary();
-        scrollToLibrary();
+        renderLibrary(true);
       });
     });
-  }
-
-  function scrollToLibrary() {
-    document.getElementById('library')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function resetPage() { currentPage = 1; }

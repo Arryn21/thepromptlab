@@ -135,6 +135,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 14px;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.prompts-grid.pl-fade-out {
+  opacity: 0;
+  transform: translateY(10px);
 }
 
 .prompts-grid.list-view {
