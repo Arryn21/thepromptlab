@@ -90,12 +90,10 @@
     }
 
     if (animate) {
-      grid.style.minHeight = grid.offsetHeight + 'px';
       grid.classList.add('pl-fade-out');
       setTimeout(() => {
         applyContent();
         grid.classList.remove('pl-fade-out');
-        grid.style.minHeight = '';
       }, 160);
     } else {
       applyContent();
