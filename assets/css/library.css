@@ -466,6 +466,69 @@
 .sk-btn-row{ display: flex; gap: 6px; margin-top: auto; }
 .sk-btn    { height: 30px; flex: 1; border-radius: 8px; }
 
+/* ── Pagination ─────────────────────────────────────────────── */
+.library-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.page-arrow-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+.page-arrow-btn:hover:not(:disabled) {
+  border-color: var(--accent-cyber);
+  color: var(--accent-cyber);
+}
+.page-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-nums {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-num-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+.page-num-btn:hover { border-color: var(--accent-cyber); color: var(--accent-cyber); }
+.page-num-btn.active {
+  background: var(--accent-cyber);
+  border-color: var(--accent-cyber);
+  color: var(--bg-primary);
+}
+
+.page-ellipsis {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  padding: 0 4px;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .prompts-grid { grid-template-columns: 1fr; }

@@ -1,12 +1,14 @@
 /* prompt-library.js — Search, filter, copy, favorites, Try in Arena */
 
 (function () {
-  const FAV_KEY = 'pl_favorites_v1';
-  let allPrompts = [];
-  let favorites  = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
-  let currentFilter = { tool: 'all', category: 'all', search: '' };
-  let debounceTimer = null;
-  let currentView = 'grid';
+  const FAV_KEY       = 'pl_favorites_v1';
+  const PER_PAGE      = 6;
+  let allPrompts      = [];
+  let favorites       = JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
+  let currentFilter   = { tool: 'all', category: 'all', search: '' };
+  let debounceTimer   = null;
+  let currentView     = 'grid';
+  let currentPage     = 1;
 
   // ── Skeleton placeholders ─────────────────────────────────
   function showSkeletons(grid, count = 6) {
@@ -26,7 +28,7 @@
     const grid = document.getElementById('prompts-grid');
     if (grid) showSkeletons(grid);
     try {
-      const res = await fetch('assets/data/prompts.json');
+      const res  = await fetch('assets/data/prompts.json');
       const data = await res.json();
       allPrompts = data.prompts;
       renderLibrary();
@@ -40,9 +42,9 @@
   // ── Filter logic ─────────────────────────────────────────
   function getFiltered() {
     return allPrompts.filter(p => {
-      const toolOk = currentFilter.tool === 'all' || p.tool === currentFilter.tool;
-      const catOk  = currentFilter.category === 'all' || p.category === currentFilter.category;
-      const q = currentFilter.search.toLowerCase();
+      const toolOk   = currentFilter.tool === 'all' || p.tool === currentFilter.tool;
+      const catOk    = currentFilter.category === 'all' || p.category === currentFilter.category;
+      const q        = currentFilter.search.toLowerCase();
       const searchOk = !q ||
         p.title.toLowerCase().includes(q) ||
         p.template.toLowerCase().includes(q) ||
@@ -54,13 +56,25 @@
 
   // ── Render ───────────────────────────────────────────────
   function renderLibrary() {
-    const grid = document.getElementById('prompts-grid');
+    const grid    = document.getElementById('prompts-grid');
     const countEl = document.getElementById('prompt-result-count');
+    const pagEl   = document.getElementById('library-pagination');
     if (!grid) return;
 
-    const filtered = getFiltered();
+    const filtered   = getFiltered();
+    const totalPages = Math.ceil(filtered.length / PER_PAGE);
+    currentPage      = Math.min(currentPage, totalPages || 1);
+
+    const start  = (currentPage - 1) * PER_PAGE;
+    const end    = Math.min(start + PER_PAGE, filtered.length);
+    const page   = filtered.slice(start, end);
+
     if (countEl) {
-      countEl.innerHTML = `Showing <strong>${filtered.length}</strong> of ${allPrompts.length} prompts`;
+      if (filtered.length === 0) {
+        countEl.innerHTML = `<strong>0</strong> prompts found`;
+      } else {
+        countEl.innerHTML = `Showing <strong>${start + 1}–${end}</strong> of ${filtered.length} prompts`;
+      }
     }
 
     if (filtered.length === 0) {
@@ -69,48 +83,68 @@
           <div class="nr-icon">🔍</div>
           <p>No prompts match your search. Try different keywords or clear filters.</p>
         </div>`;
+      if (pagEl) pagEl.innerHTML = '';
       return;
     }
 
-    grid.innerHTML = filtered.map(p => renderCard(p)).join('');
+    grid.innerHTML = page.map(p => renderCard(p)).join('');
+    attachCardListeners(grid);
+    renderPagination(filtered.length, totalPages, pagEl);
+  }
 
-    // Attach event listeners
-    grid.querySelectorAll('.prompt-fav-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleFav(btn.dataset.id);
-      });
+  // ── Pagination controls ───────────────────────────────────
+  function renderPagination(total, totalPages, container) {
+    if (!container) return;
+    if (totalPages <= 1) { container.innerHTML = ''; return; }
+
+    const prevDis = currentPage === 1          ? 'disabled' : '';
+    const nextDis = currentPage === totalPages ? 'disabled' : '';
+
+    // Build page number buttons — show up to 5 around current page
+    let pageButtons = '';
+    const delta = 2;
+    const left  = Math.max(1, currentPage - delta);
+    const right = Math.min(totalPages, currentPage + delta);
+
+    if (left > 1) {
+      pageButtons += `<button class="page-num-btn" data-page="1">1</button>`;
+      if (left > 2) pageButtons += `<span class="page-ellipsis">…</span>`;
+    }
+    for (let i = left; i <= right; i++) {
+      pageButtons += `<button class="page-num-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    }
+    if (right < totalPages) {
+      if (right < totalPages - 1) pageButtons += `<span class="page-ellipsis">…</span>`;
+      pageButtons += `<button class="page-num-btn" data-page="${totalPages}">${totalPages}</button>`;
+    }
+
+    container.innerHTML = `
+      <button class="page-arrow-btn" id="page-prev" ${prevDis} aria-label="Previous page">← Prev</button>
+      <div class="page-nums">${pageButtons}</div>
+      <button class="page-arrow-btn" id="page-next" ${nextDis} aria-label="Next page">Next →</button>`;
+
+    container.querySelector('#page-prev')?.addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; renderLibrary(); scrollToLibrary(); }
     });
-
-    grid.querySelectorAll('.prompt-copy-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        copyPrompt(btn.dataset.id);
-      });
+    container.querySelector('#page-next')?.addEventListener('click', () => {
+      if (currentPage < totalPages) { currentPage++; renderLibrary(); scrollToLibrary(); }
     });
-
-    grid.querySelectorAll('.prompt-arena-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        tryInArena(btn.dataset.id);
-      });
-    });
-
-    grid.querySelectorAll('.prompt-expand-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        openModal(btn.dataset.id);
-      });
-    });
-
-    grid.querySelectorAll('.open-tool-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        openInTool(btn.dataset.id, btn.dataset.tool);
+    container.querySelectorAll('.page-num-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentPage = parseInt(btn.dataset.page);
+        renderLibrary();
+        scrollToLibrary();
       });
     });
   }
 
+  function scrollToLibrary() {
+    document.getElementById('library')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function resetPage() { currentPage = 1; }
+
+  // ── Card helpers ──────────────────────────────────────────
   function toolLabel(tool) {
     const map = { chatgpt: 'ChatGPT', claude: 'Claude', gemini: 'Gemini', copilot: 'Copilot' };
     return map[tool] || tool;
@@ -124,13 +158,9 @@
   };
 
   function renderCard(p) {
-    const isFav = favorites.includes(p.id);
-    const featured = p.featured
-      ? '<span class="featured-badge">★ Featured</span>' : '';
-    const tags = (p.tags || []).slice(0, 3).map(t =>
-      `<span class="prompt-tag">${t}</span>`).join('');
-
-    const toolUrl = TOOL_URLS[p.tool] || '#';
+    const isFav   = favorites.includes(p.id);
+    const featured = p.featured ? '<span class="featured-badge">★ Featured</span>' : '';
+    const tags     = (p.tags || []).slice(0, 3).map(t => `<span class="prompt-tag">${t}</span>`).join('');
     const toolName = toolLabel(p.tool);
 
     return `
@@ -161,6 +191,24 @@
       </article>`;
   }
 
+  function attachCardListeners(grid) {
+    grid.querySelectorAll('.prompt-fav-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); toggleFav(btn.dataset.id); });
+    });
+    grid.querySelectorAll('.prompt-copy-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); copyPrompt(btn.dataset.id); });
+    });
+    grid.querySelectorAll('.prompt-arena-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); tryInArena(btn.dataset.id); });
+    });
+    grid.querySelectorAll('.prompt-expand-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); openModal(btn.dataset.id); });
+    });
+    grid.querySelectorAll('.open-tool-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); openInTool(btn.dataset.id, btn.dataset.tool); });
+    });
+  }
+
   // ── Favorites ────────────────────────────────────────────
   function toggleFav(id) {
     const idx = favorites.indexOf(id);
@@ -172,8 +220,6 @@
       window.showToast?.('Saved to favorites ★', 'success', 1500);
     }
     localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
-
-    // Update button without full re-render
     const btn = document.querySelector(`.prompt-fav-btn[data-id="${id}"]`);
     if (btn) {
       const isFav = favorites.includes(id);
@@ -189,11 +235,9 @@
     navigator.clipboard.writeText(p.template).then(() => {
       window.showToast?.('Prompt copied to clipboard!', 'success', 2000);
     }).catch(() => {
-      // Fallback
       const ta = document.createElement('textarea');
       ta.value = p.template;
-      document.body.appendChild(ta);
-      ta.select();
+      document.body.appendChild(ta); ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
       window.showToast?.('Prompt copied!', 'success', 2000);
@@ -204,25 +248,11 @@
   function tryInArena(id) {
     const p = allPrompts.find(x => x.id === id);
     if (!p) return;
-
-    // Navigate to arena section
-    const arenaSection = document.getElementById('arena');
-    if (arenaSection) {
-      arenaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // Select matching tab
+    document.getElementById('arena')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setTimeout(() => {
       const tabMap = { chatgpt: 'tab-chatgpt', claude: 'tab-claude', gemini: 'tab-gemini', copilot: 'tab-copilot' };
-      const tabId = tabMap[p.tool];
-      if (tabId) {
-        document.getElementById(tabId)?.click();
-      }
-
-      // Pre-fill chat input
+      document.getElementById(tabMap[p.tool])?.click();
       setTimeout(() => {
-        const tool = p.tool === 'copilot' ? 'claude' : p.tool; // copilot uses claude tab
-        const input = document.querySelector(`#panel-${tool} .chat-input, #panel-copilot .chat-input`);
         const targetInput = document.querySelector(`#panel-${p.tool === 'copilot' ? 'copilot' : p.tool} .chat-input`);
         if (targetInput) {
           targetInput.value = p.template;
@@ -238,23 +268,18 @@
   function openInTool(id, tool) {
     const p = allPrompts.find(x => x.id === id);
     if (!p) return;
-    const toolUrl = TOOL_URLS[tool] || '#';
+    const toolUrl  = TOOL_URLS[tool] || '#';
     const toolName = toolLabel(tool);
-
-    // Copy to clipboard first
     navigator.clipboard.writeText(p.template).then(() => {
       window.showToast?.(`Prompt copied — paste it in ${toolName}!`, 'success', 3000);
     }).catch(() => {
       const ta = document.createElement('textarea');
       ta.value = p.template;
-      document.body.appendChild(ta);
-      ta.select();
+      document.body.appendChild(ta); ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
       window.showToast?.(`Prompt copied — paste it in ${toolName}!`, 'success', 3000);
     });
-
-    // Open tool in new tab
     window.open(toolUrl, '_blank', 'noopener');
   }
 
@@ -262,31 +287,20 @@
   function openModal(id) {
     const p = allPrompts.find(x => x.id === id);
     if (!p) return;
-
-    const modal = document.getElementById('prompt-modal');
+    const modal   = document.getElementById('prompt-modal');
     const content = document.getElementById('modal-body');
     if (!modal || !content) return;
-
     const vars = (p.variables || []).map(v => `<span class="modal-var">[${v}]</span>`).join('');
-
     content.innerHTML = `
       <span class="modal-tool-badge prompt-tool-badge"
             style="display:inline-block;margin-bottom:12px">${toolLabel(p.tool)}</span>
       <h3 class="modal-title">${escHtml(p.title)}</h3>
-
       <div class="modal-section-label">Template</div>
       <div class="modal-template">${escHtml(p.template)}</div>
-
-      ${p.example ? `
-      <div class="modal-section-label">Example (filled in)</div>
-      <div class="modal-example">${escHtml(p.example)}</div>
-      ` : ''}
-
-      ${p.variables?.length ? `
-      <div class="modal-section-label">Variables to fill in</div>
-      <div class="modal-variables">${vars}</div>
-      ` : ''}
-
+      ${p.example ? `<div class="modal-section-label">Example (filled in)</div>
+      <div class="modal-example">${escHtml(p.example)}</div>` : ''}
+      ${p.variables?.length ? `<div class="modal-section-label">Variables to fill in</div>
+      <div class="modal-variables">${vars}</div>` : ''}
       <div class="modal-actions">
         <button class="btn btn-primary btn-sm" onclick="
           navigator.clipboard.writeText(${JSON.stringify(p.template)});
@@ -303,22 +317,16 @@
         <a href="https://github.com/Arryn21/thepromptlab/issues/new?title=Prompt+suggestion:+${encodeURIComponent(p.title)}&body=Suggest+an+improvement+for+prompt+id:+${p.id}"
            target="_blank" class="btn btn-outline btn-sm">💡 Suggest Edit</a>
       </div>`;
-
     modal.classList.add('open');
   }
 
   // Close modal
-  const modalEl = document.getElementById('prompt-modal');
+  const modalEl    = document.getElementById('prompt-modal');
   const modalClose = document.getElementById('modal-close');
   if (modalClose) modalClose.addEventListener('click', () => modalEl?.classList.remove('open'));
-  modalEl?.addEventListener('click', e => {
-    if (e.target === modalEl) modalEl.classList.remove('open');
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') modalEl?.classList.remove('open');
-  });
+  modalEl?.addEventListener('click', e => { if (e.target === modalEl) modalEl.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') modalEl?.classList.remove('open'); });
 
-  // Expose for inline use
   window.tryInArena = tryInArena;
 
   // ── Filter controls ───────────────────────────────────────
@@ -327,7 +335,7 @@
       document.querySelectorAll('.filter-chip[data-tool]').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
       currentFilter.tool = chip.dataset.tool;
-      renderLibrary();
+      resetPage(); renderLibrary();
     });
   });
 
@@ -336,7 +344,7 @@
       document.querySelectorAll('.filter-chip[data-category]').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
       currentFilter.category = chip.dataset.category;
-      renderLibrary();
+      resetPage(); renderLibrary();
     });
   });
 
@@ -346,7 +354,7 @@
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
         currentFilter.search = searchInput.value;
-        renderLibrary();
+        resetPage(); renderLibrary();
       }, 150);
     });
   }
@@ -366,15 +374,17 @@
   const favFilterBtn = document.getElementById('filter-favorites');
   if (favFilterBtn) {
     favFilterBtn.addEventListener('click', () => {
+      const grid = document.getElementById('prompts-grid');
+      const pagEl = document.getElementById('library-pagination');
       if (favFilterBtn.classList.contains('active')) {
         favFilterBtn.classList.remove('active');
         currentFilter.search = searchInput?.value || '';
-        renderLibrary();
+        resetPage(); renderLibrary();
       } else {
         favFilterBtn.classList.add('active');
-        const grid = document.getElementById('prompts-grid');
         const favPrompts = allPrompts.filter(p => favorites.includes(p.id));
         if (!grid) return;
+        if (pagEl) pagEl.innerHTML = '';
         if (favPrompts.length === 0) {
           grid.innerHTML = '<div class="no-results"><div class="nr-icon">☆</div><p>No favorites yet. Click ☆ on any prompt to save it.</p></div>';
         } else {
@@ -385,21 +395,6 @@
     });
   }
 
-  function attachCardListeners(grid) {
-    grid.querySelectorAll('.prompt-fav-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); toggleFav(btn.dataset.id); });
-    });
-    grid.querySelectorAll('.prompt-copy-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); copyPrompt(btn.dataset.id); });
-    });
-    grid.querySelectorAll('.prompt-arena-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); tryInArena(btn.dataset.id); });
-    });
-    grid.querySelectorAll('.prompt-expand-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); openModal(btn.dataset.id); });
-    });
-  }
-
   // ── Utility ───────────────────────────────────────────────
   function escHtml(str) {
     return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -407,8 +402,6 @@
   }
 
   // ── Init ──────────────────────────────────────────────────
-  if (document.getElementById('prompts-grid')) {
-    loadPrompts();
-  }
+  if (document.getElementById('prompts-grid')) loadPrompts();
 
 })();
