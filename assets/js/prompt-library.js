@@ -90,12 +90,12 @@
     }
 
     if (animate) {
-      const savedY = window.scrollY;
+      grid.style.minHeight = grid.offsetHeight + 'px';
       grid.classList.add('pl-fade-out');
       setTimeout(() => {
         applyContent();
         grid.classList.remove('pl-fade-out');
-        window.scrollTo({ top: savedY, behavior: 'instant' });
+        grid.style.minHeight = '';
       }, 160);
     } else {
       applyContent();
