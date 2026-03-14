@@ -126,11 +126,10 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-maroon), var(--accent-cyber));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--accent-cyber);
+  display: block;
   margin: 0 auto 16px;
 }
 
