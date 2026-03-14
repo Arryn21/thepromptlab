@@ -44,6 +44,7 @@
       <a href="#tools">Tools</a>
       <a href="#arena">Arena</a>
       <a href="#library">Library</a>
+      <a href="#explainer">Explainer</a>
       <a href="#resources">Resources</a>
       <a href="#arena" class="nav-cta">Try Live ⚡</a>
     </nav>
@@ -967,6 +968,75 @@ Based on my specific use case, identify the 3 most important prompting principle
 
 
 <!-- ══════════════════════════════════════════════════════════
+     AI MATH CONCEPT EXPLAINER
+══════════════════════════════════════════════════════════ -->
+<section id="explainer" aria-label="AI Math Concept Explainer">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">AI Math Concept Explainer</h2>
+      <p class="section-subtitle">Type any math concept → get a complete AI prompt that returns teacher explanations, student-friendly breakdowns, common misconceptions, YouTube recommendations, interactive resources, and classroom activities.</p>
+    </div>
+
+    <div class="ce-layout">
+
+      <!-- Left: input + chips -->
+      <div class="ce-input-panel">
+        <div>
+          <div class="ce-input-label">Math Concept</div>
+          <input
+            id="ce-input"
+            type="text"
+            placeholder="e.g. Quadratic Formula, Derivatives, Law of Sines…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <div>
+          <div class="ce-chips-label">Quick concepts — click to fill:</div>
+          <div class="ce-chips" id="ce-chips"></div>
+        </div>
+
+        <div class="ce-how-it-works">
+          <h4>How it works</h4>
+          <ol class="ce-steps">
+            <li><span class="ce-step-num">1</span> Type a concept or click a chip above</li>
+            <li><span class="ce-step-num">2</span> The full AI prompt builds on the right</li>
+            <li><span class="ce-step-num">3</span> Hit <strong>Copy Prompt</strong></li>
+            <li><span class="ce-step-num">4</span> Paste into ChatGPT, Claude, or Gemini</li>
+            <li><span class="ce-step-num">5</span> Get: explanations + YouTube picks + resources + activities + exit tickets</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Right: live prompt preview -->
+      <div class="ce-prompt-panel">
+        <div class="ce-prompt-header">
+          <span class="ce-prompt-title">Your Prompt</span>
+          <span class="ce-char-count" id="ce-char-count"></span>
+        </div>
+
+        <div class="ce-prompt-box">
+          <pre class="ce-prompt-text" id="ce-prompt-preview">← Type a concept above and the full prompt will appear here, ready to copy.</pre>
+        </div>
+
+        <button class="ce-copy-btn" id="ce-copy-btn" disabled>
+          📋 Copy Full Prompt
+        </button>
+
+        <div class="ce-open-row">
+          <a href="https://chatgpt.com" target="_blank" rel="noopener" class="ce-open-btn chatgpt">ChatGPT ↗</a>
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="ce-open-btn claude">Claude ↗</a>
+          <a href="https://gemini.google.com" target="_blank" rel="noopener" class="ce-open-btn gemini">Gemini ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
      RESOURCES
 ══════════════════════════════════════════════════════════ -->
 <section id="resources" aria-label="Resources and downloads">
@@ -1188,6 +1258,7 @@ Based on my specific use case, identify the 3 most important prompting principle
 <script src="assets/js/prompt-generator.js" defer></script>
 <script src="assets/js/ai-arena.js" defer></script>
 <script src="assets/js/math-tools.js" defer></script>
+<script src="assets/js/concept-explainer.js" defer></script>
 
 </body>
 </html>
