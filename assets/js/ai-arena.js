@@ -1,8 +1,38 @@
-/* ai-arena.js — Tabbed chat, 3 API streaming parsers */
+/* ai-arena.js — Tabbed chat, 3 API streaming parsers + Cloudflare Worker proxy */
 
 (function () {
 
   const SYSTEM_PROMPT = 'You are a helpful assistant for high school math teachers at a CSUDH LIFT LAB workshop. Be concise, practical, and focused on math education.';
+
+  // ── Worker routing helpers ────────────────────────────────
+  function getWorkerURL() {
+    return (window.WORKER_URL || '').replace(/\/$/, '');
+  }
+
+  async function isWorkerSessionActive() {
+    const url = getWorkerURL();
+    if (!url) return false;
+    try {
+      const r = await fetch(`${url}/session/status`);
+      const data = await r.json();
+      return data.active === true;
+    } catch { return false; }
+  }
+
+  // Cache session status to avoid hammering worker on every message
+  let _sessionActiveCache = null;
+  let _sessionCacheTime = 0;
+  async function getSessionActive() {
+    const now = Date.now();
+    if (_sessionActiveCache !== null && now - _sessionCacheTime < 30000) {
+      return _sessionActiveCache;
+    }
+    _sessionActiveCache = await isWorkerSessionActive();
+    _sessionCacheTime = now;
+    return _sessionActiveCache;
+  }
+  // Invalidate cache when status badge updates (called by session.js)
+  window.invalidateSessionCache = () => { _sessionActiveCache = null; };
 
   // ── Tab switching ─────────────────────────────────────────
   document.querySelectorAll('.arena-tab').forEach(tab => {
@@ -89,17 +119,26 @@
       </div>`;
     }
 
-    function sendMessage() {
+    async function sendMessage() {
       const text = inputEl?.value.trim();
       if (!text) return;
 
-      const key = window.getKey?.(provider) || '';
-      if (!key) {
-        window.showToast?.(`Add your ${provider.charAt(0).toUpperCase()+provider.slice(1)} API key first`, 'warning', 3000);
-        keyBar?.classList.remove('hidden');
-        keyInput?.focus();
-        return;
+      // Check if worker session is active — if so, route through worker (no key needed)
+      const useWorker = await getSessionActive();
+
+      if (!useWorker) {
+        // Fall back to self-service key
+        const key = window.getKey?.(provider) || '';
+        if (!key) {
+          window.showToast?.(`Add your ${provider.charAt(0).toUpperCase()+provider.slice(1)} API key first`, 'warning', 3000);
+          keyBar?.classList.remove('hidden');
+          keyInput?.focus();
+          return;
+        }
       }
+
+      // Hide key bar when session is active
+      if (useWorker && keyBar) keyBar.classList.add('hidden');
 
       // Clear empty state
       const emptyEl = messagesEl?.querySelector('.chat-empty');
@@ -119,14 +158,15 @@
       sendBtn && (sendBtn.disabled = true);
 
       const model = modelSel?.value || getDefaultModel(provider);
+      const key = useWorker ? '' : (window.getKey?.(provider) || '');
 
-      // Dispatch to correct API
+      // Dispatch to correct API (worker or direct)
       if (provider === 'openai') {
-        streamOpenAI(key, model, text, typingId);
+        useWorker ? streamOpenAIWorker(model, text, typingId) : streamOpenAI(key, model, text, typingId);
       } else if (provider === 'anthropic') {
-        streamClaude(key, model, text, typingId);
+        useWorker ? streamClaudeWorker(model, text, typingId) : streamClaude(key, model, text, typingId);
       } else if (provider === 'google') {
-        streamGemini(key, model, text, typingId);
+        useWorker ? streamGeminiWorker(model, text, typingId) : streamGemini(key, model, text, typingId);
       }
     }
 
@@ -192,6 +232,96 @@
       }
       streaming = false;
       if (sendBtn) sendBtn.disabled = false;
+    }
+
+    // ── Worker proxy streams ─────────────────────────────────
+
+    async function streamOpenAIWorker(model, userMsg, typingId) {
+      let fullText = '';
+      try {
+        const res = await fetch(`${getWorkerURL()}/proxy/openai`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model,
+            stream: true,
+            messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history.slice(-10)]
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || `HTTP ${res.status}`);
+        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          for (const line of decoder.decode(value).split('\n')) {
+            if (!line.startsWith('data:')) continue;
+            const data = line.slice(5).trim();
+            if (data === '[DONE]') break;
+            try { const j = JSON.parse(data); fullText += j.choices?.[0]?.delta?.content || ''; streamingUpdate(typingId, fullText); } catch {}
+          }
+        }
+        finishStreaming(typingId, fullText);
+      } catch (e) { handleError(typingId, e.message); }
+    }
+
+    async function streamClaudeWorker(model, userMsg, typingId) {
+      let fullText = '';
+      try {
+        const res = await fetch(`${getWorkerURL()}/proxy/anthropic`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model, max_tokens: 1024, stream: true, system: SYSTEM_PROMPT, messages: history.slice(-10) })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error?.message || `HTTP ${res.status}`);
+        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          for (const line of decoder.decode(value).split('\n')) {
+            if (!line.startsWith('data:')) continue;
+            try { const j = JSON.parse(line.slice(5).trim()); if (j.type === 'content_block_delta') { fullText += j.delta?.text || ''; streamingUpdate(typingId, fullText); } } catch {}
+          }
+        }
+        finishStreaming(typingId, fullText);
+      } catch (e) { handleError(typingId, e.message); }
+    }
+
+    async function streamGeminiWorker(model, userMsg, typingId) {
+      let fullText = '';
+      try {
+        const geminiHistory = history.slice(-10).map(m => ({
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: m.content }]
+        }));
+        const res = await fetch(`${getWorkerURL()}/proxy/google?model=${encodeURIComponent(model)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] }, contents: geminiHistory, generationConfig: { maxOutputTokens: 1024 } })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error?.message || `HTTP ${res.status}`);
+        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          for (const line of decoder.decode(value).split('\n')) {
+            if (!line.startsWith('data:')) continue;
+            try { const j = JSON.parse(line.slice(5).trim()); fullText += j.candidates?.[0]?.content?.parts?.[0]?.text || ''; streamingUpdate(typingId, fullText); } catch {}
+          }
+        }
+        finishStreaming(typingId, fullText);
+      } catch (e) { handleError(typingId, e.message); }
     }
 
     // ── OpenAI SSE ───────────────────────────────────────────

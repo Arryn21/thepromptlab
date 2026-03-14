@@ -87,12 +87,26 @@
         openModal(btn.dataset.id);
       });
     });
+
+    grid.querySelectorAll('.open-tool-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        openInTool(btn.dataset.id, btn.dataset.tool);
+      });
+    });
   }
 
   function toolLabel(tool) {
     const map = { chatgpt: 'ChatGPT', claude: 'Claude', gemini: 'Gemini', copilot: 'Copilot' };
     return map[tool] || tool;
   }
+
+  const TOOL_URLS = {
+    chatgpt: 'https://chatgpt.com/',
+    claude:  'https://claude.ai/',
+    gemini:  'https://gemini.google.com/',
+    copilot: 'https://github.com/features/copilot'
+  };
 
   function renderCard(p) {
     const isFav = favorites.includes(p.id);
@@ -101,11 +115,14 @@
     const tags = (p.tags || []).slice(0, 3).map(t =>
       `<span class="prompt-tag">${t}</span>`).join('');
 
+    const toolUrl = TOOL_URLS[p.tool] || '#';
+    const toolName = toolLabel(p.tool);
+
     return `
       <article class="prompt-card fade-in" data-tool="${p.tool}" data-id="${p.id}">
         ${featured}
         <div class="prompt-card-header">
-          <span class="prompt-tool-badge">${toolLabel(p.tool)}</span>
+          <span class="prompt-tool-badge">${toolName}</span>
           <button class="prompt-fav-btn ${isFav ? 'active' : ''}"
                   data-id="${p.id}"
                   aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
@@ -120,6 +137,11 @@
           <button class="prompt-copy-btn" data-id="${p.id}">📋 Copy</button>
           <button class="prompt-arena-btn" data-id="${p.id}">⚡ Try</button>
           <button class="prompt-expand-btn" data-id="${p.id}">↗ View</button>
+        </div>
+        <div class="card-open-row">
+          <button class="open-tool-btn" data-id="${p.id}" data-tool="${p.tool}" title="Copy prompt and open ${toolName}">
+            📋 Copy + Open in ${toolName} ↗
+          </button>
         </div>
       </article>`;
   }
@@ -195,6 +217,30 @@
         window.showToast?.(`"${p.title}" loaded in Arena`, 'success', 2500);
       }, 400);
     }, 600);
+  }
+
+  // ── Open in Tool ──────────────────────────────────────────
+  function openInTool(id, tool) {
+    const p = allPrompts.find(x => x.id === id);
+    if (!p) return;
+    const toolUrl = TOOL_URLS[tool] || '#';
+    const toolName = toolLabel(tool);
+
+    // Copy to clipboard first
+    navigator.clipboard.writeText(p.template).then(() => {
+      window.showToast?.(`Prompt copied — paste it in ${toolName}!`, 'success', 3000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = p.template;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      window.showToast?.(`Prompt copied — paste it in ${toolName}!`, 'success', 3000);
+    });
+
+    // Open tool in new tab
+    window.open(toolUrl, '_blank', 'noopener');
   }
 
   // ── Modal ─────────────────────────────────────────────────

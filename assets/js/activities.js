@@ -1,12 +1,12 @@
-/* activities.js — Countdown timers for 4 hands-on activity blocks */
+/* activities.js — Countdown timers for 4 breakout activity cards (5-hour format) */
 
 (function () {
 
   const ACTIVITIES = [
-    { id: 'activity-1', duration: 300 },  // 5 min
-    { id: 'activity-2', duration: 480 },  // 8 min
-    { id: 'activity-3', duration: 480 },  // 8 min
-    { id: 'activity-4', duration: 600 },  // 10 min
+    { id: 'activity-1', duration: 1800 },  // 30 min — Prompt Makeover
+    { id: 'activity-2', duration: 1800 },  // 30 min — Differentiation Challenge
+    { id: 'activity-3', duration: 1800 },  // 30 min — AI Showdown
+    { id: 'activity-4', duration: 1800 },  // 30 min — Math Viz Challenge
   ];
 
   ACTIVITIES.forEach(({ id, duration }) => {
@@ -31,10 +31,11 @@
       if (remaining === 0) {
         display.style.color = '#ef4444';
         btn.textContent = 'Reset';
-        window.showToast?.(`⏰ Time's up for Activity ${id.split('-')[1]}!`, 'warning', 5000);
+        window.showToast?.(`⏰ Time's up! Wrap up and share back to the main room.`, 'warning', 6000);
         running = false;
         clearInterval(interval);
-      } else if (remaining <= 30) {
+      } else if (remaining <= 120) {
+        // Last 2 minutes — yellow warning
         display.style.color = '#f0c040';
       } else {
         display.style.color = 'var(--accent-cyber)';
@@ -45,7 +46,6 @@
 
     btn.addEventListener('click', () => {
       if (remaining === 0) {
-        // Reset
         remaining = duration;
         running = false;
         clearInterval(interval);

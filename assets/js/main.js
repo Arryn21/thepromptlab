@@ -156,16 +156,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ── GSAP scroll animations (tool cards stagger) ───────────
+  // ── GSAP scroll animations ────────────────────────────────
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Section headers: fade + slide up
+    gsap.utils.toArray('.section-header').forEach(el => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        opacity: 0,
+        y: 30,
+        duration: 0.7,
+        ease: 'power2.out'
+      });
+    });
+
+    // Tool cards: stagger from bottom
     gsap.utils.toArray('.tool-card').forEach((card, i) => {
       gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-        },
+        scrollTrigger: { trigger: card, start: 'top 88%' },
         opacity: 0,
         y: 40,
         duration: 0.6,
@@ -174,6 +183,43 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
+    // Library / gallery cards: stagger on scroll
+    gsap.utils.toArray('.gallery-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 90%' },
+        opacity: 0,
+        y: 30,
+        duration: 0.5,
+        delay: i * 0.08,
+        ease: 'power2.out'
+      });
+    });
+
+    // Breakout cards
+    gsap.utils.toArray('.breakout-card').forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: 'top 90%' },
+        opacity: 0,
+        y: 30,
+        duration: 0.55,
+        delay: i * 0.1,
+        ease: 'power2.out'
+      });
+    });
+
+    // Survey steps
+    gsap.utils.toArray('.survey-step').forEach((el, i) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 90%' },
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        delay: i * 0.12,
+        ease: 'power2.out'
+      });
+    });
+
+    // Agenda items
     gsap.utils.toArray('.agenda-item').forEach((item, i) => {
       gsap.from(item, {
         scrollTrigger: { trigger: item, start: 'top 88%' },
@@ -185,5 +231,52 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+
+  // ── Survey mode toggle ────────────────────────────────────
+  const START_PROMPT = `Act as an AI literacy coach. Help me build my "AI Habits Profile" by asking these 5 questions ONE AT A TIME (wait for my response before the next):
+
+1. Which AI tools have you used? (ChatGPT, Claude, Gemini, Copilot, none, other)
+2. How often do you use AI for teaching? (Daily / Few times/week / Occasionally / Never)
+3. What do you mainly use AI for in your classroom? (lesson plans, worksheets, student feedback, explanations, parent emails, grading, other — pick all that apply)
+4. Rate your prompt-writing confidence 1–5
+   (1=never written a prompt, 5=I get exactly what I want every time)
+5. What's your biggest hesitation about AI in your classroom?
+
+After I answer all 5, output a formatted table:
+"My AI Habits Profile" | Category | My Answer | Level
+Add one final row: "My #1 goal for today's workshop" — based on my answers.`;
+
+  const END_PROMPT = `Based on what you learned today in the LIFT LAB AI workshop, update your AI Habits Profile. Reflect on:
+
+1. Which AI tools did you actually try today?
+2. Did your confidence level change? New rating 1–5?
+3. What's one specific thing you'll use AI for in your classroom next week?
+4. What's still your biggest hesitation — did it change?
+5. What was your most surprising moment today?
+
+After I answer, output an updated "My AI Habits Profile" table comparing Before/After, and add a final row: "My first AI task for next week" — based on my answers.`;
+
+  window.setSurveyMode = function(mode, btn) {
+    document.querySelectorAll('.survey-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const textEl = document.getElementById('survey-prompt-text');
+    if (textEl) textEl.textContent = mode === 'end' ? END_PROMPT : START_PROMPT;
+  };
+
+  window.copySurveyPrompt = function() {
+    const textEl = document.getElementById('survey-prompt-text');
+    const text = textEl ? textEl.textContent : START_PROMPT;
+    navigator.clipboard.writeText(text).then(() => {
+      window.showToast?.('Diagnostic prompt copied! Paste it into ChatGPT, Claude, or Gemini.', 'success', 3500);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      window.showToast?.('Prompt copied!', 'success', 2500);
+    });
+  };
 
 });

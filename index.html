@@ -40,10 +40,10 @@
     </a>
 
     <nav class="nav-links" role="navigation" aria-label="Main navigation">
-      <a href="#about">About</a>
+      <a href="#survey">Survey</a>
       <a href="#tools">Tools</a>
       <a href="#arena">Arena</a>
-      <a href="#generator">Generator</a>
+      <a href="#gallery">Gallery</a>
       <a href="#library">Library</a>
       <a href="#activities">Activities</a>
       <a href="#resources">Resources</a>
@@ -131,7 +131,7 @@
     <div class="hero-info-row fade-in">
       <div class="hero-info-item">
         <span class="icon" aria-hidden="true">📅</span>
-        March 17, 2026 · 6–8 PM PT
+        March 17, 2026 · 5-Hour Session
       </div>
       <div class="hero-info-item">
         <span class="icon" aria-hidden="true">💻</span>
@@ -163,7 +163,7 @@
     <div class="section-header">
       <span class="section-tag">About</span>
       <h2>Tonight's Agenda</h2>
-      <p>Two hours of hands-on AI exploration designed specifically for high school math teachers in the LAUSD, Compton USD, and Torrance USD area.</p>
+      <p>Five hours of hands-on AI exploration designed specifically for high school math teachers in the LAUSD, Compton USD, and Torrance USD area. Four tool blocks, four breakout activities, and a group showcase.</p>
     </div>
 
     <div class="about-grid">
@@ -251,6 +251,64 @@
           <p style="font-size:0.875rem;">The question isn't <em>whether</em> to use AI — it's <em>how to use it well.</em></p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGNOSTIC SURVEY
+══════════════════════════════════════════════════════════ -->
+<section id="survey" aria-label="Pre-workshop diagnostic survey">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Before We Start</span>
+      <h2>Build Your AI Habits Profile</h2>
+      <p>Takes 3 minutes. Paste the prompt below into any AI tool — it'll ask you 5 questions and generate a personal profile to share with the group.</p>
+    </div>
+
+    <!-- Start / End toggle -->
+    <div class="survey-toggle" role="group" aria-label="Survey timing">
+      <button class="survey-toggle-btn active" data-survey="start" onclick="setSurveyMode('start',this)">Start of Workshop</button>
+      <button class="survey-toggle-btn" data-survey="end" onclick="setSurveyMode('end',this)">End of Workshop</button>
+    </div>
+
+    <!-- Steps -->
+    <div class="survey-steps">
+      <div class="survey-step fade-in">
+        <div class="survey-step-num">1</div>
+        <h3>Copy the diagnostic prompt</h3>
+        <p>Hit the big copy button below to grab the full prompt.</p>
+      </div>
+      <div class="survey-step fade-in">
+        <div class="survey-step-num">2</div>
+        <h3>Paste into ChatGPT, Claude, or Gemini</h3>
+        <p>Answer its 5 questions one at a time — the AI will wait for each response before continuing.</p>
+      </div>
+      <div class="survey-step fade-in">
+        <div class="survey-step-num">3</div>
+        <h3>Share your AI Habits Profile</h3>
+        <p>Screenshot the final table or read it aloud during the group share-back.</p>
+      </div>
+    </div>
+
+    <!-- Prompt box -->
+    <div class="survey-prompt-box">
+      <div class="survey-prompt-text" id="survey-prompt-text">Act as an AI literacy coach. Help me build my "AI Habits Profile" by asking these 5 questions ONE AT A TIME (wait for my response before the next):
+
+1. Which AI tools have you used? (ChatGPT, Claude, Gemini, Copilot, none, other)
+2. How often do you use AI for teaching? (Daily / Few times/week / Occasionally / Never)
+3. What do you mainly use AI for in your classroom? (lesson plans, worksheets, student feedback, explanations, parent emails, grading, other — pick all that apply)
+4. Rate your prompt-writing confidence 1–5
+   (1=never written a prompt, 5=I get exactly what I want every time)
+5. What's your biggest hesitation about AI in your classroom?
+
+After I answer all 5, output a formatted table:
+"My AI Habits Profile" | Category | My Answer | Level
+Add one final row: "My #1 goal for today's workshop" — based on my answers.</div>
+      <button class="survey-copy-btn" id="survey-copy-btn" onclick="copySurveyPrompt()">
+        📋 Copy Diagnostic Prompt
+      </button>
     </div>
   </div>
 </section>
@@ -684,6 +742,147 @@
 
 
 <!-- ══════════════════════════════════════════════════════════
+     AI OUTPUT GALLERY
+══════════════════════════════════════════════════════════ -->
+<section id="gallery" aria-label="AI output examples">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">See It In Action</span>
+      <h2>Real AI Outputs for Math Teachers</h2>
+      <p>No API key needed — these are real prompts with real AI-generated results you can use as templates.</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Worksheet</span>
+          <span class="gallery-tool-badge">ChatGPT</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Act as an experienced 9th grade Algebra teacher. Create a 10-question worksheet on solving two-step equations. Include space for student work and a separate answer key. All answers should be integers.</div>
+          <div class="gallery-output-label">AI Output (excerpt)</div>
+          <div class="gallery-output-text">Name: _______ Date: _______ Period: _____
+
+<strong>Two-Step Equations Practice</strong>
+
+Directions: Solve each equation. Show all work.
+
+1) 2x + 5 = 13      x = ___
+2) 3y – 7 = 14      y = ___
+3) –4n + 9 = –3     n = ___
+[...10 problems total]
+
+<strong>Answer Key:</strong> 1) x=4  2) y=7  3) n=3  ...</div>
+        </div>
+      </div>
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Explanation</span>
+          <span class="gallery-tool-badge">Claude</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Explain slope to a 9th grader who struggles with fractions. Use a real-world analogy they would relate to. Keep it under 150 words.</div>
+          <div class="gallery-output-label">AI Output</div>
+          <div class="gallery-output-text">Think of slope like a ramp at a skatepark. If the ramp rises 3 feet for every 4 feet you move forward, the slope is 3/4 — that's rise over run.
+
+A steeper ramp = bigger slope number. A flat surface = slope of 0. A ramp going downhill = negative slope.
+
+In math, slope tells you: "for every 1 step right, how many steps up (or down) do I go?" That's it. Rise ÷ Run. Steep hill vs. gentle hill.</div>
+        </div>
+      </div>
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Differentiation</span>
+          <span class="gallery-tool-badge">Claude</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Create an explanation of the Pythagorean theorem for three reading levels: below grade level (5th grade reading), on grade level (9th grade), and advanced (honors). Same concept, different depth.</div>
+          <div class="gallery-output-label">AI Output (excerpt)</div>
+          <div class="gallery-output-text"><strong>Below Level:</strong> In a right triangle, the two shorter sides have a special relationship with the longest side. If you square each short side and add them, you get the square of the longest side: a² + b² = c².
+
+<strong>On Level:</strong> The Pythagorean theorem states that for any right triangle with legs a and b and hypotenuse c: a² + b² = c². This lets us find any missing side.
+
+<strong>Advanced:</strong> The theorem generalizes beyond Euclidean geometry — in non-Euclidean spaces, this relationship changes, forming the basis of Einstein's spacetime metric...</div>
+        </div>
+      </div>
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Parent Email</span>
+          <span class="gallery-tool-badge">ChatGPT</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Write a professional, warm parent email explaining that a student is struggling with the quadratic unit. Suggest 2 concrete ways the parent can help at home. Keep it under 200 words.</div>
+          <div class="gallery-output-label">AI Output</div>
+          <div class="gallery-output-text">Dear [Parent/Guardian],
+
+I'm reaching out because I want to make sure [Student] has the support they need in our current unit on quadratic functions.
+
+While [Student] shows great effort in class, they're having difficulty connecting the algebraic process to the visual graph. Here's how you can help:
+
+1. <strong>Khan Academy:</strong> Search "quadratic functions" — 10 min/night of practice videos makes a real difference.
+2. <strong>Ask them to teach you:</strong> Have them explain what a parabola is using the word "vertex." If they can explain it simply, they understand it.
+
+I'm available during office hours (Tue/Thu 3–4 PM) and happy to schedule a call.
+
+Warm regards,
+[Your Name]</div>
+        </div>
+      </div>
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Lesson Plan</span>
+          <span class="gallery-tool-badge">ChatGPT</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Design a 60-minute lesson plan for teaching the Pythagorean theorem to 9th graders. Include warm-up, direct instruction, guided practice, and an exit ticket. Align to CCSS 8.G.B.7.</div>
+          <div class="gallery-output-label">AI Output (excerpt)</div>
+          <div class="gallery-output-text"><strong>Standard:</strong> CCSS 8.G.B.7 — Apply the Pythagorean theorem
+
+<strong>Warm-Up (8 min):</strong> Show a right triangle on screen. Ask: "What's special about this triangle?"
+
+<strong>Direct Instruction (15 min):</strong> Introduce a² + b² = c² with a visual proof using squares drawn on each side...
+
+<strong>Guided Practice (20 min):</strong> Partner work — 6 problems increasing in difficulty...
+
+<strong>Exit Ticket (5 min):</strong> "A ladder 10 ft long leans against a wall. The base is 6 ft from the wall. How high does the ladder reach?"</div>
+        </div>
+      </div>
+
+      <div class="gallery-card fade-in">
+        <div class="gallery-card-header">
+          <span class="gallery-category-badge">Visualization</span>
+          <span class="gallery-tool-badge">Math Visualizer</span>
+        </div>
+        <div class="gallery-card-body">
+          <div class="gallery-prompt-label">Prompt Used</div>
+          <div class="gallery-prompt-text">Graph y = x² - 4x + 3, mark the vertex and x-intercepts with labeled points, use a dark background</div>
+          <div class="gallery-output-label">What it generates</div>
+          <div class="gallery-output-text">Claude writes matplotlib Python code → Pyodide runs it in your browser → you get a dark-themed parabola with:
+• Vertex labeled at (2, –1)
+• X-intercepts labeled at (1, 0) and (3, 0)
+• Color-coded annotations
+• Download as PNG button
+
+<em>Try it live in the Math Visualizer tab above →</em></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
      PROMPT LIBRARY
 ══════════════════════════════════════════════════════════ -->
 <section id="library" aria-label="Prompt library">
@@ -753,76 +952,186 @@
 
 
 <!-- ══════════════════════════════════════════════════════════
-     ACTIVITIES
+     ACTIVITIES (5-hour format)
 ══════════════════════════════════════════════════════════ -->
-<section id="activities" aria-label="Hands-on activities">
+<section id="activities" aria-label="Workshop activities and schedule">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Hands-On</span>
-      <h2>Try It Yourself</h2>
-      <p>Four timed activities tonight. Use the timers to keep pace during the workshop.</p>
+      <span class="section-tag">5-Hour Workshop</span>
+      <h2>Session Schedule &amp; Breakout Activities</h2>
+      <p>Four breakout room activities — one per tool block. Use the timers to keep pace. Each activity ends with a share-back to the main room.</p>
     </div>
 
-    <div class="activities-grid">
-      <div class="activity-card fade-in" id="activity-1">
-        <div class="activity-num">Activity 01 · ChatGPT</div>
-        <h3>Build Your First Worksheet</h3>
-        <p>Use the RTFC formula to create a practice worksheet for one of your actual units. Ask for an answer key.</p>
-        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
-          <li>Pick a topic you're teaching next week</li>
-          <li>Fill in the Worksheet template in the RTFC builder</li>
-          <li>Compare your result with a neighbor</li>
+    <!-- Session Schedule -->
+    <h3 style="font-size:0.875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px">Today's Schedule</h3>
+    <div class="schedule-grid">
+      <div class="schedule-block">
+        <div class="schedule-time">0:00 – 0:20</div>
+        <div class="schedule-name">Intro + AI Habits Survey</div>
+        <div class="schedule-desc">Welcome, diagnostic survey, goals</div>
+      </div>
+      <div class="schedule-block">
+        <div class="schedule-time">0:20 – 1:20</div>
+        <div class="schedule-name">ChatGPT Block</div>
+        <div class="schedule-desc">Teach (30 min) + Practice (30 min)</div>
+      </div>
+      <div class="schedule-block break">
+        <div class="schedule-time">1:20 – 1:30</div>
+        <div class="schedule-name">Break</div>
+        <div class="schedule-desc">Stretch &amp; reset</div>
+      </div>
+      <div class="schedule-block">
+        <div class="schedule-time">1:30 – 2:30</div>
+        <div class="schedule-name">Claude Block</div>
+        <div class="schedule-desc">Teach (30 min) + Practice (30 min)</div>
+      </div>
+      <div class="schedule-block break">
+        <div class="schedule-time">2:30 – 2:40</div>
+        <div class="schedule-name">Break</div>
+        <div class="schedule-desc">Stretch &amp; reset</div>
+      </div>
+      <div class="schedule-block">
+        <div class="schedule-time">2:40 – 3:40</div>
+        <div class="schedule-name">Gemini Block</div>
+        <div class="schedule-desc">Teach (30 min) + Practice (30 min)</div>
+      </div>
+      <div class="schedule-block break">
+        <div class="schedule-time">3:40 – 3:50</div>
+        <div class="schedule-name">Break</div>
+        <div class="schedule-desc">Stretch &amp; reset</div>
+      </div>
+      <div class="schedule-block">
+        <div class="schedule-time">3:50 – 4:30</div>
+        <div class="schedule-name">Math Visualizer</div>
+        <div class="schedule-desc">Teach + live demo</div>
+      </div>
+      <div class="schedule-block" style="border-color:rgba(134,38,51,0.3);background:rgba(134,38,51,0.06)">
+        <div class="schedule-time">4:30 – 5:00</div>
+        <div class="schedule-name">Group Challenge</div>
+        <div class="schedule-desc">Breakout + showcase</div>
+      </div>
+    </div>
+
+    <!-- Breakout Activities -->
+    <h3 style="font-size:0.875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;margin-top:40px">Breakout Room Activities</h3>
+    <div class="breakout-grid">
+
+      <!-- Activity 1: Prompt Makeover -->
+      <div class="breakout-card fade-in" id="activity-1" style="--tool-color:#10a37f">
+        <div class="breakout-header">
+          <div class="breakout-num">1</div>
+          <span class="breakout-tool-badge">ChatGPT</span>
+          <span class="breakout-time-badge">⏱ 30 min</span>
+        </div>
+        <h3>Prompt Makeover</h3>
+        <p>Fix a bad prompt using the RTFC framework. Show your group the before and after — see how much better the output gets.</p>
+        <ul class="breakout-steps">
+          <li data-n="1">Start with this weak prompt: <em>"Make a worksheet on algebra"</em></li>
+          <li data-n="2">Use the RTFC builder to add Role, Task, Format, and Criteria</li>
+          <li data-n="3">Send both versions to ChatGPT — compare the outputs side-by-side</li>
+          <li data-n="4">Note 3 specific improvements in the second output</li>
         </ul>
+        <div class="share-back-list">
+          <div class="share-label">Share Back to Room</div>
+          <ul>
+            <li>Your original weak prompt</li>
+            <li>Your improved RTFC prompt</li>
+            <li>The biggest quality difference you noticed</li>
+          </ul>
+        </div>
         <div class="activity-timer">
-          <div class="timer-display" aria-live="polite">05:00</div>
+          <div class="timer-display" aria-live="polite">30:00</div>
           <button class="timer-btn" aria-label="Start timer">Start</button>
         </div>
       </div>
 
-      <div class="activity-card fade-in" id="activity-2">
-        <div class="activity-num">Activity 02 · Claude</div>
-        <h3>Student-Friendly Explainer</h3>
-        <p>Ask Claude to explain a concept your students always struggle with — at student level, with an analogy.</p>
-        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
-          <li>Use the Claude tab in AI Arena</li>
-          <li>Try the Student-Friendly Explainer prompt</li>
-          <li>Then try the "dual-audience version" from the library</li>
+      <!-- Activity 2: Differentiation Challenge -->
+      <div class="breakout-card fade-in" id="activity-2" style="--tool-color:#d97706">
+        <div class="breakout-header">
+          <div class="breakout-num">2</div>
+          <span class="breakout-tool-badge">Claude</span>
+          <span class="breakout-time-badge">⏱ 30 min</span>
+        </div>
+        <h3>Differentiation Challenge</h3>
+        <p>Create the same content at 3 reading levels for one topic your group chooses. One prompt, three audiences.</p>
+        <ul class="breakout-steps">
+          <li data-n="1">Group picks a math concept (e.g., slope, fractions, quadratics)</li>
+          <li data-n="2">Use Claude to generate: below grade level, on grade, and honors versions</li>
+          <li data-n="3">Compare: What changed? What stayed the same?</li>
+          <li data-n="4">Try one follow-up: "Add a visual analogy to the below-level version"</li>
         </ul>
+        <div class="share-back-list">
+          <div class="share-label">Share Back to Room</div>
+          <ul>
+            <li>Your topic and the 3 versions</li>
+            <li>Which version surprised you most</li>
+            <li>One thing you'd change before using in class</li>
+          </ul>
+        </div>
         <div class="activity-timer">
-          <div class="timer-display" aria-live="polite">08:00</div>
+          <div class="timer-display" aria-live="polite">30:00</div>
           <button class="timer-btn" aria-label="Start timer">Start</button>
         </div>
       </div>
 
-      <div class="activity-card fade-in" id="activity-3">
-        <div class="activity-num">Activity 03 · Gemini</div>
-        <h3>Classroom Visual Generator</h3>
-        <p>Generate a classroom poster or flyer using Gemini's image generation. No design skills needed.</p>
-        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
-          <li>Open gemini.google.com in a new tab</li>
-          <li>Use the Math Concept Poster prompt from the library</li>
-          <li>Iterate: "Make it more colorful" or "Change to navy and gold"</li>
+      <!-- Activity 3: Gemini vs ChatGPT Showdown -->
+      <div class="breakout-card fade-in" id="activity-3" style="--tool-color:#4285f4">
+        <div class="breakout-header">
+          <div class="breakout-num">3</div>
+          <span class="breakout-tool-badge">Gemini vs ChatGPT</span>
+          <span class="breakout-time-badge">⏱ 30 min</span>
+        </div>
+        <h3>AI Showdown</h3>
+        <p>Same prompt, two tools — see which one wins for your use case. You might be surprised.</p>
+        <ul class="breakout-steps">
+          <li data-n="1">Pick a prompt from the library (or write your own)</li>
+          <li data-n="2">Send the exact same prompt to both ChatGPT and Gemini</li>
+          <li data-n="3">Score each response: clarity, accuracy, classroom-readiness (1–5)</li>
+          <li data-n="4">Try one Google Workspace-specific prompt in Gemini (rubric or slide outline)</li>
         </ul>
+        <div class="share-back-list">
+          <div class="share-label">Share Back to Room</div>
+          <ul>
+            <li>The prompt you used</li>
+            <li>Which tool "won" and why</li>
+            <li>When you'd pick each tool in real life</li>
+          </ul>
+        </div>
         <div class="activity-timer">
-          <div class="timer-display" aria-live="polite">08:00</div>
+          <div class="timer-display" aria-live="polite">30:00</div>
           <button class="timer-btn" aria-label="Start timer">Start</button>
         </div>
       </div>
 
-      <div class="activity-card fade-in" id="activity-4">
-        <div class="activity-num">Activity 04 · Math Visualizer</div>
-        <h3>Generate a Live Math Graph</h3>
-        <p>Use the Math Visualizer tab to generate a graph for something you teach. Download it for class tomorrow.</p>
-        <ul style="font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;padding-left:16px;list-style:disc">
-          <li>Click the 📊 Math Visualizer tab above</li>
-          <li>Try one of the quick-start chips or type your own</li>
-          <li>Download the PNG → use it in a slide or handout</li>
+      <!-- Activity 4: Math Viz Challenge -->
+      <div class="breakout-card fade-in" id="activity-4" style="--tool-color:#6e5494">
+        <div class="breakout-header">
+          <div class="breakout-num">4</div>
+          <span class="breakout-tool-badge">Math Visualizer</span>
+          <span class="breakout-time-badge">⏱ 30 min</span>
+        </div>
+        <h3>Math Viz Challenge</h3>
+        <p>Describe a math concept in plain English → generate a chart → explain it to the class. No coding required.</p>
+        <ul class="breakout-steps">
+          <li data-n="1">Open the 📊 Math Visualizer tab in AI Arena above</li>
+          <li data-n="2">Type a plain English description of a graph (e.g., "Show a sine wave from -2π to 2π, label key points")</li>
+          <li data-n="3">Download the PNG — it's ready for a slide or handout</li>
+          <li data-n="4">Try a second, more complex graph: unit circle, trig comparison, or statistical plot</li>
         </ul>
+        <div class="share-back-list">
+          <div class="share-label">Share Back to Room</div>
+          <ul>
+            <li>Screen-share your generated graph</li>
+            <li>The plain English prompt you used</li>
+            <li>Which lesson or unit you'd use it for</li>
+          </ul>
+        </div>
         <div class="activity-timer">
-          <div class="timer-display" aria-live="polite">10:00</div>
+          <div class="timer-display" aria-live="polite">30:00</div>
           <button class="timer-btn" aria-label="Start timer">Start</button>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1046,20 +1355,43 @@
 
     <!-- Keys form (shown after auth) -->
     <div id="admin-keys-form" style="display:none">
+
+      <!-- Cloudflare session control (only shown if WORKER_URL is set) -->
+      <div class="session-control" id="session-control-panel">
+        <div class="session-control-label">Cloudflare Session Control</div>
+        <div style="margin-bottom:10px">
+          <span id="session-status-badge" class="session-badge off">○ Session Off</span>
+        </div>
+        <div class="admin-field" style="margin-bottom:12px">
+          <label for="admin-worker-secret">Cloudflare Secret</label>
+          <div class="admin-input-wrap">
+            <input type="password" id="admin-worker-secret" placeholder="Your ADMIN_SECRET from KV" autocomplete="off">
+          </div>
+        </div>
+        <div class="session-control-btns">
+          <button class="btn-session-start" onclick="window.saveWorkerSecret(document.getElementById('admin-worker-secret').value);window.workerSessionStart()">
+            ● Start Session for Everyone
+          </button>
+          <button class="btn-session-end" onclick="window.saveWorkerSecret(document.getElementById('admin-worker-secret').value);window.workerSessionEnd()">
+            ○ End Session
+          </button>
+        </div>
+      </div>
+
       <div class="admin-field">
-        <label for="admin-openai-key">OpenAI API Key</label>
+        <label for="admin-openai-key">OpenAI API Key <span style="color:var(--text-muted);font-weight:400">(direct fallback)</span></label>
         <div class="admin-input-wrap">
           <input type="password" id="admin-openai-key" placeholder="sk-..." autocomplete="off">
         </div>
       </div>
       <div class="admin-field">
-        <label for="admin-anthropic-key">Anthropic API Key</label>
+        <label for="admin-anthropic-key">Anthropic API Key <span style="color:var(--text-muted);font-weight:400">(direct fallback)</span></label>
         <div class="admin-input-wrap">
           <input type="password" id="admin-anthropic-key" placeholder="sk-ant-..." autocomplete="off">
         </div>
       </div>
       <div class="admin-field">
-        <label for="admin-google-key">Google API Key</label>
+        <label for="admin-google-key">Google API Key <span style="color:var(--text-muted);font-weight:400">(direct fallback)</span></label>
         <div class="admin-input-wrap">
           <input type="password" id="admin-google-key" placeholder="AIza..." autocomplete="off">
         </div>

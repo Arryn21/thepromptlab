@@ -20,7 +20,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 80px 0;
+  padding: 50px 0;
 }
 
 .hero-logos {
@@ -241,8 +241,15 @@
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-content { padding: 40px 0 80px; }
-  .countdown-boxes { gap: 8px; }
+  .countdown-boxes { gap: 8px; flex-wrap: wrap; }
   .countdown-box { min-width: 64px; padding: 12px 14px; }
   .countdown-num { font-size: 1.5rem; }
   .hero-logos img { height: 36px; }
+  .hero-ctas { flex-wrap: wrap; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-ctas { flex-direction: column; align-items: center; }
+  .hero-ctas .btn-lg { width: 100%; justify-content: center; }
+  .countdown-boxes { justify-content: center; }
 }

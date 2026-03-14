@@ -1,4 +1,5 @@
-/* session.js — Admin panel, SHA-256 password, sessionStorage key management */
+/* session.js — Admin panel, SHA-256 password, sessionStorage key management,
+               Cloudflare Worker session control */
 
 (function () {
 
@@ -10,6 +11,10 @@
   //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
   const ADMIN_HASH = '29e4e33720fe99236b0b854994397a05af8a517968088ff9b9bdad7ceda8e26b';
 
+  // ── Cloudflare Worker URL ──────────────────────────────────
+  // Set this after running `wrangler deploy` — leave empty to disable worker mode
+  const WORKER_URL = (window.PROMPTLAB_WORKER_URL || '').replace(/\/$/, '');
+
   const SESSION_WINDOW_START = new Date('2026-03-18T01:00:00Z').getTime(); // Mar 17 6PM PDT
   const SESSION_WINDOW_END   = new Date('2026-03-18T13:00:00Z').getTime(); // Mar 18 6AM PDT
 
@@ -17,6 +22,7 @@
   const KEY_ANTHROPIC = 'pl_key_anthropic';
   const KEY_GOOGLE    = 'pl_key_google';
   const ADMIN_ACTIVE  = 'pl_admin_active';
+  const WORKER_SECRET = 'pl_worker_secret';
 
   // Keys use sessionStorage — auto-injected from encrypted keys.js, cleared on tab close.
   const keyStore = sessionStorage;
@@ -130,6 +136,14 @@
     if (oai) oai.value = keyStore.getItem(KEY_OPENAI) || '';
     if (ant) ant.value = keyStore.getItem(KEY_ANTHROPIC) || '';
     if (goo) goo.value = keyStore.getItem(KEY_GOOGLE) || '';
+    // Show/hide Cloudflare session control based on worker URL
+    const sessionPanel = document.getElementById('session-control-panel');
+    if (sessionPanel) {
+      sessionPanel.style.display = WORKER_URL ? 'block' : 'none';
+    }
+    // Pre-fill worker secret if saved
+    const wSecret = document.getElementById('admin-worker-secret');
+    if (wSecret) wSecret.value = sessionStorage.getItem(WORKER_SECRET) || '';
   }
 
   // Auth form submit
@@ -283,5 +297,79 @@
   updateKeyBars();
   window.isAdminAuthed = isAdminAuthed;
   window.openAdmin = openAdmin;
+  window.WORKER_URL = WORKER_URL;
+
+  // ── Cloudflare Worker Session Control ─────────────────────
+  // Exposed so admin panel HTML can call these directly
+  window.workerSessionStart = async function () {
+    if (!WORKER_URL) { window.showToast?.('Worker URL not configured', 'warning'); return; }
+    const secret = sessionStorage.getItem(WORKER_SECRET);
+    if (!secret) { window.showToast?.('Enter Cloudflare secret first', 'warning'); return; }
+    try {
+      const r = await fetch(`${WORKER_URL}/session/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret })
+      });
+      const data = await r.json();
+      if (data.ok) {
+        window.showToast?.('Session started — participants can now use the Arena', 'success', 4000);
+        updateSessionBadge(true);
+      } else {
+        window.showToast?.('Failed: ' + (data.error || 'unknown error'), 'error');
+      }
+    } catch (e) {
+      window.showToast?.('Worker error: ' + e.message, 'error');
+    }
+  };
+
+  window.workerSessionEnd = async function () {
+    if (!WORKER_URL) { window.showToast?.('Worker URL not configured', 'warning'); return; }
+    const secret = sessionStorage.getItem(WORKER_SECRET);
+    if (!secret) { window.showToast?.('Enter Cloudflare secret first', 'warning'); return; }
+    try {
+      const r = await fetch(`${WORKER_URL}/session/end`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret })
+      });
+      const data = await r.json();
+      if (data.ok) {
+        window.showToast?.('Session ended — Arena requires own keys now', 'warning', 4000);
+        updateSessionBadge(false);
+      } else {
+        window.showToast?.('Failed: ' + (data.error || 'unknown error'), 'error');
+      }
+    } catch (e) {
+      window.showToast?.('Worker error: ' + e.message, 'error');
+    }
+  };
+
+  window.workerSessionCheck = async function () {
+    if (!WORKER_URL) return;
+    try {
+      const r = await fetch(`${WORKER_URL}/session/status`);
+      const data = await r.json();
+      updateSessionBadge(data.active);
+      return data.active;
+    } catch { return false; }
+  };
+
+  window.saveWorkerSecret = function (secret) {
+    if (secret) sessionStorage.setItem(WORKER_SECRET, secret.trim());
+  };
+
+  function updateSessionBadge(active) {
+    const badge = document.getElementById('session-status-badge');
+    if (!badge) return;
+    badge.textContent = active ? '● Session Live' : '○ Session Off';
+    badge.className = 'session-badge ' + (active ? 'live' : 'off');
+  }
+
+  // Poll session status every 30s if worker is configured
+  if (WORKER_URL) {
+    window.workerSessionCheck();
+    setInterval(window.workerSessionCheck, 30000);
+  }
 
 })();

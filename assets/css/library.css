@@ -445,3 +445,9 @@
   .library-controls { flex-direction: column; }
   .search-wrap { min-width: 100%; }
 }
+
+@media (max-width: 480px) {
+  .prompts-grid { grid-template-columns: 1fr; }
+  .card-open-row { flex-direction: column; }
+  .open-tool-btn { justify-content: center; }
+}

@@ -1,0 +1,23 @@
+name = "promptlab-proxy"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# KV Namespace binding
+# After running: wrangler kv:namespace create PROMPTLAB_KV
+# Paste the returned id below
+[[kv_namespaces]]
+binding = "PROMPTLAB_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# Cloudflare Setup Steps:
+# 1. npm install -g wrangler
+# 2. wrangler login
+# 3. wrangler kv:namespace create PROMPTLAB_KV   ← copy the id into this file
+# 4. In Cloudflare dashboard → KV → your namespace → add these keys:
+#      OPENAI_KEY       your OpenAI key
+#      ANTHROPIC_KEY    your Anthropic key
+#      GOOGLE_KEY       your Google AI key
+#      ADMIN_SECRET     any strong random string (e.g. openssl rand -hex 32)
+#      SESSION_ACTIVE   false
+# 5. wrangler deploy
+# 6. Copy worker URL → paste into WORKER_URL in assets/js/ai-arena.js

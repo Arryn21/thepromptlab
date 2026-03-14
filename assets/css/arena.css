@@ -61,7 +61,8 @@
 /* ── Tab Panels ─────────────────────────────────────────────── */
 .arena-panel {
   display: none;
-  height: 600px;
+  height: calc(100vh - 200px);
+  min-height: 400px;
   flex-direction: column;
 }
 
@@ -523,8 +524,15 @@
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .arena-panel { height: 500px; }
+  .arena-tab { padding: 10px 12px; font-size: 0.78rem; }
   .msg { max-width: 95%; }
   .panel-header { flex-wrap: wrap; gap: 8px; }
   .key-bar { flex-wrap: wrap; }
+  .model-selector { max-width: 160px; }
+}
+
+@media (max-width: 480px) {
+  .arena-tab { padding: 8px 10px; font-size: 0.72rem; }
+  .viz-input-row { flex-direction: column; }
+  .viz-run-btn { width: 100%; justify-content: center; }
 }
