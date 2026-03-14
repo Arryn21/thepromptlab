@@ -8,8 +8,23 @@
   let debounceTimer = null;
   let currentView = 'grid';
 
+  // ── Skeleton placeholders ─────────────────────────────────
+  function showSkeletons(grid, count = 6) {
+    grid.innerHTML = Array.from({ length: count }, () => `
+      <div class="prompt-card skeleton-card" aria-hidden="true">
+        <div class="sk sk-badge"></div>
+        <div class="sk sk-title"></div>
+        <div class="sk sk-line"></div>
+        <div class="sk sk-line sk-short"></div>
+        <div class="sk sk-tags"><div class="sk sk-tag"></div><div class="sk sk-tag"></div></div>
+        <div class="sk sk-btn-row"><div class="sk sk-btn"></div><div class="sk sk-btn"></div></div>
+      </div>`).join('');
+  }
+
   // ── Load prompts ─────────────────────────────────────────
   async function loadPrompts() {
+    const grid = document.getElementById('prompts-grid');
+    if (grid) showSkeletons(grid);
     try {
       const res = await fetch('assets/data/prompts.json');
       const data = await res.json();

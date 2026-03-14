@@ -439,6 +439,33 @@
 .no-results .nr-icon { font-size: 2.5rem; margin-bottom: 16px; opacity: 0.5; }
 .no-results p { font-size: 0.875rem; }
 
+/* ── Skeleton loading cards ─────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton-card { pointer-events: none; gap: 10px; }
+
+.sk {
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.sk-badge  { height: 18px; width: 64px; border-radius: 100px; }
+.sk-title  { height: 16px; width: 80%; margin-top: 4px; }
+.sk-line   { height: 12px; width: 100%; }
+.sk-short  { width: 65%; }
+.sk-tags   { display: flex; gap: 6px; }
+.sk-tag    { height: 16px; width: 48px; border-radius: 100px; }
+.sk-btn-row{ display: flex; gap: 6px; margin-top: auto; }
+.sk-btn    { height: 30px; flex: 1; border-radius: 8px; }
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .prompts-grid { grid-template-columns: 1fr; }
