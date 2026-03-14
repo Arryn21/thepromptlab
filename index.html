@@ -381,197 +381,160 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
 
 
 <!-- ══════════════════════════════════════════════════════════
-     AI ARENA
+     AI ARENA — Tool Launcher
 ══════════════════════════════════════════════════════════ -->
-<section id="arena" aria-label="AI Arena — live chat">
+<section id="arena" aria-label="AI Tool Launcher">
   <div class="container">
     <div class="section-header">
-      <span class="section-tag">Live Demo</span>
+      <span class="section-tag">Try Live</span>
       <h2>AI Arena</h2>
-      <p>Chat with ChatGPT, Claude, and Gemini live — or generate math visualizations. Add your API key in the panel below, or press <kbd style="font-family:var(--font-code);background:var(--glass);padding:2px 6px;border-radius:4px;border:1px solid var(--border)">Ctrl+Shift+K</kbd> if you have workshop access.</p>
+      <p>Click any starter prompt — it copies to your clipboard and opens the tool in a new tab. All tools are <strong style="color:#22c55e">free</strong>. No API keys, no signup required for basic use.</p>
     </div>
 
     <div class="arena-wrapper">
       <!-- Tab bar -->
       <div class="arena-tabs" role="tablist" aria-label="AI tool tabs">
-        <button class="arena-tab active" id="tab-chatgpt"
-                data-panel="panel-chatgpt" role="tab"
-                aria-selected="true" aria-controls="panel-chatgpt"
-                style="--tab-color:#10a37f">
-          <span class="tab-dot" aria-hidden="true"></span>
-          ChatGPT
+        <button class="arena-tab active" id="tab-chatgpt" data-panel="panel-chatgpt" role="tab" style="--tab-color:#10a37f">
+          <span class="tab-dot" aria-hidden="true"></span> ChatGPT
         </button>
-        <button class="arena-tab" id="tab-claude"
-                data-panel="panel-claude" role="tab"
-                aria-selected="false" aria-controls="panel-claude"
-                style="--tab-color:#d97706">
-          <span class="tab-dot" aria-hidden="true"></span>
-          Claude
+        <button class="arena-tab" id="tab-claude" data-panel="panel-claude" role="tab" style="--tab-color:#d97706">
+          <span class="tab-dot" aria-hidden="true"></span> Claude
         </button>
-        <button class="arena-tab" id="tab-gemini"
-                data-panel="panel-gemini" role="tab"
-                aria-selected="false" aria-controls="panel-gemini"
-                style="--tab-color:#4285f4">
-          <span class="tab-dot" aria-hidden="true"></span>
-          Gemini
+        <button class="arena-tab" id="tab-gemini" data-panel="panel-gemini" role="tab" style="--tab-color:#4285f4">
+          <span class="tab-dot" aria-hidden="true"></span> Gemini
         </button>
-        <button class="arena-tab" id="tab-math"
-                data-panel="panel-math" role="tab"
-                aria-selected="false" aria-controls="panel-math"
-                style="--tab-color:#6e5494">
-          <span class="tab-dot" aria-hidden="true"></span>
-          📊 Math Visualizer
+        <button class="arena-tab" id="tab-arena" data-panel="panel-arena" role="tab" style="--tab-color:#a855f7">
+          <span class="tab-dot" aria-hidden="true"></span> ⚔ Compare Side-by-Side
+        </button>
+        <button class="arena-tab" id="tab-math" data-panel="panel-math" role="tab" style="--tab-color:#6e5494">
+          <span class="tab-dot" aria-hidden="true"></span> 📊 Math Visualizer
         </button>
       </div>
 
-      <!-- ── ChatGPT Panel ── -->
-      <div class="arena-panel active" id="panel-chatgpt" role="tabpanel" aria-labelledby="tab-chatgpt">
-        <div class="panel-header">
-          <div class="panel-header-left">
-            <span style="font-size:0.8rem;font-weight:700;color:#10a37f">ChatGPT</span>
-            <select class="model-selector" aria-label="Select ChatGPT model">
-              <option value="gpt-4o-mini">gpt-4o-mini (fast, free tier)</option>
-              <option value="gpt-4o">gpt-4o (most capable)</option>
-              <option value="gpt-4-turbo">gpt-4-turbo</option>
-            </select>
+      <!-- ── ChatGPT Launcher ── -->
+      <div class="arena-panel active" id="panel-chatgpt" role="tabpanel">
+        <div class="launcher-panel">
+          <div class="launcher-hero" style="--lc:#10a37f">
+            <div class="launcher-icon">🤖</div>
+            <div class="launcher-info">
+              <div class="launcher-name" style="color:#10a37f">ChatGPT</div>
+              <div class="launcher-tagline">Best for: worksheets, lesson plans, exit tickets, word problems</div>
+              <div class="launcher-free-badge">✓ Free · chatgpt.com · No API key needed</div>
+            </div>
+            <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="launcher-open-btn" style="--lc:#10a37f">
+              Open ChatGPT ↗
+            </a>
           </div>
-          <div class="panel-header-right">
-            <button class="panel-btn" data-action="clear" aria-label="Clear conversation">Clear</button>
+
+          <div class="launcher-prompts-label">Click a prompt — it copies to clipboard &amp; opens ChatGPT:</div>
+          <div class="launcher-prompts-grid" data-tool-url="https://chatgpt.com/" data-tool-name="ChatGPT">
+            <button class="launcher-prompt-btn">Create a 10-question worksheet on solving two-step equations for 9th grade. Include an answer key. All answers should be integers.</button>
+            <button class="launcher-prompt-btn">Act as an experienced Algebra 1 teacher. Write 5 real-world word problems about linear equations for high school students. Make the scenarios relatable.</button>
+            <button class="launcher-prompt-btn">Design a 60-minute lesson plan for teaching the Pythagorean theorem to 9th graders. Include warm-up, direct instruction, guided practice, and an exit ticket. Align to CCSS 8.G.B.7.</button>
+            <button class="launcher-prompt-btn">Generate 10 exit ticket questions on quadratic functions for 10th grade. Include a mix of multiple choice and short answer. Include answer key.</button>
+            <button class="launcher-prompt-btn">Write a professional parent email explaining that a student is struggling with the quadratic unit. Suggest 2 concrete ways the parent can help at home. Keep it under 200 words.</button>
+            <button class="launcher-prompt-btn">Create a differentiated worksheet on slope with three versions: below grade level, on grade level, and enrichment. Same topic, different depth.</button>
           </div>
         </div>
+      </div>
 
-        <!-- Self-service key bar -->
-        <div class="key-bar" data-provider="openai" role="form" aria-label="OpenAI API key">
-          <span class="key-bar-label">🔑 OpenAI Key:</span>
-          <input type="password" placeholder="sk-..." autocomplete="off" aria-label="OpenAI API key input">
-          <button class="key-save-btn">Save</button>
-          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener"
-             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
+      <!-- ── Claude Launcher ── -->
+      <div class="arena-panel" id="panel-claude" role="tabpanel">
+        <div class="launcher-panel">
+          <div class="launcher-hero" style="--lc:#d97706">
+            <div class="launcher-icon">🧠</div>
+            <div class="launcher-info">
+              <div class="launcher-name" style="color:#d97706">Claude</div>
+              <div class="launcher-tagline">Best for: explanations, proof scaffolding, student-friendly rewrites, interactive HTML tools</div>
+              <div class="launcher-free-badge">✓ Free · claude.ai · No API key needed</div>
+            </div>
+            <a href="https://claude.ai/" target="_blank" rel="noopener" class="launcher-open-btn" style="--lc:#d97706">
+              Open Claude ↗
+            </a>
+          </div>
+
+          <div class="launcher-prompts-label">Click a prompt — it copies to clipboard &amp; opens Claude:</div>
+          <div class="launcher-prompts-grid" data-tool-url="https://claude.ai/" data-tool-name="Claude">
+            <button class="launcher-prompt-btn">Explain slope to a 9th grader who struggles with fractions. Use a real-world analogy they would relate to. Keep it under 150 words and avoid any fraction notation.</button>
+            <button class="launcher-prompt-btn">Create an explanation of the Pythagorean theorem for three reading levels: below grade level (5th grade reading), on grade level (9th grade), and advanced (honors). Same concept, different depth.</button>
+            <button class="launcher-prompt-btn">List the 5 most common misconceptions students have when solving two-step equations. For each one, show the wrong thinking and then the correct approach side by side.</button>
+            <button class="launcher-prompt-btn">Write a reteach script I can use in a small group for students who missed the lesson on solving two-step equations. Make it conversational, not lecture-style.</button>
+            <button class="launcher-prompt-btn">Build an interactive HTML quiz on quadrilateral properties with 5 multiple choice questions. Include instant right/wrong feedback and a score at the end. Use a clean, student-friendly design.</button>
+            <button class="launcher-prompt-btn">Scaffold a proof of the Pythagorean theorem into 6 steps with hints at each stage. Design it so students can fill in the reasoning themselves.</button>
+          </div>
         </div>
+      </div>
 
-        <div class="chat-messages" id="chat-chatgpt" aria-live="polite">
-          <div class="chat-empty">
-            <div class="empty-icon" aria-hidden="true">🤖</div>
-            <p>Ask ChatGPT anything about math teaching, or try a starter:</p>
-            <div class="chat-chips">
-              <button class="chip">Create a worksheet on solving two-step equations for 9th grade</button>
-              <button class="chip">Write 5 real-world word problems about linear equations</button>
-              <button class="chip">Design a 60-min lesson plan on the Pythagorean theorem</button>
-              <button class="chip">Generate 15 exit ticket questions on quadratic functions</button>
+      <!-- ── Gemini Launcher ── -->
+      <div class="arena-panel" id="panel-gemini" role="tabpanel">
+        <div class="launcher-panel">
+          <div class="launcher-hero" style="--lc:#4285f4">
+            <div class="launcher-icon">✨</div>
+            <div class="launcher-info">
+              <div class="launcher-name" style="color:#4285f4">Gemini</div>
+              <div class="launcher-tagline">Best for: Google Classroom, image generation, rubrics, slide decks</div>
+              <div class="launcher-free-badge">✓ Free · gemini.google.com · Just sign in with Google</div>
+            </div>
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener" class="launcher-open-btn" style="--lc:#4285f4">
+              Open Gemini ↗
+            </a>
+          </div>
+
+          <div class="launcher-prompts-label">Click a prompt — it copies to clipboard &amp; opens Gemini:</div>
+          <div class="launcher-prompts-grid" data-tool-url="https://gemini.google.com/" data-tool-name="Gemini">
+            <button class="launcher-prompt-btn">Create a detailed rubric for a 10th grade geometry project on Google Classroom. Include categories for accuracy, presentation, and real-world application. Use a 4-point scale.</button>
+            <button class="launcher-prompt-btn">Write a monthly parent newsletter for Algebra 1. Include what we covered this month, upcoming topics, how parents can help at home, and one fun math fact.</button>
+            <button class="launcher-prompt-btn">Design an outline for a Google Slides presentation introducing exponential functions to 11th graders. Include slide titles, key visuals to include, and discussion questions.</button>
+            <button class="launcher-prompt-btn">Generate a classroom poster concept for teaching the order of operations (PEMDAS). Describe the layout, colors, and visuals in detail so I can recreate it or use it as an image generation prompt.</button>
+            <button class="launcher-prompt-btn">Create a Google Forms quiz on the Pythagorean theorem with 8 questions: 4 multiple choice, 2 short answer, and 2 word problems. Include the correct answers.</button>
+            <button class="launcher-prompt-btn">What California Common Core standards (CCSS) apply to teaching quadratic equations in Algebra 2? List each standard with a plain English summary and one example activity for each.</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Arena.ai Side-by-Side ── -->
+      <div class="arena-panel" id="panel-arena" role="tabpanel">
+        <div class="launcher-panel">
+          <div class="launcher-hero" style="--lc:#a855f7">
+            <div class="launcher-icon">⚔</div>
+            <div class="launcher-info">
+              <div class="launcher-name" style="color:#a855f7">Compare Side-by-Side</div>
+              <div class="launcher-tagline">Send the same prompt to multiple AI models at once — see which one is best for your use case</div>
+              <div class="launcher-free-badge">✓ Free · lmarena.ai · Create a free account or use anonymously</div>
+            </div>
+            <a href="https://lmarena.ai/" target="_blank" rel="noopener" class="launcher-open-btn" style="--lc:#a855f7">
+              Open Arena ↗
+            </a>
+          </div>
+
+          <div class="launcher-compare-info">
+            <div class="compare-how">
+              <div class="compare-step"><span class="compare-num">1</span> Open lmarena.ai — no account needed to start</div>
+              <div class="compare-step"><span class="compare-num">2</span> Click a starter prompt below to copy it</div>
+              <div class="compare-step"><span class="compare-num">3</span> Paste into Arena — it runs your prompt on two random models simultaneously</div>
+              <div class="compare-step"><span class="compare-num">4</span> Vote for the better response — you'll see which models won</div>
             </div>
           </div>
-        </div>
 
-        <div class="chat-input-area">
-          <div class="chat-input-row">
-            <textarea class="chat-input" placeholder="Ask ChatGPT… (Shift+Enter for new line, Enter to send)"
-                      rows="1" aria-label="Message input"></textarea>
-            <button class="send-btn" aria-label="Send message">▶</button>
+          <div class="launcher-prompts-label">Copy a prompt to try in Arena:</div>
+          <div class="launcher-prompts-grid" data-tool-url="https://lmarena.ai/" data-tool-name="Arena">
+            <button class="launcher-prompt-btn">Explain the quadratic formula to a 10th grader. Use a simple analogy, show one worked example, and explain when we actually use it in real life.</button>
+            <button class="launcher-prompt-btn">Create a warm-up activity for a lesson on linear equations. It should take 5 minutes, involve real-world context, and require no prior knowledge of algebra.</button>
+            <button class="launcher-prompt-btn">Write feedback for a student who got 6/10 on their equation-solving test. They made consistent sign errors. Be encouraging but specific about what to fix.</button>
+            <button class="launcher-prompt-btn">List 5 ways a high school math teacher can use AI responsibly in their classroom without violating academic integrity.</button>
           </div>
         </div>
       </div>
 
-      <!-- ── Claude Panel ── -->
-      <div class="arena-panel" id="panel-claude" role="tabpanel" aria-labelledby="tab-claude">
-        <div class="panel-header">
-          <div class="panel-header-left">
-            <span style="font-size:0.8rem;font-weight:700;color:#d97706">Claude</span>
-            <select class="model-selector" aria-label="Select Claude model">
-              <option value="claude-sonnet-4-6">claude-sonnet-4-6 (recommended)</option>
-              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5 (fast)</option>
-              <option value="claude-opus-4-6">claude-opus-4-6 (most capable)</option>
-            </select>
-          </div>
-          <div class="panel-header-right">
-            <button class="panel-btn" data-action="clear">Clear</button>
-          </div>
-        </div>
-
-        <div class="key-bar" data-provider="anthropic">
-          <span class="key-bar-label">🔑 Anthropic Key:</span>
-          <input type="password" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API key">
-          <button class="key-save-btn">Save</button>
-          <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener"
-             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
-        </div>
-
-        <div class="chat-messages" id="chat-claude" aria-live="polite">
-          <div class="chat-empty">
-            <div class="empty-icon" aria-hidden="true">🧠</div>
-            <p>Ask Claude to explain a concept, scaffold a proof, or build an interactive quiz:</p>
-            <div class="chat-chips">
-              <button class="chip">Explain slope to a 9th grader who struggles with fractions</button>
-              <button class="chip">Create an interactive HTML quiz on quadrilateral properties</button>
-              <button class="chip">List 5 common misconceptions about solving equations</button>
-              <button class="chip">Write a reteach script for students who missed two-step equations</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="chat-input-area">
-          <div class="chat-input-row">
-            <textarea class="chat-input" placeholder="Ask Claude… (Enter to send, Shift+Enter for new line)"
-                      rows="1" aria-label="Message input"></textarea>
-            <button class="send-btn" aria-label="Send message">▶</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Gemini Panel ── -->
-      <div class="arena-panel" id="panel-gemini" role="tabpanel" aria-labelledby="tab-gemini">
-        <div class="panel-header">
-          <div class="panel-header-left">
-            <span style="font-size:0.8rem;font-weight:700;color:#4285f4">Gemini</span>
-            <select class="model-selector" aria-label="Select Gemini model">
-              <option value="gemini-2.0-flash">gemini-2.0-flash (fast)</option>
-              <option value="gemini-1.5-pro">gemini-1.5-pro (long context)</option>
-              <option value="gemini-2.0-flash-thinking-exp">gemini-2.0-flash-thinking</option>
-            </select>
-          </div>
-          <div class="panel-header-right">
-            <button class="panel-btn" data-action="clear">Clear</button>
-          </div>
-        </div>
-
-        <div class="key-bar" data-provider="google">
-          <span class="key-bar-label">🔑 Google Key:</span>
-          <input type="password" placeholder="AIza..." autocomplete="off" aria-label="Google API key">
-          <button class="key-save-btn">Save</button>
-          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener"
-             style="font-size:0.75rem;color:var(--accent-cyber);white-space:nowrap">Get key ↗</a>
-        </div>
-
-        <div class="chat-messages" id="chat-gemini" aria-live="polite">
-          <div class="chat-empty">
-            <div class="empty-icon" aria-hidden="true">✨</div>
-            <p>Ask Gemini — especially great for Google Classroom integration:</p>
-            <div class="chat-chips">
-              <button class="chip">Create a rubric for a 10th grade geometry project on Google Classroom</button>
-              <button class="chip">Write a parent newsletter for Algebra 1 this month</button>
-              <button class="chip">Design a slide deck for a lesson on exponential functions</button>
-              <button class="chip">What CA Common Core standards cover the Pythagorean theorem?</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="chat-input-area">
-          <div class="chat-input-row">
-            <textarea class="chat-input" placeholder="Ask Gemini… (Enter to send)"
-                      rows="1" aria-label="Message input"></textarea>
-            <button class="send-btn" aria-label="Send message">▶</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Copilot / Math Visualizer Panel ── -->
-      <div class="arena-panel" id="panel-math" role="tabpanel" aria-labelledby="tab-math">
+      <!-- ── Math Visualizer Panel ── -->
+      <div class="arena-panel" id="panel-math" role="tabpanel">
         <div class="panel-header">
           <div class="panel-header-left">
             <span style="font-size:0.8rem;font-weight:700;color:#6e5494">📊 Math Visualizer</span>
-            <span style="font-size:0.75rem;color:var(--text-muted)">Claude → Python → Graph</span>
+            <span style="font-size:0.75rem;color:var(--text-muted)">Claude → Python → Graph · runs in your browser</span>
           </div>
           <div class="panel-header-right">
-            <span style="font-size:0.72rem;color:var(--text-muted)">Uses Anthropic key</span>
+            <span style="font-size:0.72rem;color:var(--text-muted)">Needs Anthropic key · <kbd style="background:var(--glass);padding:1px 5px;border-radius:3px;border:1px solid var(--border)">Ctrl+Shift+K</kbd></span>
           </div>
         </div>
 
@@ -601,23 +564,17 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
               <p style="font-size:0.875rem;">Describe any math graph or visualization above.<br>Claude writes the Python code, Pyodide runs it — live in your browser.</p>
               <p style="font-size:0.75rem;margin-top:8px;">First run loads ~7MB (one time only)</p>
             </div>
-
-            <!-- Pyodide progress bar -->
             <div class="pyodide-progress" id="pyodide-progress" aria-live="polite">
               <div style="font-size:0.8rem;font-weight:600;margin-bottom:6px;" id="progress-msg">Loading...</div>
               <div class="progress-bar-wrap">
                 <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
               </div>
             </div>
-
-            <!-- Chart result -->
             <div class="chart-result" id="chart-result">
               <img id="chart-img" alt="Generated math visualization" src="">
               <div class="chart-actions">
                 <button class="btn btn-primary btn-sm" id="chart-download">⬇ Download PNG</button>
-                <a href="#" target="_blank" rel="noopener" class="btn btn-outline btn-sm" id="chart-colab">
-                  ▶ Open in Colab
-                </a>
+                <a href="#" target="_blank" rel="noopener" class="btn btn-outline btn-sm" id="chart-colab">▶ Open in Colab</a>
               </div>
               <details class="code-collapse" id="generated-code">
                 <summary>Generated Python Code</summary>
@@ -628,6 +585,7 @@ Add one final row: "My #1 goal for today's workshop" — based on my answers.</d
           </div>
         </div>
       </div>
+
     </div><!-- /.arena-wrapper -->
   </div>
 </section>

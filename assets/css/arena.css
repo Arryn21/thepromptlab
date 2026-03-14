@@ -670,6 +670,160 @@
   color: var(--accent-cyber);
 }
 
+/* ── Tool Launcher ──────────────────────────────────────────── */
+.launcher-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.launcher-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 3px solid var(--lc, var(--accent-cyber));
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+
+.launcher-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.launcher-info {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.launcher-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.launcher-tagline {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.launcher-free-badge {
+  font-size: 0.72rem;
+  color: #22c55e;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.launcher-open-btn {
+  padding: 12px 24px;
+  background: var(--lc, var(--accent-cyber));
+  color: #000;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--transition);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.launcher-open-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.launcher-prompts-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-left: 2px;
+}
+
+.launcher-prompts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.launcher-prompt-btn {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-align: left;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.launcher-prompt-btn:hover {
+  border-color: var(--accent-cyber);
+  color: var(--text-primary);
+  background: var(--accent-cyber-dim);
+  transform: translateY(-2px);
+}
+
+.launcher-prompt-btn.copied {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+/* ── Compare (Arena.ai) panel extras ──── */
+.launcher-compare-info {
+  background: rgba(168,85,247,0.05);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.compare-how {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compare-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.compare-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  background: rgba(168,85,247,0.2);
+  border: 1px solid rgba(168,85,247,0.4);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a855f7;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .arena-tab { padding: 10px 12px; font-size: 0.78rem; }

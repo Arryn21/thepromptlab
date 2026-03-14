@@ -512,10 +512,52 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // ── Init panels ───────────────────────────────────────────
-  initChatPanel('panel-chatgpt', 'openai');
-  initChatPanel('panel-claude',  'anthropic');
-  initChatPanel('panel-gemini',  'google');
-  initChatPanel('panel-copilot', 'anthropic'); // copilot uses Claude API
+  // ── Launcher prompt buttons ───────────────────────────────
+  // Click → copy prompt text to clipboard → open tool in new tab → toast
+  document.querySelectorAll('.launcher-prompts-grid').forEach(grid => {
+    grid.addEventListener('click', async e => {
+      const btn = e.target.closest('.launcher-prompt-btn');
+      if (!btn) return;
+
+      const toolUrl  = grid.dataset.toolUrl  || 'https://chatgpt.com/';
+      const toolName = grid.dataset.toolName || 'the tool';
+      const promptText = btn.textContent.trim();
+
+      try {
+        await navigator.clipboard.writeText(promptText);
+      } catch {
+        // Fallback for non-secure contexts
+        const ta = document.createElement('textarea');
+        ta.value = promptText;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+
+      // Visual feedback on button
+      btn.classList.add('copied');
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = orig;
+      }, 1500);
+
+      // Open tool in new tab
+      window.open(toolUrl, '_blank', 'noopener,noreferrer');
+
+      // Toast notification
+      if (window.showToast) {
+        window.showToast(`Prompt copied — paste it in ${toolName}!`, 'success');
+      }
+    });
+  });
+
+  // ── Init Math Visualizer key bar ──────────────────────────
+  // (ChatGPT / Claude / Gemini are now Tool Launchers — no API needed)
+  // initChatPanel handles the .key-bar save button; viz logic is in python-runner.js
+  initChatPanel('panel-math', 'anthropic');
 
 })();
