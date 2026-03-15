@@ -324,6 +324,40 @@
 @media (max-width: 768px) {
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .resources-grid { grid-template-columns: 1fr; gap: 32px; }
+  /* Tools grid */
+  .tools-grid { gap: 16px; }
+  .tool-card { padding: 22px 20px; }
+  /* Comparison table: smaller text, allow horizontal scroll */
+  .comparison-table th,
+  .comparison-table td { padding: 8px 10px; font-size: 0.76rem; white-space: nowrap; }
+  /* Presenter */
+  .presenter-card { padding: 20px; }
+  /* Activities */
+  .activities-grid { gap: 16px; }
+  .activity-card { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  /* Tools */
+  .tool-card { padding: 18px 14px; }
+  .tool-icon { width: 44px; height: 44px; font-size: 1.3rem; }
+  .tool-card h3 { font-size: 1rem; }
+  /* Presenter */
+  .presenter-avatar { width: 64px; height: 64px; }
+  .presenter-card { padding: 16px; }
+  .presenter-contact { flex-wrap: wrap; gap: 8px; }
+  .presenter-contact .btn-sm { flex: 1; justify-content: center; min-width: 100px; }
+  /* Activities */
+  .activity-card { padding: 16px; }
+  .activity-timer { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .timer-display { font-size: 1.1rem; }
+  .timer-btn { padding: 6px 16px; font-size: 0.8rem; align-self: flex-end; }
+  /* Comparison table */
+  .comparison-table th,
+  .comparison-table td { padding: 6px 8px; font-size: 0.7rem; }
+  /* Footer logos */
+  .footer-logos { gap: 12px; }
+  .footer-logos img { height: 28px; }
 }
 
 
@@ -875,18 +909,31 @@
 /* ── Responsive for new sections ────────────────────────────── */
 @media (max-width: 900px) {
   .ce-layout { grid-template-columns: 1fr; }
-  .ce-prompt-panel { position: static; }
+  .ce-prompt-panel { position: static; margin-bottom: 24px; }
 }
 
 @media (max-width: 768px) {
   .breakout-grid { grid-template-columns: 1fr; }
   .schedule-grid { grid-template-columns: 1fr 1fr; }
   .countdown-boxes { flex-wrap: wrap; }
+  /* CE explainer input */
+  .ce-input-panel { gap: 14px; }
+}
+
+@media (max-width: 640px) {
+  /* Schedule: single column */
+  .schedule-grid { grid-template-columns: 1fr; }
+  /* CE chips wrap nicely */
+  .ce-chips { gap: 6px; }
+  .ce-chip { padding: 5px 10px; font-size: 0.76rem; }
 }
 
 @media (max-width: 480px) {
   .schedule-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-wrap: wrap; justify-content: center; }
+  /* CE */
+  .ce-prompt-text { font-size: 0.72rem; }
+  .breakout-card { padding: 18px; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1376,8 +1423,16 @@
 @media (max-width: 640px) {
   .kya-activity-top { flex-direction: column; align-items: flex-start; }
   .kya-round { padding: 20px 16px; }
-  .kya-rounds-nav { padding: 12px 16px; }
-  .kya-pill { padding: 7px 11px; font-size: 0.72rem; }
+  .kya-rounds-nav { padding: 12px 16px; overflow-x: auto; }
+  .kya-pill { padding: 7px 11px; font-size: 0.72rem; white-space: nowrap; }
+  .kya-cards { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .kya-activity { padding: 16px 12px; }
+  .kya-pill { padding: 6px 9px; font-size: 0.68rem; }
+  .kya-round-title { font-size: 1rem; }
+  .kya-checklist-item { font-size: 0.78rem; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1676,4 +1731,15 @@
   .projects-guide-header, .projects-body { padding: 20px 18px; }
   .projects-steps { grid-template-columns: 1fr; }
   .projects-upload-grid { grid-template-columns: 1fr; }
+  /* Projects tabs: stack / scroll on mobile */
+  .projects-tabs { width: 100%; flex-wrap: wrap; gap: 6px; }
+  .proj-tab-btn { flex: 1; min-width: 120px; justify-content: center; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .projects-guide { margin-top: 32px; }
+  .projects-guide-header { padding: 16px; }
+  .projects-body { padding: 16px; }
+  .projects-instruction pre { font-size: 0.7rem; max-height: 240px; }
+  .proj-step { padding: 12px; }
 }

@@ -540,11 +540,32 @@
 @media (max-width: 640px) {
   .prompts-grid { grid-template-columns: 1fr; }
   .library-controls { flex-direction: column; }
-  .search-wrap { min-width: 100%; }
+  .search-wrap { min-width: 100%; flex: 1; }
+  .filter-row { gap: 6px; }
+  /* Modal: full-screen-ish on phones */
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal-content {
+    max-width: 100%;
+    width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 20px 16px;
+  }
+  .modal-header { margin-bottom: 16px; }
 }
 
 @media (max-width: 480px) {
   .prompts-grid { grid-template-columns: 1fr; }
   .card-open-row { flex-direction: column; }
   .open-tool-btn { justify-content: center; }
+  /* Prompt card tighter on small phones */
+  .prompt-card { padding: 14px; gap: 8px; }
+  .prompt-title { font-size: 0.85rem; }
+  /* Action buttons: stack vertically */
+  .prompt-actions { flex-wrap: wrap; gap: 6px; }
+  .prompt-copy-btn, .prompt-arena-btn { flex: 1; justify-content: center; }
+  /* Filter chips: smaller */
+  .filter-chip { padding: 5px 10px; font-size: 0.7rem; }
+  /* Library stats row */
+  .library-stats { flex-direction: column; gap: 6px; align-items: flex-start; }
 }

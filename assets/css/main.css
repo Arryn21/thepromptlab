@@ -427,7 +427,7 @@ footer p {
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  section { padding: 64px 0; }
+  section { padding: 48px 0; }
 
   .nav-links { display: none; }
   .nav-links.open {
@@ -447,6 +447,10 @@ footer p {
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.6rem; }
+  h1 { font-size: 1.9rem; }
+  h2 { font-size: 1.5rem; }
+  .section-header { margin-bottom: 28px; }
+  /* Toast: keep on screen on small phones */
+  #toast-container { bottom: 12px; right: 12px; left: 12px; }
+  .toast { max-width: 100%; }
 }

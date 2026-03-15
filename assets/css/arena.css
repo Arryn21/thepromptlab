@@ -435,10 +435,27 @@
   .panel-header { flex-wrap: wrap; gap: 8px; }
   .key-bar { flex-wrap: wrap; }
   .model-selector { max-width: 160px; }
+  /* Launcher panel */
+  .launcher-panel { padding: 20px 16px; }
+  .launcher-hero { padding: 16px; gap: 12px; flex-wrap: wrap; }
+  .launcher-info { min-width: unset; }
+  .launcher-icon { font-size: 2rem; }
+}
+
+@media (max-width: 600px) {
+  /* Chat panel: don't let calc go negative on short screens */
+  .arena-panel { height: auto; min-height: 340px; }
+  .chat-messages { min-height: 200px; }
+  .model-selector { max-width: 100%; width: 100%; }
+  .panel-header { gap: 6px; }
+  .launcher-hero { flex-direction: column; align-items: flex-start; }
+  .launcher-open-btn { width: 100%; justify-content: center; }
 }
 
 @media (max-width: 480px) {
   .arena-tab { padding: 8px 10px; font-size: 0.72rem; }
   .viz-input-row { flex-direction: column; }
   .viz-run-btn { width: 100%; justify-content: center; }
+  .arena-tabs { gap: 2px; }
+  .launcher-panel { padding: 16px 12px; }
 }

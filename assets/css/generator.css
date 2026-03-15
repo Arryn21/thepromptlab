@@ -267,3 +267,12 @@
   .pw-toggle-btn { flex: 1; min-width: 120px; justify-content: center; padding: 9px 10px; font-size: 0.82rem; }
   .pw-prompt-text { font-size: 0.72rem; }
 }
+
+@media (max-width: 480px) {
+  .pw-toggle-btn { min-width: 100%; font-size: 0.8rem; }
+  .pw-improve-input { min-height: 90px; font-size: 0.8rem; }
+  .pw-prompt-text { font-size: 0.7rem; max-height: 360px; }
+  .pw-copy-btn { padding: 5px 12px; font-size: 0.74rem; }
+  .pw-humanize-controls { flex-wrap: wrap; }
+  .pw-humanize-select { width: 100%; }
+}
