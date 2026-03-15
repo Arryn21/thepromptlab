@@ -927,13 +927,20 @@
   /* CE chips wrap nicely */
   .ce-chips { gap: 6px; }
   .ce-chip { padding: 5px 10px; font-size: 0.76rem; }
+  /* CE prompt text: switch from pre to pre-wrap so it wraps on mobile */
+  .ce-prompt-text { white-space: pre-wrap; overflow-x: hidden; }
+  /* CE open buttons: stack on small screens */
+  .ce-open-row { flex-wrap: wrap; }
+  .ce-open-btn { min-width: calc(50% - 4px); }
 }
 
 @media (max-width: 480px) {
   .schedule-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-wrap: wrap; justify-content: center; }
   /* CE */
-  .ce-prompt-text { font-size: 0.72rem; }
+  .ce-prompt-text { font-size: 0.72rem; white-space: pre-wrap; overflow-x: hidden; }
+  .ce-open-btn { min-width: 100%; }
+  .ce-prompt-header { flex-wrap: wrap; gap: 6px; }
   .breakout-card { padding: 18px; }
 }
 
