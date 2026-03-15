@@ -51,6 +51,24 @@
     });
   });
 
+  // ── Projects tab toggle ──────────────────────────────────────
+  document.querySelectorAll('.proj-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tool = btn.dataset.proj;
+      document.querySelectorAll('.proj-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.projects-tab-panel').forEach(p => p.classList.add('hidden'));
+      btn.classList.add('active');
+      document.getElementById('proj-panel-' + tool)?.classList.remove('hidden');
+    });
+  });
+
+  // ── Projects instruction copy ─────────────────────────────────
+  document.getElementById('proj-copy-instruction')?.addEventListener('click', (e) => {
+    const text = document.getElementById('proj-instruction-text')?.textContent || '';
+    copyText(text, e.currentTarget);
+    window.showToast?.('System instruction copied — paste it into your project settings!', 'success', 3000);
+  });
+
   // ── Checklist copy ───────────────────────────────────────────
   const CHECKLIST_TEXT = `Before Using Any AI Math Output in Class — 10-Question Checklist
 (Source: NCTM 2024 + practitioner research)
