@@ -7,7 +7,7 @@
       "category": "worksheet",
       "title": "Basic Worksheet Generator",
       "tags": ["worksheet", "practice", "printable", "answer-key"],
-      "template": "Act as an experienced high school [SUBJECT] teacher. Create a [NUMBER]-question practice worksheet on [TOPIC] for [GRADE] students. Format it as a clean printable with space between each problem for student work, and include a full answer key with step-by-step worked solutions on a separate page. Make all answers integers only and align to Common Core standards.",
+      "template": "Act as an experienced high school [SUBJECT] teacher. Create a [NUMBER]-question practice worksheet on [TOPIC] for [GRADE] students. Format it as a clean printable with space between each problem for student work, and include a full answer key with step-by-step worked solutions on a separate page. Make all answers integers only and align to Common Core standards.\n\nBefore generating: verify every problem is solvable and every answer in the key is correct. Flag any problem where the answer is not a clean integer.\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 examples from your textbook to improve accuracy]\nEXAMPLE: [paste a worked problem and solution from your textbook here]\nAI will match your exact method, notation, and difficulty level.\n──────────────────────────────────────",
       "example": "Act as an experienced high school Algebra 1 teacher. Create a 12-question practice worksheet on solving two-step equations for 9th graders. Format it as a clean printable with space between each problem for student work, and include a full answer key with step-by-step worked solutions on a separate page. Make all answers integers only and align to Common Core 8.EE.C.7.",
       "variables": ["SUBJECT", "NUMBER", "TOPIC", "GRADE"],
       "featured": true
@@ -18,7 +18,7 @@
       "category": "differentiation",
       "title": "Differentiated Worksheet (3 Levels)",
       "tags": ["differentiation", "worksheet", "mixed-ability", "scaffolding"],
-      "template": "I teach [SUBJECT] to a mixed-ability [GRADE] class. Create THREE versions of a [NUMBER]-problem practice set on [TOPIC]:\n- Version A (Below Grade Level): [EASIER DESCRIPTION]\n- Version B (On Grade Level): [STANDARD DESCRIPTION]\n- Version C (Above Grade Level): [HARDER DESCRIPTION]\nInclude a complete answer key for each version. Format each as a separate printable section.",
+      "template": "I teach [SUBJECT] to a mixed-ability [GRADE] class. Create THREE versions of a [NUMBER]-problem practice set on [TOPIC]:\n- Version A (Below Grade Level): [EASIER DESCRIPTION]\n- Version B (On Grade Level): [STANDARD DESCRIPTION]\n- Version C (Above Grade Level): [HARDER DESCRIPTION]\nInclude a complete answer key for each version. Format each as a separate printable section.\n\nBefore generating: check every problem is solvable at the intended level and every answer in all three keys is correct.\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 textbook examples so AI matches your method and notation]\nEXAMPLE: [paste a worked problem and solution here]\n──────────────────────────────────────",
       "example": "I teach Algebra 1 to a mixed-ability 9th grade class. Create THREE versions of a 6-problem practice set on solving systems of linear equations:\n- Version A: substitution only, positive integer solutions, one-step setup\n- Version B: substitution and elimination, some negative solutions\n- Version C: all three methods, word problems requiring students to set up the system, some fractional coefficients\nInclude a complete answer key for each version. Format each as a separate printable section.",
       "variables": ["SUBJECT", "GRADE", "NUMBER", "TOPIC", "EASIER DESCRIPTION", "STANDARD DESCRIPTION", "HARDER DESCRIPTION"],
       "featured": true
@@ -29,7 +29,7 @@
       "category": "assessment",
       "title": "Answer Key Generator",
       "tags": ["answer-key", "solutions", "worked-examples"],
-      "template": "I have the following [SUBJECT] problems for [GRADE] students. Create a complete answer key with full step-by-step worked solutions for each problem. Show all work clearly, as a model for students. Problems:\n[PASTE YOUR PROBLEMS HERE]",
+      "template": "⚠ REMINDER: AI-generated answer keys contain errors. Solve every problem yourself before distributing to students.\n\nI have the following [SUBJECT] problems for [GRADE] students. Create a complete answer key with full step-by-step worked solutions for each problem. Show all work clearly, as a model for students.\n\nFor each problem: if the answer is not a clean, reasonable value — flag it with [CHECK THIS] rather than proceeding. Do not make up a method that was not in the original problem.\n\nProblems:\n[PASTE YOUR PROBLEMS HERE]\n\n──────────────────────────────────────\n[OPTIONAL — Paste a sample worked solution to match your notation and format]\nMY FORMAT EXAMPLE: [paste here]\n──────────────────────────────────────",
       "example": "I have the following Algebra 1 problems for 9th grade students. Create a complete answer key with full step-by-step worked solutions for each problem. Show all work clearly, as a model for students. Problems:\n[PASTE YOUR PROBLEMS HERE]",
       "variables": ["SUBJECT", "GRADE"],
       "featured": false
@@ -40,7 +40,7 @@
       "category": "worksheet",
       "title": "Word Problem Creator",
       "tags": ["word-problems", "real-world", "engagement"],
-      "template": "Write [NUMBER] engaging word problems about [MATH TOPIC] for [GRADE] students. Use real-world contexts that teenagers find relevant: [CHOOSE: social media, sports, streaming services, part-time jobs, gaming, food, fashion, music, travel]. Each problem must require students to [MATH SKILL]. Include complete solutions.",
+      "template": "Write [NUMBER] engaging word problems about [MATH TOPIC] for [GRADE] students. Use real-world contexts that teenagers find relevant: [CHOOSE: social media, sports, streaming services, part-time jobs, gaming, food, fashion, music, travel]. Each problem must require students to [MATH SKILL]. Include complete solutions.\n\nCritical check: before finalizing each problem, verify (1) all numbers produce a clean, reasonable answer, (2) the problem is solvable as written, and (3) no problem requires a score above 100% or an impossible value. Flag any problem that fails this check with [REVIEW NEEDED].\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 example word problems from your textbook]\nMY EXAMPLE: [paste here]\nAI will match your problem structure, vocabulary, and difficulty level.\n──────────────────────────────────────",
       "example": "Write 6 engaging word problems about linear equations for 8th graders. Use real-world contexts involving social media, sports, and part-time jobs. Each problem must require students to set up and solve a linear equation. Include complete solutions.",
       "variables": ["NUMBER", "MATH TOPIC", "GRADE", "MATH SKILL"],
       "featured": false
@@ -62,7 +62,7 @@
       "category": "assessment",
       "title": "Exit Ticket Bank",
       "tags": ["exit-ticket", "formative-assessment", "conceptual", "procedural"],
-      "template": "Create a bank of [NUMBER] exit ticket questions for a [GRADE] [SUBJECT] unit on [TOPIC]. Include:\n- [X] conceptual questions (explain, compare, identify, describe)\n- [X] procedural questions (calculate, graph, solve, simplify)\n- [X] application questions (real-world scenarios, word problems)\nEach question should take no more than 3 minutes to answer. Provide answers for all questions.",
+      "template": "Create a bank of [NUMBER] exit ticket questions for a [GRADE] [SUBJECT] unit on [TOPIC]. Include:\n- [X] conceptual questions (explain, compare, identify, describe)\n- [X] procedural questions (calculate, graph, solve, simplify)\n- [X] application questions (real-world scenarios, word problems)\nEach question should take no more than 3 minutes to answer. Provide answers for all questions.\n\nFor every procedural and application question: verify the answer is correct and the problem is solvable as written. Flag any answer that seems unusual with [VERIFY].\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 examples from your textbook to match your method]\nEXAMPLE: [paste a worked problem and solution here]\n──────────────────────────────────────",
       "example": "Create a bank of 15 exit ticket questions for a 10th grade Algebra 2 unit on exponential functions. Include 5 conceptual, 5 procedural, and 5 application questions. Each should take ≤3 minutes. Provide answers for all 15.",
       "variables": ["NUMBER", "GRADE", "SUBJECT", "TOPIC"],
       "featured": false
@@ -73,7 +73,7 @@
       "category": "assessment",
       "title": "Quiz or Test Generator",
       "tags": ["quiz", "test", "multiple-choice", "free-response", "printable"],
-      "template": "Create a [NUMBER]-question [QUIZ/TEST] for [GRADE] [SUBJECT] covering [TOPICS]. Include:\n- [X] multiple choice questions (4 answer choices each)\n- [X] short answer questions\n- [X] free response / show-your-work problems\nWrite at a [DIFFICULTY] level. Include a complete answer key. Format as a printable student document with name/date/period lines at the top.",
+      "template": "Create a [NUMBER]-question [QUIZ/TEST] for [GRADE] [SUBJECT] covering [TOPICS]. Include:\n- [X] multiple choice questions (4 answer choices each)\n- [X] short answer questions\n- [X] free response / show-your-work problems\nWrite at a [DIFFICULTY] level. Include a complete answer key. Format as a printable student document with name/date/period lines at the top.\n\nFor the answer key: verify every answer is correct, every multiple choice problem has exactly one correct answer among the 4 choices, and every free response problem has a clean solution. Flag any answer that needs human verification with [CHECK].\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 textbook examples to match your method and notation]\nEXAMPLE: [paste a worked problem and solution here]\nAI will align difficulty and format to your actual curriculum.\n──────────────────────────────────────",
       "example": "Create a 20-question quiz for 9th grade Algebra 1 covering solving one-step and two-step equations. Include 10 multiple choice, 6 short answer, and 4 free response problems. Write at grade level. Include a complete answer key.",
       "variables": ["NUMBER", "QUIZ/TEST", "GRADE", "SUBJECT", "TOPICS", "DIFFICULTY"],
       "featured": false
@@ -84,7 +84,7 @@
       "category": "worksheet",
       "title": "Spiral Review / Warm-Up",
       "tags": ["spiral-review", "warm-up", "bell-ringer", "review"],
-      "template": "Create a 5-question spiral review warm-up for a [GRADE] [SUBJECT] class. The questions should review these previously taught topics: [TOPIC 1], [TOPIC 2], [TOPIC 3], [TOPIC 4]. Keep each question quick (2-3 minutes max). Include answers.",
+      "template": "Create a 5-question spiral review warm-up for a [GRADE] [SUBJECT] class. The questions should review these previously taught topics: [TOPIC 1], [TOPIC 2], [TOPIC 3], [TOPIC 4]. Keep each question quick (2-3 minutes max). Include answers.\n\nVerify every answer is correct before outputting. Each problem should have a single clean answer achievable in under 3 minutes.\n\n──────────────────────────────────────\n[OPTIONAL — Paste examples from your recent lessons to match your method]\nEXAMPLE: [paste a problem + solution here]\n──────────────────────────────────────",
       "example": "Create a 5-question spiral review warm-up for a 9th grade Algebra 1 class. The questions should review: solving one-step equations, evaluating expressions, order of operations, and graphing points. Keep each quick. Include answers.",
       "variables": ["GRADE", "SUBJECT", "TOPIC 1", "TOPIC 2", "TOPIC 3", "TOPIC 4"],
       "featured": false
@@ -150,7 +150,7 @@
       "category": "proof",
       "title": "Proof Scaffolding (Geometry)",
       "tags": ["proof", "geometry", "scaffolding", "differentiation"],
-      "template": "Create a two-column proof activity for [GRADE] geometry students proving [THEOREM/STATEMENT].\nCreate THREE versions:\n- Fully Scaffolded: All statements provided; students fill in the reasons only\n- Partially Scaffolded: First statement and reason given; every other row left blank\n- Independent: Only the given information and diagram description; students write the full proof\nUse the same mathematical situation for all three versions. Include a complete answer key.",
+      "template": "Create a two-column proof activity for [GRADE] geometry students proving [THEOREM/STATEMENT].\nCreate THREE versions:\n- Fully Scaffolded: All statements provided; students fill in the reasons only\n- Partially Scaffolded: First statement and reason given; every other row left blank\n- Independent: Only the given information and diagram description; students write the full proof\nUse the same mathematical situation for all three versions. Include a complete answer key.\n\nFor the answer key: verify the logical flow of every proof is valid with no missing steps or unjustified leaps. Each reason must cite a specific postulate, theorem, or definition.\n\n──────────────────────────────────────\n[OPTIONAL — Paste a sample two-column proof from your textbook]\nSAMPLE PROOF: [paste here]\nAI will match your proof format, notation, and accepted reasons exactly.\n──────────────────────────────────────",
       "example": "Create a two-column proof activity for 10th grade geometry students proving that vertical angles are congruent. Create three scaffolded versions as described. Include a full answer key.",
       "variables": ["GRADE", "THEOREM/STATEMENT"],
       "featured": false
@@ -238,7 +238,7 @@
       "category": "assessment",
       "title": "Study Guide Builder",
       "tags": ["study-guide", "review", "unit-test", "self-check"],
-      "template": "Create a comprehensive study guide for a [GRADE] [SUBJECT] unit test on [TOPICS]. Include:\n- A summary of each key concept (2-3 sentences each)\n- Important formulas and when to use them\n- Common mistakes to avoid (at least 3)\n- 10 practice problems with answers\n- A self-check checklist ('I can...' statements)\nFormat it so students can use it for independent review.",
+      "template": "Create a comprehensive study guide for a [GRADE] [SUBJECT] unit test on [TOPICS]. Include:\n- A summary of each key concept (2-3 sentences each)\n- Important formulas and when to use them\n- Common mistakes to avoid (at least 3)\n- 10 practice problems with answers\n- A self-check checklist ('I can...' statements)\nFormat it so students can use it for independent review.\n\nFor every formula: state exactly when it applies and when it does not. For every practice problem: verify the answer is correct before including it. Flag any formula or answer you are uncertain about with [VERIFY].\n\n──────────────────────────────────────\n[OPTIONAL — Paste your textbook's formula sheet or a chapter summary]\nMY MATERIALS: [paste here]\nAI will align all formulas and methods to your exact textbook.\n──────────────────────────────────────",
       "example": "Create a study guide for a 10th grade Geometry unit test on triangles. Include summaries of congruence, similarity, and Pythagorean theorem; key formulas; 3 common mistakes; 10 practice problems with answers; and an 'I can...' checklist.",
       "variables": ["GRADE", "SUBJECT", "TOPICS"],
       "featured": false
@@ -293,7 +293,7 @@
       "category": "assessment",
       "title": "Quiz Questions Generator",
       "tags": ["quiz", "multiple-choice", "short-answer", "answer-key"],
-      "template": "Create [NUMBER] quiz questions for a [GRADE] [SUBJECT] quiz on [TOPIC]. Include [X] multiple choice (with 4 options each), [X] short answer, and [X] true/false. Provide an answer key. Make sure the difficulty is appropriate for [GRADE] students.",
+      "template": "Create [NUMBER] quiz questions for a [GRADE] [SUBJECT] quiz on [TOPIC]. Include [X] multiple choice (with 4 options each), [X] short answer, and [X] true/false. Provide an answer key. Make sure the difficulty is appropriate for [GRADE] students.\n\nFor every question: verify there is exactly one correct answer, all distractors in multiple choice are plausible but clearly wrong, and every true/false statement is unambiguously one or the other. Flag any question needing human review with [CHECK].\n\n──────────────────────────────────────\n[OPTIONAL — Paste 1–2 examples from your textbook to match your method]\nEXAMPLE: [paste a worked problem and solution here]\n──────────────────────────────────────",
       "example": "Create 12 quiz questions for a 9th grade Algebra 1 quiz on slope and rate of change. Include 6 multiple choice (4 options each), 4 short answer, and 2 true/false. Provide an answer key. Grade-level difficulty.",
       "variables": ["NUMBER", "GRADE", "SUBJECT", "TOPIC"],
       "featured": false
