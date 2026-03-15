@@ -46,6 +46,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-h);
   font-size: 16px;
+  overflow-x: hidden; /* prevent horizontal scroll on all browsers / iOS Safari */
 }
 
 body {
@@ -54,6 +55,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -428,6 +430,8 @@ footer p {
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   section { padding: 48px 0; }
+  /* Ensure no section/container bleeds past viewport */
+  .container { width: 100%; }
 
   .nav-links { display: none; }
   .nav-links.open {
