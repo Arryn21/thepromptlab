@@ -888,3 +888,494 @@
   .schedule-grid { grid-template-columns: 1fr; }
   .hero-ctas { flex-wrap: wrap; justify-content: center; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   KNOW YOUR AI SECTION
+════════════════════════════════════════════════════════════ */
+
+/* ── Activity wrapper ────────────────────────────────────── */
+.kya-activity {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 56px;
+}
+
+.kya-activity-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px;
+  background: rgba(0, 212, 255, 0.04);
+  border-bottom: 1px solid var(--border);
+}
+
+.kya-activity-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.kya-activity-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.kya-badge-time {
+  background: var(--accent-cyber);
+  color: var(--bg-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Round navigation pills ──────────────────────────────── */
+.kya-rounds-nav {
+  display: flex;
+  gap: 0;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.kya-rounds-nav::-webkit-scrollbar { display: none; }
+
+.kya-pill {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+  margin-right: -1px;
+}
+
+.kya-pill:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.kya-pill:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-right: 0; }
+
+.kya-pill:hover { color: var(--text-primary); background: var(--glass); z-index: 1; }
+
+.kya-pill.active {
+  background: var(--accent-cyber);
+  border-color: var(--accent-cyber);
+  color: var(--bg-primary);
+  z-index: 2;
+}
+
+/* ── Round panels ────────────────────────────────────────── */
+.kya-round { display: none; padding: 28px; }
+.kya-round.active { display: block; }
+
+.kya-round-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.kya-round-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-cyber);
+}
+
+.kya-round-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.kya-round-tests {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.kya-instructions {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.kya-step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* ── Prompt copy box ─────────────────────────────────────── */
+.kya-prompt-wrap {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.kya-prompt-text {
+  font-family: var(--font-code);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 16px 20px;
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.kya-copy-prompt {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 212, 255, 0.07);
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--accent-cyber);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+
+.kya-copy-prompt:hover { background: rgba(0, 212, 255, 0.15); }
+.kya-copy-prompt.copied { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+
+.kya-prompts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* ── Reveal button ───────────────────────────────────────── */
+.kya-reveal-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+  margin-top: 4px;
+}
+
+.kya-reveal-btn:hover { border-color: var(--accent-cyber); color: var(--accent-cyber); }
+.kya-reveal-btn.open  { border-style: solid; border-color: var(--accent-cyber); color: var(--accent-cyber); }
+
+/* ── Reveal panel ────────────────────────────────────────── */
+.kya-reveal {
+  display: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.kya-reveal.visible { display: grid; }
+
+.kya-result-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.kya-wrong  { background: rgba(239,68,68,0.06);  border: 1px solid rgba(239,68,68,0.25);  border-radius: var(--radius-md); padding: 16px; }
+.kya-correct{ background: rgba(34,197,94,0.06);  border: 1px solid rgba(34,197,94,0.25);  border-radius: var(--radius-md); padding: 16px; }
+.kya-why    { background: rgba(0,212,255,0.04);   border: 1px solid rgba(0,212,255,0.15);  border-radius: var(--radius-md); padding: 16px; }
+
+.kya-wrong  .kya-result-label { color: #f87171; }
+.kya-correct .kya-result-label { color: #4ade80; }
+.kya-why    .kya-result-label { color: var(--accent-cyber); }
+
+.kya-wrong p, .kya-correct p, .kya-why p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Insight cards grid ──────────────────────────────────── */
+.kya-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 40px;
+}
+
+.kya-section-divider h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.kya-section-divider::before,
+.kya-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.kya-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.kya-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.kya-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--kya-color, var(--accent-cyber));
+}
+
+.kya-card:hover { border-color: var(--kya-color, var(--accent-cyber)); }
+
+.kya-card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.kya-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.kya-card-stat {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--kya-color, var(--accent-cyber));
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.kya-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kya-card li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+
+.kya-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--kya-color, var(--accent-cyber));
+  font-size: 0.72rem;
+}
+
+/* ── Use It / Skip It chart ──────────────────────────────── */
+.kya-use-skip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.kya-use-col, .kya-skip-col {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.kya-use-col { border: 1px solid rgba(34,197,94,0.3); }
+.kya-skip-col { border: 1px solid rgba(239,68,68,0.3); }
+
+.kya-col-header {
+  padding: 14px 20px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kya-use-col .kya-col-header { background: rgba(34,197,94,0.08); color: #4ade80; }
+.kya-skip-col .kya-col-header { background: rgba(239,68,68,0.08); color: #f87171; }
+
+.kya-col-body {
+  padding: 16px 20px;
+  background: var(--glass);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kya-col-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.kya-col-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.kya-use-col .kya-col-dot { background: #4ade80; }
+.kya-skip-col .kya-col-dot { background: #f87171; }
+
+/* ── Checklist ───────────────────────────────────────────── */
+.kya-checklist-wrap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.kya-checklist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(0,212,255,0.04);
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.kya-checklist-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.kya-checklist-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+#kya-copy-checklist {
+  padding: 8px 18px;
+  background: var(--accent-cyber);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#kya-copy-checklist:hover { background: #33ddff; }
+#kya-copy-checklist.copied { background: #22c55e; color: #fff; }
+
+.kya-checklist-body {
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 32px;
+}
+
+.kya-check-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.kya-check-num {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.kya-check-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.kya-checklist-footer {
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .kya-reveal { grid-template-columns: 1fr; }
+  .kya-use-skip { grid-template-columns: 1fr; }
+  .kya-checklist-body { grid-template-columns: 1fr; }
+  .kya-prompts-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .kya-activity-top { flex-direction: column; align-items: flex-start; }
+  .kya-round { padding: 20px 16px; }
+  .kya-rounds-nav { padding: 12px 16px; }
+  .kya-pill { padding: 7px 11px; font-size: 0.72rem; }
+}
