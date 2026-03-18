@@ -42,8 +42,7 @@
       btn.textContent = '✓ Copied!';
       setTimeout(() => { btn.classList.remove('copied'); btn.textContent = orig; }, 1500);
 
-      window.open(toolUrl, '_blank', 'noopener,noreferrer');
-      window.showToast?.(`Prompt copied — paste it in ${toolName}!`, 'success');
+      window.showToast?.(`Prompt copied!`, 'success');
     });
   });
 
