@@ -178,8 +178,9 @@
   font-size: 0.76rem;
   color: var(--text-secondary);
   line-height: 1.75;
-  white-space: pre;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: hidden;
   overflow-y: auto;
   max-height: 520px;
   padding: 20px;
@@ -231,6 +232,7 @@
 
 .pw-improve-input {
   width: 100%;
+  box-sizing: border-box;
   background: var(--bg-primary);
   border: none;
   padding: 16px 20px;
